@@ -1,0 +1,557 @@
+\documentclass[12pt , a4paper]{article}
+
+\usepackage[french]{babel}
+\usepackage [utf8] {inputenc} % utf-8 / latin1
+\usepackage[T1]{fontenc}
+\usepackage{aeguill} %impression de qualite des listings
+\usepackage {amsmath}
+\usepackage {mathpazo}
+\usepackage {hyperref} %lien dynamique
+\usepackage {graphicx}%image
+\usepackage {fancyhdr}%entete et pied de page
+\usepackage {float} %image
+\usepackage {color}
+\usepackage{lastpage}
+\usepackage[top=2cm, bottom=2cm, left=2cm , right=2cm]{geometry}
+\usepackage{vmargin}
+\usepackage{listings}
+\usepackage{lscape}
+
+
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{0,0.5,0}
+\definecolor{colString}{rgb}{0.62,0.12,0.94}
+
+\newcommand {\TitreCours}{Java distribué}
+\newcommand {\Epoque}{GM4 - 2ème semestre}
+\newcommand {\Prof}{M. Pécuchet}
+\newcommand {\Auteur}{Pauline Réquéna \and Guillaume Dubuisson Duplessis}
+
+\newcommand{\J}{
+	\lstset{
+	language=java,
+	float=hbp,
+	basicstyle=\ttfamily\small,
+	identifierstyle=\color{colIdentifier},
+	keywordstyle=\bf \color{colKeys},
+	stringstyle=\color{colString},
+	commentstyle=\color{colComments},
+	columns=flexible,
+	tabsize=5,
+	frame=single,
+	%frame=shadowbox,
+	rulesepcolor=\color[gray]{0.5},
+	extendedchars=true,
+	showspaces=false,
+	showstringspaces=false,
+	numbers=left,
+	stepnumber=5,
+	firstnumber=1,
+	numberstyle=\tiny,
+	breaklines=true,
+	%backgroundcolor=\color{hellgelb},
+	captionpos=b,%
+	}
+}
+
+
+\title{Java distribué\\
+	\vspace{0.6cm}
+	\normalsize{Gestionnaire d'agendas} 
+	\begin{center}
+%		\includegraphics[scale=3.5]{./images/piton3d.jpg}
+	\end{center}
+}
+\author{\Auteur}
+\date{\today}
+
+%UNE METHODE DE DEFINITION D'ENTETE
+%\pagestyle{fancy}
+%\fancyhf{}%detruit les entetes deja presents
+%\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+%\lhead{\Auteur}
+%\rhead{\today}
+%\rfoot{\thepage\ sur \pageref{LastPage}}
+
+%MEMO
+%\lhead{haut gauche}
+%\chead{centre haut}
+%\rhead{haut droit}
+%\lfoot{bas gauche}
+
+%UNE AUTRE METHODE
+%\pagestyle{headings}
+\setmarginsrb{2.5cm}{1cm}{1cm}{1.5cm}{.5cm}{.5cm}{.5cm}{.5cm}
+%\renewcommand{\sectionmark}[1]{\markright{\textsc{\TitreCours:} \thesection. \#1 \hrulefill\ \textup{page }}}
+% FONCTIONNEMENT DE \setmarginsrb
+%\setmarginsrb{1}{2}{3}{4}{5}{6}{7}{8}
+%1 est la marge gauche
+%2 est la marge en haut
+%3 est la marge droite
+%4 est la marge en bas
+%5 fixe la hauteur de l'entête
+%6 fixe la distance entre l'entête et le texte
+%7 fixe la hauteur du pied de page
+%8 fixe la distance entre le texte et le pied de page
+
+%UNE DERNIERE METHODE
+\pagestyle{fancy}
+\fancyhf{}%supprime les entetes et pieds de page utilise par defaut par LaTeX
+% \rightmark : contient le nom de la section courante
+% \markright : contient le nom de la section courante
+%\renewcommand{\sectionmark}[1]{\markright{\#1}}
+%\renewcommand{\chaptermark}[1]{\markboth{\bsc{\chaptername~\thechapter{} :} #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection{} #1}}
+\lhead[\thepage]{\TitreCours\ - \rightmark} 
+\rhead{\Epoque}
+\rfoot{\thepage\ / \pageref{LastPage}}
+
+\fancypagestyle{plain}{ 
+	\fancyhead{} 
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+\begin{document}
+	\maketitle
+	\thispagestyle{empty}
+	%\setcounter{page}{0}
+	\newpage
+	\thispagestyle{plain}% page sans entete 
+
+	\tableofcontents
+	\newpage
+	\section{Introduction}
+	\noindent blabla
+        
+        \section{Analyse détaillée du sujet}
+
+Le sujet de notre mini-projet de Java Distribu\'e consiste en la
+conception et l{\textquoteright}impl\'ementation d{\textquoteright}un
+site web de gestion d{\textquoteright}agendas. Ce site a pour fonction
+de g\'erer les diff\'erents types d{\textquoteright}agendas
+d{\textquoteright}un utilisateur. Par exemple, un utilisateur peut
+disposer d{\textquoteright}un agenda
+{\guillemotleft}~Travail~{\guillemotright} pour ses rendez-vous
+professionnels et d{\textquoteright}un agenda
+{\guillemotleft}~Perso~{\guillemotright} pour ses activit\'es
+personnelles. Cette application permettra donc la gestion individuelle
+de ces 2 agendas.
+
+
+
+
+Un utilisateur de ce gestionnaire devra donc pouvoir~avoir acc\`es aux
+fonctionnalit\'es suivantes :
+
+
+\begin{itemize}
+\item \textbf{Consulter ses agendas sous une forme claire et
+fonctionnelle}
+\end{itemize}
+Nous avons opt\'e pour l{\textquoteright}affichage des agendas par
+semaine. Par ailleurs, afin de pouvoir bien distinguer les diff\'erents
+agendas lors de l{\textquoteright}affichage des \'ev\`enements, chaque
+agenda est caract\'eris\'e par une couleur.
+
+
+\begin{itemize}
+\item \textbf{Cr\'eer un nouvel agenda}
+\end{itemize}
+Un agenda est caract\'eris\'e par un nom, un lieu
+d{\textquoteright}application, une description, ainsi
+qu{\textquoteright}une couleur.
+
+
+\begin{itemize}
+\item \textbf{Modifier les param\`etres d{\textquoteright}un agenda
+pr\'eexistant}
+\end{itemize}
+Une fois qu{\textquoteright}un agenda a \'et\'e cr\'ee,
+l{\textquoteright}utilisateur doit pouvoir s{\textquoteright}il le
+souhaite en modifier les d\'etails ou la couleur
+d{\textquoteright}affichage.
+
+
+\begin{itemize}
+\item \textbf{Supprimer un agenda pr\'eexistant}
+\end{itemize}
+Lorsqu{\textquoteright}un agenda n{\textquoteright}est plus utilis\'e
+par l{\textquoteright}internaute, celui-ci peut le supprimer, afin de
+ne pas encombrer son compte de donn\'ees inutiles. Ce
+n{\textquoteright}est pas une action anodine, car toute suppression est
+irr\'eversible et entra\^ine la suppression de tous \'ev\`enements de
+l{\textquoteright}agenda.
+
+
+\begin{itemize}
+\item \textbf{Cr\'eer un nouvel \'ev\`enement dans un agenda
+pr\'eexistant}
+\end{itemize}
+Un \'ev\`enement appartient \`a un agenda. Il est caract\'eris\'e par un
+objet, une date, un lieu, des heures de d\'ebut et de fin, ainsi
+qu{\textquoteright}une description.
+
+
+\begin{itemize}
+\item \textbf{Modifier les caract\'eristiques d{\textquoteright}un
+\'ev\`enement pr\'eexistant}
+\end{itemize}
+Une fois qu{\textquoteright}un \'ev\`enement a \'et\'e cr\'ee dans un
+agenda, l{\textquoteright}utilisateur doit pouvoir s{\textquoteright}il
+le souhaite en modifier les d\'etails.
+
+
+\begin{itemize}
+\item \textbf{Supprimer un \'ev\`enement pr\'eexistant}
+\end{itemize}
+
+
+
+
+
+
+{\centering
+\textbf{\textit{\textcolor[rgb]{0.0,0.4392157,0.7529412}{Structure du
+site}}}
+\par}
+
+
+
+
+
+
+
+L{\textquoteright}acc\`es \`a ce site se fera par le biais
+d{\textquoteright}une page d{\textquoteright}authentification. En
+effet, les comptes de chaque utilisateur sont confidentiels. Pour se
+connecter au gestionnaire d{\textquoteright}agendas,
+l{\textquoteright}internaute devra donc en premier lieu saisir son
+login et son mot de passe.
+
+
+
+
+Une fois l{\textquoteright}authentification accomplie,
+l{\textquoteright}internaute sera dirig\'e vers la page
+d{\textquoteright}accueil, compos\'ee de plusieurs parties :
+
+
+\begin{itemize}
+\item \textbf{L{\textquoteright}en-t\^ete}
+\end{itemize}
+Elle est constitu\'ee du logo de l{\textquoteright}application,
+d{\textquoteright}un message d{\textquoteright}accueil et du bouton de
+d\'econnexion.
+
+\begin{itemize}
+\item \textbf{Le menu de gauche~}
+\end{itemize}
+Ce menu est compos\'e tout d{\textquoteright}abord de la liste des
+agendas de l{\textquoteright}utilisateur connect\'e. Ce dernier peut
+s\'electionner dans cette liste les agendas qu{\textquoteright}il
+d\'esire ou non afficher.
+
+A travers ce menu, l{\textquoteright}utilisateur peut \'egalement
+acc\'eder aux diff\'erentes fonctionnalit\'es de gestion des agendas,
+\`a savoir la cr\'eation d{\textquoteright}un nouvel agenda, la
+modification ou la suppression d{\textquoteright}un agenda, ainsi que
+la cr\'eation d{\textquoteright}un nouvel \'ev\`enement. La
+modification ou la suppression d{\textquoteright}un \'ev\`enement se
+fera par le biais du calendrier d{\textquoteright}affichage.
+
+
+\begin{itemize}
+\item \textbf{Le corps de la page}
+\end{itemize}
+Il est compos\'e du tableau d{\textquoteright}affichage des agendas. En
+cliquant sur un des \'ev\`enements affich\'e sur ce calendrier,
+l{\textquoteright}utilisateur pourra en modifier les d\'etails, ou le
+supprimer.
+
+
+
+L{\textquoteright}affichage des agendas \'etant hebdomadaire,
+l{\textquoteright}utilisateur pourra passer d{\textquoteright}une
+semaine \`a l{\textquoteright}autre \`a l{\textquoteright}aide de
+fl\`eches directionnelles.
+
+{\centering
+\textbf{\textit{\textcolor[rgb]{0.0,0.4392157,0.7529412}{Aspects
+techniques}}}
+\par}
+
+\begin{itemize}
+\item Le planning de ce projet sera r\'ealis\'e sur le logiciel
+GanttProject.
+\item La mod\'elisation et le d\'eveloppement de ce projet seront
+effectu\'es sur l{\textquoteright}IDE Netbeans 6.5.
+\item Les interfaces des diff\'erentes pages web seront r\'ealis\'ees en
+xHTML/CSS.
+\item Des JSP permettront d{\textquoteright}ins\'erer des donn\'ees
+dynamiques \`a ce contenu statique.
+\item Les informations enregistr\'ees dans l{\textquoteright}application
+seront stock\'ees dans une base de donn\'ees MySQL et la liaison de
+l{\textquoteright}application \`a la base se fera via une connexion
+JDBC.
+\end{itemize}
+
+
+
+\newpage
+\section{Cas d'utilisation}
+\subsection{Identification des acteurs}
+Dans le cadre de ce jeu, la seule entité qui intéragit avec le système est le joueur. C'est pourquoi le système a comme unique acteur le joueur.
+\subsection{Diagramme de cas d'utilisation}
+\begin{center}
+%  \includegraphics[scale=0.6]{./image/useCase.jpg}
+\end{center}
+
+\noindent L'objectif du système est de jouer une partie de morpion africain indépendamment de l'interface graphique (qui peut être un terminal, une fenêtre, ou être sous bien d'autres formes). C'est pourquoi nous allons centrer notre modélisation sur le jeu en lui-même.
+
+\newpage 
+\subsection{Les scénarios détaillés}
+\subsubsection{Scénario "jouer une partie"}
+\noindent\textbf{Titre : } jouer une partie\\
+\textbf{Résumé : } ce cas d'utilisation permet aux Joueurs de lancer une partie de Morpion Africain et de jouer\\
+\textbf{Acteur : }Joueur\\ \\
+\textbf{Scénario nominal :}
+\begin{enumerate}
+\item Le Joueur démarre une nouvelle partie
+\item Le Jeu demande au Joueur de saisir les pseudonymes des joueurs : exécution du cas d'utilisation "Saisir pseudonymes des joueurs"
+\item Le Jeu demande au premier joueur de poser un pion
+\item Le Joueur 1 pose un pion : exécution du cas d'utilisation "Poser un pion"
+\item Le Jeu demande au Joueur 2 de poser un pion
+\item Le Joueur 2 pose un pion : exécution du cas d'utilisation "Poser un pion"
+\item Le Jeu redemande deux fois à chaque Joueur de poser un pion. La phase d'initialisation est alors terminée.
+\item Le Jeu demande aux joueurs de déplacer leurs pions
+\item Successivement, les joueurs déplacent leurs pions (exécution du cas d'utilisation "Déplacer un pion") jusqu'à ce qu'un joueur aligne 3 de ses pions
+\item Le Jeu indique le Joueur gagnant et le score
+\end{enumerate}
+\textbf{Encha\^inements alternatifs :}\\
+\textit{A1 : un joueur a gagné}\\
+L'encha\^inement A1 démarre au point 7 du scénario nominal.
+\begin{enumerate}
+\item[7.] La partie est terminé, un joueur a aligné 3 pions.
+\end{enumerate}
+Le scénario nominal reprend au point 10.\\
+
+\subsubsection{Scénario "Saisir pseudonymes des joueurs"}
+\noindent\textbf{Titre : } Saisir pseudonymes des joueurs\\
+\textbf{Résumé : } ce cas d'utilisation permet aux Joueurs de saisir leurs pseudonymes\\
+\textbf{Acteur : } Joueur\\ \\
+\textbf{Scénario nominal :}
+\begin{enumerate}
+\item Le Jeu demande aux Joueurs de saisir le pseudonyme du Joueur 1
+\item Le Joueur 1 saisit son pseudonyme et valide
+\item Le Jeu vérifie que le pseudonyme est non vide
+\item Le Jeu enregistre le pseudonyme
+\item Le Jeu demande aux Joueurs de saisir le pseudonyme du Joueur 2
+\item Le Joueur 2 saisit son pseudonyme et valide
+\item Le Jeu vérifie que le pseudonyme est non vide
+\item Le Jeu enregistre le pseudonyme
+\end{enumerate}
+\textbf{Encha\^inements alternatifs :}\\
+\textit{A1 : pseudonyme vide}\\
+L'encha\^inement A1 démarre au point 3 du scénario nominal.
+\begin{enumerate}
+\item[3.] Le pseudonyme est vide, le Jeu remplace le nom vide par "Sans nom 1".
+\end{enumerate}
+Le scénario nominal reprend au point 4.\\
+
+\noindent\textit{A2 : pseudonyme vide}\\
+L'encha\^inement A2 démarre au point 7 du scénario nominal.
+\begin{enumerate}
+\item[7.] Le pseudonyme est vide, le Jeu remplace le nom vide par "Sans nom 2".
+\end{enumerate}
+Le scénario nominal reprend au point 8.
+
+\subsubsection{Scénario "Poser un pion"}
+\noindent\textbf{Titre : } Poser un pion\\
+\textbf{Résumé : } ce cas d'utilisation permet à un Joueur de poser un pion\\
+\textbf{Acteur : } Joueur\\ \\
+\textbf{Scénario nominal :}
+\begin{enumerate}
+\item Le Joueur sélectionne la case sur laquelle il souhaite poser le pion
+\item Le Jeu valide la case et y place le pion du Joueur
+\end{enumerate}
+\textbf{Encha\^inement alternatif :}\\
+\textit{A1 : case occupée}\\
+L'encha\^inement A1 démarre au point 2 du scénario nominal.
+\begin{enumerate}
+\item[2.] Le Jeu indique au Joueur que la case est occupée. Le pion ne peut alors pas \^etre placé sur cette case.
+\end{enumerate}
+Le scénario nominal reprend au point 1.
+
+\subsubsection{Scénario "Déplacer un pion"}
+\noindent\textbf{Titre : } Déplacer un pion\\
+\textbf{Résumé : } ce cas d'utilisation permet à un Joueur de déplacer un de ses pions\\
+\textbf{Acteur : } Joueur\\ \\
+\textbf{Scénario nominal :}
+\begin{enumerate}
+\item Le Jeu demande au Joueur de sélectionner un pion
+\item Le Joueur sélectionne le pion qu'il veut bouger
+\item Le Jeu valide la sélection du pion
+\item Le Jeu demande au Joueur de sélectionner la case adjacente sur laquelle il souhaite déplacer le pion
+\item Le Joueur sélectionne la case sur laquelle il souhaite déplacer le pion
+\item Le Jeu valide la case sélectionnée
+\item Le Jeu déplace le pion
+\end{enumerate}
+\textbf{Encha\^inement alternatif :}\\
+\textit{A1 : le pion n'appartient pas au joueur}\\
+L'encha\^inement A1 démarre au point 3 du scénario nominal.
+\begin{enumerate}
+\item[3.] Le Jeu indique au Joueur que le pion sélectionné ne lui appartient pas. Le pion ne peut alors pas \^etre déplacé.
+\end{enumerate}
+Le scénario nominal reprend au point 1.\\
+
+\noindent\textit{A2 : la case sélectionnée n'est pas adjacente au pion}\\
+L'encha\^inement A2 démarre au point 6 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le Jeu indique au Joueur que la case sélectionnée n'est pas adjacente au pion. Le pion ne peut alors pas \^etre déplacé.
+\end{enumerate}
+Le scénario nominal reprend au point 4.\\
+
+\noindent\textit{A3 : la case sélectionnée est occupée}\\
+L'encha\^inement A3 démarre au point 6 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le Jeu indique au Joueur que la case sélectionnée est occupée. Le pion ne peut alors pas \^etre déplacé.
+\end{enumerate}
+Le scénario nominal reprend au point  1 (\textbf{remarque importante : } on reprend nécessairement au point  1 pour éviter un blocage du type : le joueur sélectionne  un pion dont les cases adjacentes
+sont toutes occupées par des pions adverses).
+
+\subsubsection{Scénario "Quitter"}
+\noindent\textbf{Titre : } Quitter\\
+\textbf{Résumé : } ce cas d'utilisation permet à un Joueur de quitter le jeu\\
+\textbf{Acteur : } Joueur\\ \\
+\textbf{Scénario nominal :}
+\begin{enumerate}
+\item Le Joueur quitte le jeu
+\item L'application Jeu se ferme
+\end{enumerate}
+\textbf{Encha\^inement alternatif :} \textit{aucun}\\
+
+\subsection{Diagramme d'activité}
+\noindent Nous allons maintenant présenter les diagrammes d'activités qui nous semblent les plus importants et qui concernent le jeu en lui-même :
+\begin{itemize}
+	\item Jouer : représente le déroulement du jeu (qui peut contenir plusieurs parties)
+	\item Poser un pion : représente la phase d'initialisation d'une partie (les joueurs posent à tour de rôle 3 pions)
+	\item Déplacer un pion : représente la phase de jeu en elle-même où le joueur déplace un de ces pions
+\end{itemize}
+
+\subsubsection{Déroulement du jeu}
+\noindent Après avoir lancé le programme, le jeu se déroule selon le diagramme d'activité suivant : 
+\begin{landscape}
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/activite_jeu.jpg}
+	\end{center}
+\end{landscape}	
+\noindent Comme nous pouvons le voir, le jeu se décompose en quatre phases distinctes : la saisie des pseudonymes des deux joueurs, la phase d'initialisation de la partie (les joueurs posent leurs trois pions), la partie en elle-même (les joueurs déplacent leurs pions) puis la victoire d'un joueur avec la possibilité de relancer une partie. \\
+Nous allons maintenant nous concentrer sur les deux phases de la partie, à savoir l'initialisation et le jeu en lui-m\^eme
+	
+\subsubsection{Poser un pion}
+\noindent La première phase (initialisation) consiste pour les joueurs à poser trois pions alternativement sur les cases. La pose d'un pion se déroule de la manière suivante :
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/activite_poserPion.jpg}
+	\end{center}
+
+\subsubsection{Déplacer un pion}
+\noindent La deuxième phase qu'on peut considérer comme le coeur de la partie consiste pour chaque joueur à déplacer ses pions pour tenter de les aligner. Le déplacement d'un pion se déroule de la façon suivante :
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/activite_deplacerPion.jpg}
+	\end{center}
+	
+\subsection{Diagramme de séquence du système}
+\noindent Nous allons maintenant nous intéresser aux scénarios que nous avons précédémment décrit en transcrivant les scénarios nominaux en diagramme de séquence.
+
+\begin{landscape}
+\subsubsection{Saisir les pseudonymes}
+\noindent La saisie du pseudonyme requiert l'intervention du joueur humain qui transite l'information au jeu à travers une IHM (nous insistons sur le fait qu'elle puisse \^etre quelconque). Le diagramme de séquence suivant traduit les principales interactions lors de l'enregistrement du pseudonyme d'un joueur :
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/sequence_saisirNom.jpg}
+	\end{center}
+\end{landscape}
+
+\subsubsection{Jouer une partie}
+\noindent Le diagramme de séquence suivant regroupe les principales interactions réalisées durant une partie. Remarquons la présence de deux phases "init" (qui correspond à l'initialisation) et "play" (qui correspond au coeur de la partie).
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/sequence_partie.jpg}
+	\end{center}
+\noindent Et le diagramme de collaboration associé :
+	\begin{center}
+	  \includegraphics[scale=0.45]{./image/collaboration_partie.jpg}
+	\end{center}
+\noindent Nous allons maintenant nous intéresser de plus près aux interactions qui ont lieues lorsque qu'un joueur pose un pion ou déplace un pion.
+
+\begin{landscape}
+\subsubsection{Poser un pion}
+\noindent Les principales interactions effectuées durant la pose d'un pion par un joueur sont regroupées dans le diagramme suivant :
+	\begin{center}
+	  \includegraphics[scale=0.55]{./image/sequence_poserPion.jpg}
+	  \end{center}
+\end{landscape}
+\noindent Et le diagramme de collaboration associé :
+	\begin{center}
+	  \includegraphics[scale=0.46]{./image/collaboration_poserPion.jpg}
+	\end{center}
+\begin{landscape}
+\subsubsection{Déplacer un pion}
+\noindent Les principales interactions effectuées lors du déplacement d'un pion par un joueur sont regroupées dans le diagramme suivant :
+	\begin{center}
+  \includegraphics[scale=0.4]{./image/sequence_deplacerPion.jpg}
+	\end{center}
+\end{landscape}
+\noindent Et le diagramme de collaboration associé :
+	\begin{center}
+	  \includegraphics[scale=0.55]{./image/collaboration_deplacerPion.jpg}
+	\end{center}
+	
+	
+\subsection{Diagramme de classes}
+\noindent Maintenant que nous avons cerné le déroulement des principales phases de jeu et des interactions qu'elles engagent, nous pouvons nous concentrer sur une étape importante de la modélisation UML : le diagramme de classes. Les différentes classes que nous avons créées sont regroupées sur le diagramme suivant.
+\begin{landscape}
+\subsubsection{Les différentes classes}
+	\begin{center}
+	  \includegraphics[scale=0.37]{./image/classes.jpg}
+	\end{center}
+\end{landscape}
+\noindent Comme nous pouvons le constater, notre diagramme de classe est constitué de deux étages. Le premier étage représenté par les classes du package "boardGame" représente une abstraction de ce qui est nécessaire à tout jeu de plateau :
+\begin{itemize}
+	\item Classe "Person" :  elle contient le nom du joueur et est une généralisation de "Player"
+	\item Classe abstraite "Player" : elle représente le joueur. Un "Player" connaît le joueur qui le précède dans le jeu "previousPlayer" ainsi que le joueur qui le suit "nextPlayer". On peut noter qu'un "Player" possède deux méthodes abstraites "play" et "init" qui correspondent respectivement à ce que fera le Player durant la phase du jeu en lui-même et  durant la phase d'initialisation.
+	\item Classe abstraite "Game" : elle représente le jeu en lui-même. Un "Game" est constitué de "Players" et possède également un "currentPlayer" (joueur courant ou joueur qui a le trait). Deux méthodes importantes : play et init qui correspondent au comportement du jeu durant les phases de jeu et d'initialisation.
+	\item Classe abstraite "Box" : elle représente une case. Un Box peut être occupée par un joueur (ou pas) : elle peut donc être libre ou occupée.
+\end{itemize}
+
+\noindent Enfin, le deuxième étage (paquetage AfricanTicTacToe) est le diagramme de classe qui correspond au morpion africain en particulier :
+\begin{itemize}
+	\item Classe "GameAfricanTicTacToe" : c'est le jeu en lui-même. C'est une spécialisation de "Game". Il est constitué de cases spécifiques "BoxAfricanTicTacToe" et de deux joueurs "PlayerAfricanTicTacToe".
+	\item Classe "PlayerAfricanTicTacToe" : c'est un joueur de morpion africain. C'est une spécialisation de la classe "Player". Un joueur de morpion africain possède les cases sur lesquelles il a des pions (il en a au maximum 3 et au minimum 0).
+	\item Classe "BoxAfricanTicTacToe" : c'est une spécialisation de "Box". Elle correspond à une case du jeu de morpion africain. Elle conna\^it les cases qui lui sont adjacentes (ce qui est spécifique à ce jeu).	
+\end{itemize}
+
+\subsubsection{Diagramme de paquetage}
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/package.jpg}
+	\end{center}
+\noindent Nous avons choisi une décomposition en deux paquetages : le premier paquetage "boardGame" possède ce que nous pouvons appeler les briques communes à la création de tout jeu de plateau. Le paquetage "africanTicTacToe" importe le paquetage "boardGame" pour en spécialiser les classes et ainsi obtenir un jeu de morpion africain.\\
+Nous pouvons souligner que le paquetage "boardGame" sera réutilisable dans de nombreux jeux comme par exemple un jeu de morpion classique, des jeux du types "monopoly", "hotel", "la bonne paye", etc.
+\subsection{Diagramme d'états}
+\noindent Pour finir, nous avons voulu représenter des aspects importants du jeu et des cases par des diagrammes d'états.
+	\subsubsection{Etat du jeu}
+	\noindent Voici l'état du jeu réduit au niveau des joueurs au cours d'une partie :
+	\begin{center}
+	  \includegraphics[scale=0.6]{./image/state_game.jpg}
+	\end{center}
+	\subsubsection{Etat d'une case}	
+	\noindent Voici l'état d'une case au cours d'une partie :
+		\begin{center}
+	  \includegraphics[scale=0.4]{./image/state_box.jpg}
+	\end{center}
+\newpage	
+\subsection{Conclusion}
+\noindent Ce projet nous a permis de nous familiariser avec l'UML. Effectivement, nous avons pu utiliser les nombreux outils fournis par ce langage de modélisation ce qui nous a permis de mieux comprendre leurs utilités et de cerner leurs puissances respectives. D'autre part, l'intér\^et de ce langage nous est apparu plus clairement : c'est un outil puissant pour structurer de manière plus logique et plus compréhensible un programme ce qui facilite l'implémentation.\\
+Néanmoins, nous devons reconna\^itre qu'il nous faudrait plus de temps et de pratique pour ma\^itriser toutes les subtilités de ce langage très complet.
+\end{document}
