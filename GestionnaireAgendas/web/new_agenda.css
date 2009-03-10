@@ -1,0 +1,315 @@
+/* 
+    Document   : new_agenda
+    Created on : 16 févr. 2009, 13:16:45
+    Author     : Pauline Réquéna
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/* Design de l'en-tête commun à toutes les pages' */
+
+
+body {
+    background-image: url("fond5.jpg");
+    background-repeat: no-repeat;
+
+}
+
+
+#logo {
+
+    margin-left:20px;
+    margin-top:20px;
+    width: 130px;
+    height: 130px;
+    float: left;
+    background-image: url("calendar.png");
+}
+
+#haut_page {
+
+    padding:10px;
+    margin-top:20px;
+    margin-right:20px;
+    width: 1020px;
+    height: 90px;
+    float: right;
+    color: navy;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size:18px;
+    font-weight:bold;
+    border-style: double;
+    border-color:navy;
+}
+
+
+#message_accueil {
+
+    padding:10px;
+    margin-top:15px;
+    width: 800px;
+    height: 60px;
+    float: left;
+    text-align:center;
+
+}
+
+#deconnexion {
+
+    padding:3px;
+    margin-top:5px;
+    margin-left:35px;
+    width: 100px;
+    height: 80px;
+    float: left;
+    text-align:center;
+
+}
+
+input.out
+{
+    background: transparent url("exit.png") no-repeat center center;
+    border:none;
+    width:60px;
+    height:60px;
+}
+
+label.bouton_deco
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:red;
+    font-weight:bold;
+}
+
+/* Design spécifique au panneau de création d'agenda */
+
+#cadre_creation {
+
+    margin-top:30px;
+    width: 800px;
+    height: 500px;
+    position:absolute;
+    top:180px;
+    left:300px;
+    background-color: white;
+    -moz-opacity:0.6;
+    filter:alpha(opacity=60);
+    opacity:0.6;
+}
+
+#cadre_creation_content {
+
+    padding-top:10px;
+    margin-top:30px;
+    width: 800px;
+    height: 500px;
+    position:absolute;
+    top:180px;
+    left:300px;
+
+}
+
+#cadre_titre {
+
+    padding-top:10px;
+    margin-top:5px;
+    width: 800px;
+    height: 45px;
+    text-align:center;
+}
+
+#bouton_valider {
+
+    float:right;
+    margin-right:20px;
+    width: 80px;
+    height: 80px;
+    text-align:center;
+}
+
+#bouton_supprimer {
+
+    float:right;
+    margin-right:20px;
+    width: 80px;
+    height: 80px;
+    text-align:center;
+}
+
+#retour_agendas {
+
+    position:absolute;
+    top:570px;
+    left:70px;
+    width: 150px;
+    height: 100px;
+    text-align:center;
+}
+
+
+label.titre_creation_agenda
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 18px;
+    font-weight:bold;
+    font-style:normal;
+    text-decoration:underline;
+    color:navy;
+}
+
+
+label.form_new_agenda
+{
+    display:block;
+    float:left;
+    width:130px;
+    margin-left:200px;
+    text-align:left;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    font-weight:bold;
+}
+
+td.red
+{
+    width:20px;
+    height:20px;
+    background-color:red;
+}
+
+td.yellow
+{
+    width:20px;
+    height:20px;
+    background-color:yellow;
+}
+
+td.cyan
+{
+    width:20px;
+    height:20px;
+    background-color:aqua;
+}
+
+td.green
+{
+    width:20px;
+    height:20px;
+    background-color:green;
+}
+
+td.blue
+{
+    width:20px;
+    height:20px;
+    background-color:blue;
+}
+
+td.pink
+{
+    width:20px;
+    height:20px;
+    background-color:fuchsia;
+}
+
+td.lime
+{
+    width:20px;
+    height:20px;
+    background-color:lime;
+}
+
+td.purple
+{
+    width:20px;
+    height:20px;
+    background-color:purple;
+}
+
+td.silver
+{
+    width:20px;
+    height:20px;
+    background-color:silver;
+}
+
+td.orange
+{
+    width:20px;
+    height:20px;
+    background-color:orange;
+}
+
+td.choix
+{
+    width:20px;
+    height:20px;
+}
+
+input.valider_agenda
+{
+    background: transparent url("valider.png") no-repeat center center;
+    border:none;
+    width:50px;
+    height:50px;
+}
+
+input.supprimer_agenda
+{
+    background: transparent url("del.png") no-repeat center center;
+    border:none;
+    width:50px;
+    height:50px;
+}
+
+input.select_agenda
+{
+    background: transparent url("play.png") no-repeat center center;
+    border:none;
+    width:20px;
+    height:20px;
+}
+
+input.retour_agenda
+{
+    background: transparent url("blocnotes2.png") no-repeat center center;
+    border:none;
+    width:65px;
+    height:65px;
+}
+
+label.bouton_valider
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:green;
+    font-weight:bold;
+}
+
+label.bouton_supprimer
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:red;
+    font-weight:bold;
+}
+
+label.bouton_retour
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:maroon;
+    font-weight:bold;
+}
