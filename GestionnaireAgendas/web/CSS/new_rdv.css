@@ -15,7 +15,7 @@
 
 
 body {
-    background-image: url("fond5.jpg");
+    background-image: url("../images/fond5.jpg");
     background-repeat: no-repeat;
 
 }
@@ -28,7 +28,7 @@ body {
     width: 130px;
     height: 130px;
     float: left;
-    background-image: url("calendar.png");
+    background-image: url("../images/calendar.png");
 }
 
 #haut_page {
@@ -74,7 +74,7 @@ body {
 
 input.out
 {
-    background: transparent url("exit.png") no-repeat center center;
+    background: transparent url("../images/exit.png") no-repeat center center;
     border:none;
     width:60px;
     height:60px;
@@ -182,7 +182,7 @@ label.form_new_rdv
 
 input.valider_rdv
 {
-    background: transparent url("valider.png") no-repeat center center;
+    background: transparent url("../images/valider.png") no-repeat center center;
     border:none;
     width:50px;
     height:50px;
@@ -190,7 +190,7 @@ input.valider_rdv
 
 input.supprimer_rdv
 {
-    background: transparent url("del.png") no-repeat center center;
+    background: transparent url("../images/del.png") no-repeat center center;
     border:none;
     width:50px;
     height:50px;
@@ -198,7 +198,7 @@ input.supprimer_rdv
 
 input.select_agenda
 {
-    background: transparent url("play.png") no-repeat center center;
+    background: transparent url("../images/play.png") no-repeat center center;
     border:none;
     width:20px;
     height:20px;
@@ -206,7 +206,7 @@ input.select_agenda
 
 input.retour_agenda
 {
-    background: transparent url("blocnotes2.png") no-repeat center center;
+    background: transparent url("../images/blocnotes2.png") no-repeat center center;
     border:none;
     width:65px;
     height:65px;

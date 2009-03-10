@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" media="screen" type="text/css" title="Design_accueil" href="accueil.css" />
+        <link rel="stylesheet" media="screen" type="text/css" title="Design_accueil" href="CSS/accueil.css" />
         
         <title>Agenda</title>
     </head>

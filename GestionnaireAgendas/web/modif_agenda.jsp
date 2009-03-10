@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" media="screen" type="text/css" title="Design_new_agenda" href="new_agenda.css" />
+        <link rel="stylesheet" media="screen" type="text/css" title="Design_new_agenda" href="CSS/new_agenda.css" />
         <title>Modifier Agenda</title>
     </head>
     <body>

@@ -16,7 +16,7 @@
 
 
 body {
-    background-image: url("fond5.jpg");
+    background-image: url("../images/fond5.jpg");
     background-repeat: no-repeat;
 
 }
@@ -29,7 +29,7 @@ body {
     width: 130px;
     height: 130px;
     float: left;
-    background-image: url("calendar.png");
+    background-image: url("../images/calendar.png");
 }
 
 #haut_page {
@@ -75,7 +75,7 @@ body {
 
 input.out
 {
-    background: transparent url("exit.png") no-repeat center center;
+    background: transparent url("../images/exit.png") no-repeat center center;
     border:none;
     width:60px;
     height:60px;
@@ -210,7 +210,7 @@ label.bouton_deco
 input.afficher
 {
     margin-left:105px;
-    background: transparent url("pen.png") no-repeat center center;
+    background: transparent url("../images/pen.png") no-repeat center center;
     border:none;
     width:60px;
     height:60px;
@@ -219,7 +219,7 @@ input.afficher
 input.new_agenda
 {
     margin-left:8px;
-    background: transparent url("new.png") no-repeat center center;
+    background: transparent url("../images/new.png") no-repeat center center;
     border:none;
     width:65px;
     height:65px;
@@ -228,7 +228,7 @@ input.new_agenda
 input.new_rdv
 {
     margin-left:8px;
-    background: transparent url("blocnotes.png") no-repeat center center;
+    background: transparent url("../images/blocnotes.png") no-repeat center center;
     border:none;
     width:65px;
     height:65px;
@@ -237,7 +237,7 @@ input.new_rdv
 input.modifier_agenda
 {
     margin-left:8px;
-    background: transparent url("setting.png") no-repeat center center;
+    background: transparent url("../images/setting.png") no-repeat center center;
     border:none;
     width:65px;
     height:65px;
@@ -245,7 +245,7 @@ input.modifier_agenda
 
 input.semaine_precedente
 {
-    background: transparent url("fleche1.png") no-repeat center center;
+    background: transparent url("../images/fleche1.png") no-repeat center center;
     border:none;
     width:50px;
     height:50px;
@@ -253,7 +253,7 @@ input.semaine_precedente
 
 input.semaine_suivante
 {
-    background: transparent url("fleche2.png") no-repeat center center;
+    background: transparent url("../images/fleche2.png") no-repeat center center;
     border:none;
     width:50px;
     height:50px;
