@@ -94,7 +94,7 @@
         <TABLE>
             <%! int compteur_ligne=1; %>
             <% for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
-                {out.println("<TR class='agenda'><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD></TR>");}
+                {out.println("<TR class='agenda'><TD class='col_agenda' > </TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD></TR>");}
             %>
         </TABLE>
     </div>
