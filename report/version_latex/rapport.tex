@@ -362,6 +362,302 @@ L'encha\^inement E2 démarre au point 4 du scénario nominal.
 \item[7.] Le système enregistre la machine comme étant bannie pour une durée déterminée (par exemple 1h)
 \end{enumerate}
 
+
+\subsubsection{Scénario "Création d'un nouvel agenda"}
+
+\noindent\textbf{Titre : } Création d’un nouvel agenda\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de créer un nouvel agenda dans son calendrier.\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L'utilisateur est authentifié
+\item La base de données stockant la table des agendas est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur indique qu'il souhaite créer un nouvel agenda 
+\item Le système affiche le formulaire de création d’agendas.
+\item L'utilisateur renseigne le formulaire avec le nom de l'agenda, le lieu, une description, et une couleur représentative
+\item Le système vérifie que le champ "Nom" est bien renseigné
+\item Le système vérifie qu’aucun agenda du même nom n’existe déjà dans la base
+\item Le système crée un nouvel agenda dans la base de données.\\
+\end{enumerate}
+
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : le champ nom est vide}\\
+L'encha\^inement A1 démarre au point 4 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que le champ « Nom » n’est pas rempli et que la création est donc impossible.
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A2 : il y a déjà un agenda du même nom dans la base}\\
+L'encha\^inement A2 démarre au point 5 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur que ce nom est déjà utilisé et qu’il doit en choisir un nouveau.
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\subsubsection{Scénario "Modifier les paramètres d'un agenda"}
+\noindent\textbf{Titre : } Modification d’un agenda\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de modifier les caractéristiques d’un agenda existant, s’il veut par exemple changer sa couleur ou son nom.\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L’utilisateur est authentifié
+\item L'agenda doit exister
+\item La base de données stockant la table des agendas est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur indique qu'il souhaite modifier un de ses agendas
+\item Le système affiche le formulaire de modification d’agendas
+\item L’utilisateur sélectionne un agenda à modifier
+\item Le système vérifie que l’agenda existe dans la base de données
+\item Le système vérifie que l’agenda appartient bien à l’utilisateur
+\item Le système va chercher dans la base les caractéristiques de l’agenda et les affiche dans le formulaire.
+\item L’utilisateur renseigne les différents champs, suivant les modifications qu’il désire effectuer et clique sur « Modifier ».
+\item Le système vérifie que le champ « Nom » est bien renseigné.
+\item Le système vérifie qu’aucun agenda du même nom n’existe pas déjà dans la base.
+\item Le système modifie les informations de l’agenda dans la base de données\\
+\end{enumerate}
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : l’agenda n’existe pas}\\
+L'encha\^inement A1 démarre au point 4 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que l’agenda n’existe pas donc il n’y a pas de modification possible
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A2 : l’agenda n’appartient pas à l’utilisateur}\\
+L'encha\^inement A2 démarre au point 5 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur qu’il n’a pas l’autorisation de modifier cet agenda
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A3 : le champ nom est vide}\\
+L'encha\^inement A3 démarre au point 8 du scénario nominal.
+\begin{enumerate}
+\item[9.] Le système indique à l’utilisateur que le champ « Nom » n’est pas rempli et que la modification est donc impossible
+\end{enumerate}
+Le scénario nominal reprend au point 6.\\
+
+
+\noindent\textit{A4 : il y a déjà un agenda du même nom dans la base}\\
+L'encha\^inement A4 démarre au point 9 du scénario nominal.
+\begin{enumerate}
+\item[10.] Le système indique à l’utilisateur que ce nom est déjà utilisé et qu’il doit en choisir un nouveau
+\end{enumerate}
+Le scénario nominal reprend au point 6.\\
+
+
+\subsubsection{Scénario "Supprimer un agenda"}
+\noindent\textbf{Titre : } Suppression d’un agenda\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de supprimer un agenda existant, s’il n’en a plus l’utilité. Cette action a pour conséquence de supprimer tous les évènements relatifs à cet agenda.\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L’utilisateur est authentifié
+\item L'agenda doit exister
+\item La base de données stockant la table des agendas et des événements est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur indique qu'il souhaite supprimer un agenda
+\item Le système affiche le formulaire de modification d’agendas
+\item L’utilisateur sélectionne un agenda à supprimer
+\item Le système vérifie que l’agenda existe dans la base de données.
+\item Le système vérifie que l’agenda appartient bien à l’utilisateur
+\item Le système va chercher dans la base les caractéristiques de l’agenda et les affiche dans le formulaire.
+\item L’utilisateur confirme la suppression
+\item Le système supprime l’agenda dans la base de données, ainsi que tous les évènements liés à cet agenda \\
+\end{enumerate}
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : l’agenda n’existe pas}\\
+L'encha\^inement A1 démarre au point 4 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que l’agenda n’existe pas donc il n’y a pas de modification possible
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A2 : l’agenda n’appartient pas à l’utilisateur}\\
+L'encha\^inement A2 démarre au point 5 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur qu’il n’a pas l’autorisation de modifier cet agenda
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\subsubsection{Scénario "Création d’un nouvel évènement"}
+\noindent\textbf{Titre : } Création d’un nouvel évènement\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de créer un nouvel évènement dans un agenda de son calendrier\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L’utilisateur est authentifié
+\item L'agenda doit exister
+\item La base de données stockant la table des agendas et des événements est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur indique qu'il souhaite créer un nouvel événement
+\item Le système affiche le formulaire de création d’évènement.
+\item L’utilisateur renseigne le formulaire avec l’objet de l’évènement, la date, le lieu, les heures de début et de fin, l’agenda auquel il appartient, et une description
+\item Le système vérifie que l’agenda sélectionné existe bien dans la base.
+\item Le système vérifie que l’agenda sélectionné appartient bien à l’utilisateur.
+\item Le système vérifie que les champs « Objet », « Date », « Heure de début » et « Heure de fin » sont bien renseignés.
+\item Le système vérifie qu’aucun évènement du même agenda n’existe déjà dans la base sur une plage horaire commune.
+\item Le système crée un nouvel évènement  dans la base de données.\\
+\end{enumerate}
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : l’agenda n’existe pas}\\
+L'encha\^inement A1 démarre au point 4 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que l’agenda n’existe pas donc il n’y a pas de modification possible
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A2 : l’agenda n’appartient pas à l’utilisateur}\\
+L'encha\^inement A2 démarre au point 5 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur qu’il n’a pas l’autorisation de modifier cet agenda
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A3: un champ obligatoire n'est pas renseigné}\\
+L'encha\^inement A3 démarre au point 6 du scénario nominal.
+\begin{enumerate}
+\item[7.] Le système indique à l’utilisateur que certains des champs « Objet », « Date », « Heure de début » ou « Heure de fin » ne sont pas renseignés.
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+\noindent\textit{A4: un évènement simultané existe déjà}\\
+L'encha\^inement A3 démarre au point 7 du scénario nominal.
+\begin{enumerate}
+\item[8.] Le système indique à l’utilisateur qu’il doit changer les horaires de son évènement car cette plage horaire est déjà occupée.
+\end{enumerate}
+Le scénario nominal reprend au point 2.\\
+
+
+
+\subsubsection{Scénario "Modifier les détails d'un évènement"}
+\noindent\textbf{Titre : } Modification d’un évènement\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de modifier les détails d’un évènement existant dans un agenda de son calendrier. Il peut par exemple vouloir changer la plage horaire d’un rendez-vous, ou le lieu d’une soirée etc.\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L’utilisateur est authentifié
+\item L'agenda doit exister
+\item La base de données stockant la table des agendas et des événements est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur sélectionne l’évènement qu’il veut modifier.
+\item Le système vérifie que l’évènement sélectionné existe bien dans la base.
+\item Le système vérifie que l’évènement sélectionné appartient bien à l’utilisateur.
+\item Le système va chercher dans la base les caractéristiques de l’évènement et affiche le formulaire de modification d’évènement.
+\item L’utilisateur renseigne le formulaire en modifiant les champs voulus et clique sur le bouton « Modifier ».
+\item Le système vérifie que les champs « Objet », « Date », « Heure de début » et « Heure de fin » sont bien renseignés.
+\item Le système vérifie qu’aucun évènement du même agenda n’existe déjà dans la base sur une plage horaire commune.
+\item Le système modifie les caractéristiques de l’évènement dans la base de données.\\
+\end{enumerate}
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : l’événement n’existe pas}\\
+L'encha\^inement A1 démarre au point 4 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que l’événement n’existe pas donc il n’y a pas de modification possible
+\end{enumerate}
+Le scénario nominal reprend au point 1.\\
+
+
+\noindent\textit{A2 : l’événement n’appartient pas à l’utilisateur}\\
+L'encha\^inement A2 démarre au point 3 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur qu’il n’a pas l’autorisation de modifier cet événement
+\end{enumerate}
+Le scénario nominal reprend au point 1.\\
+
+
+\noindent\textit{A3: un champ obligatoire n'est pas renseigné}\\
+L'encha\^inement A3 démarre au point 6 du scénario nominal.
+\begin{enumerate}
+\item[7.] Le système indique à l’utilisateur que certains des champs « Objet », « Date », « Heure de début » ou « Heure de fin » ne sont pas renseignés.
+\end{enumerate}
+Le scénario nominal reprend au point 5.\\
+
+
+
+
+
+
+\subsubsection{Scénario "Supprimer un évènement"}
+\noindent\textbf{Titre : } Suppression d’un évènement\\
+\textbf{Résumé : } Ce scénario permet à l’utilisateur de supprimer un évènement existant\\
+\textbf{Acteur : }utilisateur\\
+
+\noindent\textbf{Préconditions :}
+\begin{itemize}
+\item L’utilisateur est authentifié
+\item L'agenda doit exister
+\item La base de données stockant la table des agendas et des événements est accessible\\
+\end{itemize}
+
+
+\noindent\textbf{Scénario nominal :}
+\begin{enumerate}
+\item L’utilisateur sélectionne l’évènement qu’il veut modifier
+\item Le système vérifie que l’évènement existe dans la base de données
+\item Le système vérifie que l’évènement appartient bien à l’utilisateur
+\item Le système va chercher dans la base les caractéristiques de l’évènement sélectionné et les affiche dans le formulaire
+\item L’utilisateur clique sur « Supprimer »
+\item Le système supprime l’évènement  de la base de données\\
+\end{enumerate}
+
+\noindent\textbf{Encha\^inements alternatifs :}\\
+\noindent\textit{A1 : l’événement n’existe pas}\\
+L'encha\^inement A1 démarre au point 2 du scénario nominal.
+\begin{enumerate}
+\item[5.] Le système indique à l’utilisateur que l’événement n’existe pas donc il n’y a pas de modification possible
+\end{enumerate}
+Le scénario nominal reprend au point 1.\\
+
+
+\noindent\textit{A2 : l’événement n’appartient pas à l’utilisateur}\\
+L'encha\^inement A2 démarre au point 3 du scénario nominal.
+\begin{enumerate}
+\item[6.] Le système indique à l’utilisateur qu’il n’a pas l’autorisation de modifier cet événement
+\end{enumerate}
+Le scénario nominal reprend au point 1.\\
+
 \newpage	
 \section{Conclusion}
 blabla
