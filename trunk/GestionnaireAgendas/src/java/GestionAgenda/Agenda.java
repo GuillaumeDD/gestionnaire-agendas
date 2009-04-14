@@ -1,6 +1,8 @@
 package GestionAgenda;
 
+import java.sql.Date;
 import java.util.ArrayList; 
+import java.util.Iterator;
 
 public class Agenda {
 
@@ -28,12 +30,12 @@ public class Agenda {
         return true;
     }
 
-    public void setColor (String color) {
-        return color;
+    public void setColor (String couleur) {
+        this.color=couleur;
     }
 
-    public void setLieu (String lieu) {
-        return lieu;
+    public void setLieu (String l) {
+        this.lieu=l;
     }
 
     public String getNom () {
@@ -47,12 +49,12 @@ public class Agenda {
         return true;
     }
 
-    public void setDescription (String description) {
-        return description;
+    public void setDescription (String des) {
+        this.description=des;
     }
 
     public void setNom (String name) {
-        return nom;
+        this.nom=name;
     }
 
     public void modifierEvenement (int eventID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {

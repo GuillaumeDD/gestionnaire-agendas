@@ -1,5 +1,7 @@
 package Authentification;
 
+import java.sql.Date;
+
 
 public class Session {
 
@@ -22,7 +24,7 @@ public class Session {
     public void enregistrer () {
     }
 
-    public User getUser () {
+    public Utilisateur getUser () {
         return null;
     }
 
