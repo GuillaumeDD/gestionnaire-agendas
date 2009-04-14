@@ -1,5 +1,7 @@
 package GestionAgenda;
 
+import java.sql.Date;
+
 
 public class Evenement {
 

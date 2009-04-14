@@ -1,6 +1,7 @@
 package GestionAgenda;
 
 import Authentification.Utilisateur; 
+import java.sql.Date;
 import java.util.ArrayList; 
 
 public class PortefeuilleAgenda {

@@ -1,6 +1,7 @@
 package service;
 
 import GestionAgenda.Evenement; 
+import java.sql.Date;
 import java.util.ArrayList; 
 
 public interface EvenementDAO {
