@@ -1,4 +1,4 @@
-import Authentification.User; 
+import Authentification.Utilisateur;
 import GestionAgenda.Agenda; 
 import GestionAgenda.Evenement; 
 import java.util.ArrayList; 
@@ -8,7 +8,7 @@ public class Database {
     public Database () {
     }
 
-    public ArrayList<Agenda> chargerAgendas (User userID) {
+    public ArrayList<Agenda> chargerAgendas (Utilisateur user) {
         return null;
     }
 
