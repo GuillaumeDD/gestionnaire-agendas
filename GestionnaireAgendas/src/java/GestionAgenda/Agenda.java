@@ -1,8 +1,10 @@
 package GestionAgenda;
 
 import java.sql.Date;
-import java.util.ArrayList; 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Agenda {
 
@@ -18,24 +20,30 @@ public class Agenda {
 
     private int agendaID;
 
-    private ArrayList<Evenement> evenements;
+    private HashMap<Integer,Evenement> evenements;
 
     public Agenda () {
     }
 
     public Agenda (String name, String description, String lieu, String color, int userID) {
+        setNom(name);
+        setDescription(description);
+        setLieu(lieu);
+        setColor(color);
+        setUserID(userID);
     }
 
     public boolean verifierValiditeNom (String name) {
-        return true;
+        if(name.equals("")) return false;
+        else return true;
     }
 
     public void setColor (String couleur) {
         this.color=couleur;
     }
 
-    public void setLieu (String l) {
-        this.lieu=l;
+    public void setLieu (String _lieu) {
+        this.lieu=_lieu;
     }
 
     public String getNom () {
@@ -43,10 +51,14 @@ public class Agenda {
     }
 
     public void ajouterEvenement (Evenement evt) {
+        if(estUnique(evt)==true)
+            evenements.put(evt.getEventID(), evt);
     }
 
     public boolean estUnique (Evenement evt) {
-        return true;
+        if(evenements.containsValue(evt)==true)
+            return false;
+        else return true;
     }
 
     public void setDescription (String des) {
@@ -58,15 +70,41 @@ public class Agenda {
     }
 
     public void modifierEvenement (int eventID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    Evenement event = new Evenement();
+    event = getEvenement(eventID);
+    event.setObjet(objet);
+    event.setLieu(lieu);
+    event.setDescription(description);
+    event.setDate(d);
+    event.setHeureDebut(heureDebut);
+    event.setHeureFin(heureFin);
+    if(event.verifierChamp(objet, lieu, description, d, heureDebut, heureFin)==true)
+        if(estUnique(event))
+            {
+            evenements.remove(eventID);
+            evenements.put(eventID, event);
+            }
     }
 
-    public void getEvenement (int eventID) {
+    public Evenement getEvenement (int eventID) {
+    return evenements.get(eventID) ;
     }
 
     public void supprimer () {
+    try {
+      for(Evenement boucle:evenements.values())
+          boucle.supprimer();
+      this.finalize();
+        } catch (Throwable ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void supprimerEvenement (int eventID) {
+        Evenement event = new Evenement();
+        event = getEvenement(eventID);
+        event.supprimer();
+        evenements.remove(eventID);
     }
 
     public int getAgendaID () {
@@ -81,11 +119,11 @@ public class Agenda {
         return color;
     }
 
-    public ArrayList<Evenement> getEvenements () {
+    public HashMap<Integer,Evenement> getEvenements () {
         return evenements;
     }
 
-    public void setEvenements (ArrayList<Evenement> val) {
+    public void setEvenements (HashMap<Integer,Evenement> val) {
         this.evenements = val;
     }
 

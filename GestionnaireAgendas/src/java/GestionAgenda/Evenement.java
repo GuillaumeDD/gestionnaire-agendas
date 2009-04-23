@@ -1,9 +1,14 @@
 package GestionAgenda;
 
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 public class Evenement {
+
+    private int eventID;
 
     private int agendaID;
 
@@ -22,19 +27,44 @@ public class Evenement {
     public Evenement () {
     }
 
-    public Evenement (int agendaID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public Evenement (int _agendaID, String _objet, String _lieu, String _description, Date _d, int _heureDebut, int _heureFin) {
+        setAgendaID(_agendaID);
+        setObjet(_objet);
+        setLieu(_lieu);
+        setDescription(_description);
+        setDate(_d);
+        setHeureDebut(_heureDebut);
+        setHeureFin(_heureFin);
+
     }
 
     public boolean estValideEvenement () {
-        return true;
+        if(verifierChamp(getObjet(),getLieu(),getDescription(),getDate(),getHeureDebut(),getHeureFin())==true)
+            return true;
+        else return false;
     }
 
-    public void verifierChamp (String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public boolean verifierChamp (String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    Date date_init= new Date(0);
+        if(objet.equals("") || d==date_init || heureDebut==0 || heureFin==0)  return false;
+           else return true;
     }
 
     public void supprimer () {
+        try {
+            this.finalize();
+        } catch (Throwable ex) {
+            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    public int getEventID () {
+        return eventID;
+    }
+
+    public void setEventID (int val) {
+        this.eventID = val;
+    }
     public int getAgendaID () {
         return agendaID;
     }
@@ -43,11 +73,11 @@ public class Evenement {
         this.agendaID = val;
     }
 
-    public Date getD () {
+    public Date getDate () {
         return d;
     }
 
-    public void setD (Date val) {
+    public void setDate (Date val) {
         this.d = val;
     }
 
