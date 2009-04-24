@@ -3,7 +3,7 @@ package GestionAgenda;
 import Authentification.Utilisateur; 
 import java.sql.Date;
 import java.util.HashMap;
-import service.PortefeuilleAgendaDAO;
+import service.sql.PortefeuilleAgendaSQL;
 
 public class PortefeuilleAgenda {
 
@@ -16,9 +16,11 @@ public class PortefeuilleAgenda {
 
     public void creerAgenda (String name, String description, String lieu, String color) {
         Agenda a = new Agenda(name,description,lieu,color,utilisateur.getUserID());
-        a.verifierValiditeNom(name);
-        if(estUniqueNomAgenda(name))
-            ajouterAgenda(a);
+        // On fixe un ID bidon qui va être mis à jour lors du reload de la BDD
+        a.setAgendaID(2000);
+        if(a.verifierValiditeNom(name))
+            if(estUniqueNomAgenda(name))
+                ajouterAgenda(a);
     }
 
     public boolean estUniqueNomAgenda (String name) {
@@ -36,6 +38,8 @@ public class PortefeuilleAgenda {
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
     Evenement evt = new Evenement(agendaID,objet,lieu,description,d,heureDebut,heureFin);
+    // On fixe un ID bidon qui va être mis à jour lors du reload de la BDD
+    evt.setEventID(3321);
     if(evt.estValideEvenement()==true)
         a.ajouterEvenement(evt);
     }
@@ -54,6 +58,7 @@ public class PortefeuilleAgenda {
                 ag.setDescription(description);
                 ag.setLieu(lieu);
                 ag.setColor(color);
+                ag.setModif(true);
                 agendas.remove(agendaID);
                 agendas.put(agendaID, ag);
                 }
@@ -81,7 +86,11 @@ public class PortefeuilleAgenda {
     }
 
     public void initialiser () {
-        //PortefeuilleAgendaDAO a = new PortefeuilleAgendaDAO();
+        PortefeuilleAgendaSQL a = new PortefeuilleAgendaSQL();
+        PortefeuilleAgenda pa = new PortefeuilleAgenda();
+        pa = a.findByUser(getUtilisateur());
+        setAgendas(pa.getAgendas());
+        
     }
 
     public HashMap<Integer,Agenda> getAgendas () {

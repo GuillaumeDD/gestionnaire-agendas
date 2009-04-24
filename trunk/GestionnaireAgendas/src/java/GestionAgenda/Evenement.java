@@ -24,6 +24,10 @@ public class Evenement {
 
     private int heureFin;
 
+    boolean suppr;
+    boolean modif;
+    boolean nouveau;
+
     public Evenement () {
     }
 
@@ -35,6 +39,9 @@ public class Evenement {
         setDate(_d);
         setHeureDebut(_heureDebut);
         setHeureFin(_heureFin);
+        setSuppr(false);
+        setModif(false);
+        setNouveau(true);
 
     }
 
@@ -51,11 +58,7 @@ public class Evenement {
     }
 
     public void supprimer () {
-        try {
-            this.finalize();
-        } catch (Throwable ex) {
-            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       setSuppr(true);
     }
 
     public int getEventID () {
@@ -119,6 +122,30 @@ public class Evenement {
 
     public void setObjet (String val) {
         this.objet = val;
+    }
+
+    public boolean aEteSupprime () {
+        return suppr;
+    }
+
+    public void setSuppr (boolean b) {
+        this.suppr = b;
+    }
+
+    public boolean aEteModifie () {
+        return modif;
+    }
+
+    public void setModif (boolean b) {
+        this.modif = b;
+    }
+
+    public boolean aEteCree () {
+        return nouveau;
+    }
+
+    public void setNouveau (boolean b) {
+        this.nouveau = b;
     }
 
 }
