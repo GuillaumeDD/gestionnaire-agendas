@@ -2,7 +2,7 @@ package service;
 
 import GestionAgenda.Evenement; 
 import java.sql.Date;
-import java.util.ArrayList; 
+import java.util.HashMap;
 
 public interface EvenementDAO {
 
@@ -12,17 +12,17 @@ public interface EvenementDAO {
 
     public void delete (Evenement e);
 
-    public ArrayList<Evenement> findAll ();
+    public HashMap<Integer,Evenement> findAll ();
 
-    public Evenement findByPrimaryKey (int eid);
+    public Evenement findByPrimaryKey (int eventID);
 
-    public ArrayList<Evenement> findAfter (Date d);
+    public HashMap<Integer,Evenement> findAfter (Date d);
 
-    public ArrayList<Evenement> findBefore (Date d);
+    public HashMap<Integer,Evenement> findBefore (Date d);
 
-    public ArrayList<Evenement> findBetween (Date d1, Date d2);
+    public HashMap<Integer,Evenement> findBetween (Date d1, Date d2);
 
-    public ArrayList<Evenement> findByAgenda (int agendaID);
+    public HashMap<Integer,Evenement> findByAgenda (int agendaID);
 
 }
 

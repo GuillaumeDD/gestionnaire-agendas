@@ -2,7 +2,7 @@ package service;
 
 import Authentification.Utilisateur; 
 import GestionAgenda.Agenda; 
-import java.util.ArrayList; 
+import java.util.HashMap;
 
 public interface AgendaDAO {
 
@@ -12,11 +12,11 @@ public interface AgendaDAO {
 
     public void delete (Agenda a);
 
-    public ArrayList<Agenda> findAll ();
+    public HashMap<Integer,Agenda> findAll ();
 
     public Agenda findByPrimaryKey (int agendaID);
 
-    public ArrayList<Agenda> findByUser (Utilisateur u);
+    public HashMap<Integer,Agenda> findByUser (Utilisateur u);
 
 }
 

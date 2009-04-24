@@ -22,6 +22,12 @@ public class Agenda {
 
     private HashMap<Integer,Evenement> evenements;
 
+    boolean suppr;
+
+    boolean modif;
+
+    boolean nouveau;
+
     public Agenda () {
     }
 
@@ -31,6 +37,9 @@ public class Agenda {
         setLieu(lieu);
         setColor(color);
         setUserID(userID);
+        setSuppr(false);
+        setModif(false);
+        setNouveau(true);
     }
 
     public boolean verifierValiditeNom (String name) {
@@ -78,6 +87,7 @@ public class Agenda {
     event.setDate(d);
     event.setHeureDebut(heureDebut);
     event.setHeureFin(heureFin);
+    event.setModif(true);
     if(event.verifierChamp(objet, lieu, description, d, heureDebut, heureFin)==true)
         if(estUnique(event))
             {
@@ -91,13 +101,9 @@ public class Agenda {
     }
 
     public void supprimer () {
-    try {
       for(Evenement boucle:evenements.values())
           boucle.supprimer();
-      this.finalize();
-        } catch (Throwable ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      setSuppr(true);
     }
 
     public void supprimerEvenement (int eventID) {
@@ -153,6 +159,30 @@ public class Agenda {
 
     public void setUserID (int val) {
         this.userID = val;
+    }
+
+    public boolean aEteSupprime () {
+        return suppr;
+    }
+
+    public void setSuppr (boolean b) {
+        this.suppr = b;
+    }
+
+    public boolean aEteModifie () {
+        return modif;
+    }
+
+    public void setModif (boolean b) {
+        this.modif = b;
+    }
+
+    public boolean aEteCree () {
+        return nouveau;
+    }
+
+    public void setNouveau (boolean b) {
+        this.nouveau = b;
     }
 
 }
