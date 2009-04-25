@@ -12,14 +12,34 @@
         <title>Agenda</title>
     </head>
     <body>
+    <%@page import="java.util.GregorianCalendar" %>
+    <%@page import="GestionAgenda.*" %>
+    <%@page import="service.*" %>
+    <%@page import="service.sql.*" %>
+    <%@page import="Authentification.*" %>
+    <%@page import="java.sql.*" %>
+    <%@page import="java.util.logging.*" %>
 
+    <% GregorianCalendar today = new GregorianCalendar();
+        session.setAttribute("dateDuJour",today.getTime());
+
+        Utilisateur moi = new Utilisateur(1);
+        session.setAttribute("utilisateur",moi);
+
+        //Chargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+        session.setAttribute("portefeuille", port);
+
+        //session.setAttribute("agenda_select",null);
+     %>
 
     <div id="logo">
     </div>
 
 <!-- Haut de page : message d'accueil -->
     <div id="haut_page">
-        <div id="message_accueil"> Bonjour Utilisateur1, <br/> nous sommes le 15 février 2009 </div>
+        <div id="message_accueil"> Bonjour  <%=session.getAttribute("user")%> , <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
         <div id="deconnexion">
                 <form method="post" action="identification.jsp" >
                 <input type="submit" class="out" id="disconnect" value="" ><br/>
@@ -36,10 +56,14 @@
 <!-- Sélection des agendas -->
      <form method="post" action="accueil.jsp">
      &nbsp;&nbsp;&nbsp;<label class="titre1">Mes agendas</label><br/><br/>
-     <input type="checkbox" name="checkbox1"> <label> Travail </label><br/>
-     <input type="checkbox" name="checkbox2"> <label> Agenda Perso </label><br/>
-     <input type="checkbox" name="checkbox3"> <label> Sorties </label><br/>
-     <input type="checkbox" name="checkbox4"> <label> Sport </label><br/>
+
+     <%
+     for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+        {
+        out.println("<input type='checkbox' name='"+ag.getAgendaID()+"'> <label>"+ ag.getNom()+" </label><br/>");
+        }
+     
+     %>
 
      <input type="submit" class="afficher" name="afficher" value="" ><br/>
      <label class ="bouton_afficher"> Afficher </label><br/><br/>

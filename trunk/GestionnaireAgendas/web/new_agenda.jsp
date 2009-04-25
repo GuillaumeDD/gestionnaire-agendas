@@ -1,5 +1,11 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="GestionAgenda.*" %>
+<%@page import="service.*" %>
+<%@page import="service.sql.*" %>
+<%@page import="Authentification.*" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.logging.*" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -18,7 +24,7 @@
 
 <!-- Haut de page : message d'accueil -->
     <div id="haut_page">
-        <div id="message_accueil"> Bonjour Utilisateur1, <br/> nous sommes le 15 février 2009 </div>
+        <div id="message_accueil"> Bonjour <%=session.getAttribute("user")%>, <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
         <div id="deconnexion">
                 <form method="post" action="identification.jsp" >
                 <input type="submit" class="out" name="disconnect" value="" ><br/>
@@ -26,6 +32,28 @@
                 </form>
         </div>
     </div>
+
+    <% 
+      String creation=request.getParameter("creer");
+     if(creation!=null)
+        {
+        String nom_agenda =request.getParameter("nom_agenda");
+        String lieu_agenda = request.getParameter("lieu_agenda");
+        String description = request.getParameter("maDescription");
+        String couleur = request.getParameter("choix_couleur");
+        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerAgenda(nom_agenda, description, lieu_agenda, couleur);
+
+        //Enregistrement des modifications
+        PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
+        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
+
+        //Rechargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+        session.setAttribute("portefeuille", port);
+        
+        }
+    %>
 
 <!-- Formulaire de modification des paramètres d'un agenda ou suppression de l'agenda -->
     <div id="cadre_creation"></div>

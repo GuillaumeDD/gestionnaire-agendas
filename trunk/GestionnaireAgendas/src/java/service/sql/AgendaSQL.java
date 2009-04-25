@@ -13,6 +13,10 @@ public class AgendaSQL implements AgendaDAO {
 
     private BaseDeDonnees bd = new BaseDeDonnees();
 
+    public AgendaSQL(){
+        bd.connexion();
+    }
+
     public void insert (Agenda a){
     String req="";
     req="INSERT INTO Agenda(NomAgenda, LieuAgenda, Description, Couleur, IdUser) VALUES('"+a.getNom()+"', '"+a.getLieu()+"', '"+a.getDescription()+"', '"+a.getColor()+"', "+a.getUserID()+") ";
@@ -46,22 +50,22 @@ public class AgendaSQL implements AgendaDAO {
         }
     }
 
-    public HashMap<Integer,Agenda> findAll (){
+    public HashMap<Long,Agenda> findAll (){
         String req="";
         ResultSet rs = null;
-        Agenda a = new Agenda();
-        HashMap<Integer,Agenda> agendas = new HashMap();
+        HashMap<Long,Agenda> agendas = new HashMap();
         req="SELECT * FROM Agenda ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                a.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Agenda a = new Agenda();
+                a.setAgendaID((Long) rs.getObject("IdAgenda"));
                 a.setNom((String) rs.getObject("NomAgenda"));
                 a.setDescription((String) rs.getObject("Description"));
                 a.setLieu((String) rs.getObject("LieuAgenda"));
                 a.setColor((String) rs.getObject("Couleur"));
-                a.setUserID((Integer) rs.getObject("IdUser"));
+                a.setUserID((Long) rs.getObject("IdUser"));
                 agendas.put(a.getAgendaID(), a);
                 }
             }
@@ -71,7 +75,7 @@ public class AgendaSQL implements AgendaDAO {
         return agendas;
     }
 
-    public Agenda findByPrimaryKey (int agendaID){
+    public Agenda findByPrimaryKey (long agendaID){
         String req="";
         ResultSet rs = null;
         Agenda a = new Agenda();
@@ -80,12 +84,12 @@ public class AgendaSQL implements AgendaDAO {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                a.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                a.setAgendaID((Long) rs.getObject("IdAgenda"));
                 a.setNom((String) rs.getObject("NomAgenda"));
                 a.setDescription((String) rs.getObject("Description"));
                 a.setLieu((String) rs.getObject("LieuAgenda"));
                 a.setColor((String) rs.getObject("Couleur"));
-                a.setUserID((Integer) rs.getObject("IdUser"));
+                a.setUserID((Long) rs.getObject("IdUser"));
                 }
             }
         catch (SQLException ex) {
@@ -93,28 +97,33 @@ public class AgendaSQL implements AgendaDAO {
             }
         return a;}
 
-    public HashMap<Integer,Agenda> findByUser (Utilisateur u){
+    public HashMap<Long,Agenda> findByUser (Utilisateur u) {
+        EvenementSQL e_sql = new EvenementSQL();
         String req="";
         ResultSet rs = null;
-        Agenda a = new Agenda();
-        HashMap<Integer,Agenda> agendas = new HashMap();
-        req="SELECT * FROM Agenda WHERE IdUser="+u.getUserID()+" ";
+        HashMap<Long,Agenda> agendas = new HashMap();
+        HashMap<Long,Evenement> evenements = new HashMap();
+        req="SELECT * FROM Agenda WHERE IdUser='"+u.getUserID()+"' ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                a.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Agenda a = new Agenda();
+                a.setAgendaID((Long) rs.getObject("IdAgenda"));
                 a.setNom((String) rs.getObject("NomAgenda"));
                 a.setDescription((String) rs.getObject("Description"));
                 a.setLieu((String) rs.getObject("LieuAgenda"));
                 a.setColor((String) rs.getObject("Couleur"));
-                a.setUserID((Integer) rs.getObject("IdUser"));
+                a.setUserID((Long) rs.getObject("IdUser"));
+                evenements=e_sql.findByAgenda(a.getAgendaID());
+                a.setEvenements(evenements);
                 agendas.put(a.getAgendaID(), a);
                 }
             }
         catch (SQLException ex) {
             Logger.getLogger(AgendaSQL.class.getName()).log(Level.SEVERE, null, ex);
             }
-        return agendas;}
+        if(agendas.isEmpty()) return null;
+        else return agendas;}
 
 }

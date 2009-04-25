@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 
 public class Evenement {
 
-    private int eventID;
+    private long eventID;
 
-    private int agendaID;
+    private long agendaID;
 
     private String objet;
 
@@ -20,9 +20,9 @@ public class Evenement {
 
     private Date d;
 
-    private int heureDebut;
+    private long heureDebut;
 
-    private int heureFin;
+    private long heureFin;
 
     boolean suppr;
     boolean modif;
@@ -31,7 +31,7 @@ public class Evenement {
     public Evenement () {
     }
 
-    public Evenement (int _agendaID, String _objet, String _lieu, String _description, Date _d, int _heureDebut, int _heureFin) {
+    public Evenement (long _agendaID, String _objet, String _lieu, String _description, Date _d, long _heureDebut, long _heureFin) {
         setAgendaID(_agendaID);
         setObjet(_objet);
         setLieu(_lieu);
@@ -51,7 +51,7 @@ public class Evenement {
         else return false;
     }
 
-    public boolean verifierChamp (String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public boolean verifierChamp (String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
     Date date_init= new Date(0);
         if(objet.equals("") || d==date_init || heureDebut==0 || heureFin==0)  return false;
            else return true;
@@ -61,18 +61,18 @@ public class Evenement {
        setSuppr(true);
     }
 
-    public int getEventID () {
+    public long getEventID () {
         return eventID;
     }
 
-    public void setEventID (int val) {
+    public void setEventID (long val) {
         this.eventID = val;
     }
-    public int getAgendaID () {
+    public long getAgendaID () {
         return agendaID;
     }
 
-    public void setAgendaID (int val) {
+    public void setAgendaID (long val) {
         this.agendaID = val;
     }
 
@@ -92,19 +92,19 @@ public class Evenement {
         this.description = val;
     }
 
-    public int getHeureDebut () {
+    public long getHeureDebut () {
         return heureDebut;
     }
 
-    public void setHeureDebut (int val) {
+    public void setHeureDebut (long val) {
         this.heureDebut = val;
     }
 
-    public int getHeureFin () {
+    public long getHeureFin () {
         return heureFin;
     }
 
-    public void setHeureFin (int val) {
+    public void setHeureFin (long val) {
         this.heureFin = val;
     }
 

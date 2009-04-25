@@ -12,11 +12,11 @@ public interface AgendaDAO {
 
     public void delete (Agenda a);
 
-    public HashMap<Integer,Agenda> findAll ();
+    public HashMap<Long,Agenda> findAll ();
 
-    public Agenda findByPrimaryKey (int agendaID);
+    public Agenda findByPrimaryKey (long agendaID);
 
-    public HashMap<Integer,Agenda> findByUser (Utilisateur u);
+    public HashMap<Long,Agenda> findByUser (Utilisateur u);
 
 }
 

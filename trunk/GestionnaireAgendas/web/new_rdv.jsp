@@ -18,7 +18,7 @@
 
 <!-- Haut de page : message d'accueil -->
     <div id="haut_page">
-        <div id="message_accueil"> Bonjour Utilisateur1, <br/> nous sommes le 15 février 2009 </div>
+        <div id="message_accueil"> Bonjour <%=session.getAttribute("user")%>, <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
         <div id="deconnexion">
                 <form method="post" action="identification.jsp" >
                 <input type="submit" class="out" id="disconnect" value="" ><br/>

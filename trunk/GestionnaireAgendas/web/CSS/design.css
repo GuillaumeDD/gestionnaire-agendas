@@ -44,6 +44,17 @@ body {
     height:250px;
 }
 
+#message
+{
+    position:absolute;
+    padding:15px;
+    left:350px;
+    top:310px;
+    width:600px;
+    height:250px;
+    text-align:center;
+}
+
 label.form
 {
     display:block;
@@ -68,6 +79,18 @@ label.titre
     font-weight:bold;
 }
 
+label.titre1
+{
+    display:inline;
+    width:400px;
+    text-align:center;
+    margin-left:20px;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    font-weight:bold;
+}
+
+
 label.bouton
 {
     display:inline;
@@ -79,10 +102,28 @@ label.bouton
     font-weight:bold;
 }
 
+label.bouton1
+{
+    display:inline;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:green;
+    font-weight:bold;
+}
+
 input.in
 {
 
     margin-left:180px;
+    background: transparent url("../images/entrer.png") no-repeat center center;
+    border:none;
+    width:60px;
+    height:60px;
+}
+
+input.in1
+{
     background: transparent url("../images/entrer.png") no-repeat center center;
     border:none;
     width:60px;

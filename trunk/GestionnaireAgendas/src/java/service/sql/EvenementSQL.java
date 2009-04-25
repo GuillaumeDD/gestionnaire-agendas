@@ -45,23 +45,24 @@ public class EvenementSQL implements EvenementDAO {
         }
     }
 
-    public HashMap<Integer,Evenement> findAll (){
+    public HashMap<Long,Evenement> findAll (){
         String req="";
         ResultSet rs = null;
-        Evenement e = new Evenement();
-        HashMap<Integer,Evenement> evenements = new HashMap();
+        
+        HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Evenement e = new Evenement();
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -72,7 +73,7 @@ public class EvenementSQL implements EvenementDAO {
         return evenements;
     }
 
-    public Evenement findByPrimaryKey (int eventID){
+    public Evenement findByPrimaryKey (long eventID){
     String req="";
         ResultSet rs = null;
         Evenement e = new Evenement();
@@ -81,13 +82,13 @@ public class EvenementSQL implements EvenementDAO {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 }
             }
@@ -97,23 +98,24 @@ public class EvenementSQL implements EvenementDAO {
         return e;
     }
 
-    public HashMap<Integer,Evenement> findAfter (Date d){
+    public HashMap<Long,Evenement> findAfter (Date d){
     String req="";
         ResultSet rs = null;
-        Evenement e = new Evenement();
-        HashMap<Integer,Evenement> evenements = new HashMap();
+        
+        HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date >= "+d+" ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Evenement e = new Evenement();
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -124,23 +126,24 @@ public class EvenementSQL implements EvenementDAO {
         return evenements;
     }
 
-    public HashMap<Integer,Evenement> findBefore (Date d){
+    public HashMap<Long,Evenement> findBefore (Date d){
         String req="";
         ResultSet rs = null;
-        Evenement e = new Evenement();
-        HashMap<Integer,Evenement> evenements = new HashMap();
+        
+        HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date <= "+d+" ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Evenement e = new Evenement();
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -152,23 +155,24 @@ public class EvenementSQL implements EvenementDAO {
 
     }
 
-    public HashMap<Integer,Evenement> findBetween (Date d1, Date d2){
+    public HashMap<Long,Evenement> findBetween (Date d1, Date d2){
     String req="";
         ResultSet rs = null;
-        Evenement e = new Evenement();
-        HashMap<Integer,Evenement> evenements = new HashMap();
+        
+        HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date >= "+d1+" AND Date <= "+d2+" ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Evenement e = new Evenement();
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -179,23 +183,24 @@ public class EvenementSQL implements EvenementDAO {
         return evenements;
     }
 
-    public HashMap<Integer,Evenement> findByAgenda (int agendaID){
+    public HashMap<Long,Evenement> findByAgenda (long agendaID){
     String req="";
         ResultSet rs = null;
-        Evenement e = new Evenement();
-        HashMap<Integer,Evenement> evenements = new HashMap();
+        
+        HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE IdAgenda="+agendaID+" ";
         try {
             rs=bd.executerSELECT(req);
             while(rs.next())
                 {
-                e.setEventID((Integer) rs.getObject("IdEvent"));
-                e.setAgendaID((Integer) rs.getObject("IdAgenda"));
+                Evenement e = new Evenement();
+                e.setEventID((Long) rs.getObject("IdEvent"));
+                e.setAgendaID((Long) rs.getObject("IdAgenda"));
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Integer) rs.getObject("HeureDebut"));
-                e.setHeureFin((Integer) rs.getObject("HeureFin"));
+                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
+                e.setHeureFin((Long) rs.getObject("HeureFin"));
                 e.setDate((Date) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
