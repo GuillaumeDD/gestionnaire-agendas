@@ -1,19 +1,23 @@
+package service.sql;
+
 import Authentification.Utilisateur;
 import GestionAgenda.Agenda; 
 import GestionAgenda.Evenement; 
-import java.util.ArrayList; 
+import java.util.*;
 
 public class Database {
 
     public Database () {
     }
 
-    public ArrayList<Agenda> chargerAgendas (Utilisateur user) {
-        return null;
+    public HashMap<Integer,Agenda> chargerAgendas (Utilisateur user) {
+        AgendaSQL a = new AgendaSQL();
+        return a.findByUser(user);
     }
 
-    public ArrayList<Evenement> chargerEvenements (int agendaID) {
-        return null;
+    public HashMap<Integer,Evenement> chargerEvenements (int agendaID) {
+        EvenementSQL e = new EvenementSQL();
+        return e.findByAgenda(agendaID);
     }
 
     public boolean utilisateurValide (String name, String mdp) {

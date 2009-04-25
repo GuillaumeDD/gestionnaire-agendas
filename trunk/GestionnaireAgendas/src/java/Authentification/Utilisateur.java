@@ -10,6 +10,12 @@ public class Utilisateur {
     private int userID;
 
     public Utilisateur () {
+
+    }
+
+    //pour tester mes méthodes
+    public Utilisateur (int userID) {
+        setUserID(userID);
     }
 
     public boolean verifierChamps (String login, String mdp) {
