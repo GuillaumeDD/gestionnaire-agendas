@@ -17,6 +17,31 @@ public class AgendaSQL implements AgendaDAO {
         bd.connexion();
     }
 
+    public void save(Agenda a)
+    {
+        for(Evenement boucle : a.getEvenements().values())
+        {
+            if(boucle.aEteCree()) saveEvenement(boucle);
+            else if (boucle.aEteModifie()) updateEvenement(boucle);
+            else if(boucle.aEteSupprime()) deleteEvenement(boucle);
+        }
+    }
+
+    public void saveEvenement (Evenement e){
+    EvenementSQL esql = new EvenementSQL();
+    esql.insert(e);
+    }
+
+    public void deleteEvenement (Evenement e){
+    EvenementSQL esql = new EvenementSQL();
+    esql.delete(e);
+    }
+
+    public void updateEvenement (Evenement e){
+    EvenementSQL esql = new EvenementSQL();
+    esql.update(e);
+    }
+
     public void insert (Agenda a){
     String req="";
     req="INSERT INTO Agenda(NomAgenda, LieuAgenda, Description, Couleur, IdUser) VALUES('"+a.getNom()+"', '"+a.getLieu()+"', '"+a.getDescription()+"', '"+a.getColor()+"', "+a.getUserID()+") ";
@@ -41,6 +66,7 @@ public class AgendaSQL implements AgendaDAO {
 
     public void delete (Agenda a){
     String req="";
+    EvenementSQL e_sql=new EvenementSQL();
     req="DELETE FROM Agenda WHERE IdAgenda="+a.getAgendaID()+" ";
     try {
         bd.executerMAJ(req);
@@ -48,6 +74,9 @@ public class AgendaSQL implements AgendaDAO {
     catch (SQLException ex) {
             Logger.getLogger(AgendaSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
+    for(Evenement e:a.getEvenements().values())
+        e_sql.delete(e);
+
     }
 
     public HashMap<Long,Agenda> findAll (){

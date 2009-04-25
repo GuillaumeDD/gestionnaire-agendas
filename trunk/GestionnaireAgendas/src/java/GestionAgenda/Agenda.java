@@ -101,8 +101,8 @@ public class Agenda {
     }
 
     public void supprimer () {
-      for(Evenement boucle:evenements.values())
-          boucle.supprimer();
+      for(Long boucle:evenements.keySet())
+          supprimerEvenement(boucle);
       setSuppr(true);
     }
 
@@ -110,7 +110,6 @@ public class Agenda {
         Evenement event = new Evenement();
         event = getEvenement(eventID);
         event.supprimer();
-        evenements.remove(eventID);
     }
 
     public long getAgendaID () {

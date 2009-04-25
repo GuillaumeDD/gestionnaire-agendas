@@ -47,6 +47,7 @@
        session.setAttribute("agenda_select",a);
        session.setAttribute("agendaID",agendaID);
        }
+       
 
         if(modif!=null)
         {
@@ -54,7 +55,7 @@
         String lieu_agenda = request.getParameter("lieu_agenda");
         String description_agenda = request.getParameter("maDescription");
         String couleur = request.getParameter("choix_couleur");
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda(((Agenda)session.getAttribute("agenda_select")).getAgendaID(), nom_agenda, description_agenda, lieu_agenda, couleur);
+        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
@@ -72,6 +73,7 @@
         {
         ((PortefeuilleAgenda)session.getAttribute("portefeuille")).supprimerAgenda((Long)session.getAttribute("agendaID"));
         session.setAttribute("agenda_select", null);
+        session.setAttribute("agendaID", null);
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
@@ -83,6 +85,7 @@
         session.setAttribute("portefeuille", port);
 
         }
+
 
     %>
 
@@ -101,34 +104,60 @@
         <select name="agenda" name="agenda">
         <%
         for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
-            if(ag.getAgendaID()==((Agenda)session.getAttribute("agenda_select")).getAgendaID())
-                out.println("<option value='"+ag.getAgendaID()+"' selected>"+ ag.getNom()+" </option><br/>");
-            else
-                out.println("<option value='"+ag.getAgendaID()+"'>"+ ag.getNom()+" </option><br/>");
+            if((Long)session.getAttribute("agendaID") != null)
+                {
+                if(ag.getAgendaID()==(Long)session.getAttribute("agendaID"))
+                    out.println("<option value='"+ag.getAgendaID()+"' selected>"+ ag.getNom()+" </option><br/>");
+                else
+                    out.println("<option value='"+ag.getAgendaID()+"'>"+ ag.getNom()+" </option><br/>");
+                }
+            else out.println("<option value='"+ag.getAgendaID()+"'>"+ ag.getNom()+" </option><br/>");
         %>
         </select>
         &nbsp;<input type="submit" class="select_agenda" name="select" value="" ><br/><br/>
 
         
         <!-- Paramètres de cet agenda -->
-        <% if(session.getAttribute("agenda_select") != null)
+        
+        <%
+        if(session.getAttribute("agenda_select") != null)
         {
         out.println("<label class ='form_new_agenda'> Nom : </label><input type='text' name='nom_agenda' value='"+((Agenda)session.getAttribute("agenda_select")).getNom()+"'><br/><br/>");
         out.println("<label class ='form_new_agenda'> Lieu : </label><input type='text' name='lieu_agenda' value='"+((Agenda)session.getAttribute("agenda_select")).getLieu()+"'><br/><br/>");
         out.println("<label class ='form_new_agenda'> Description : </label><textarea rows='5' cols='30' name='maDescription' >"+((Agenda)session.getAttribute("agenda_select")).getDescription()+"</textarea><br/><br/>");
         out.println("<label class ='form_new_agenda'> Couleur : </label>");
         out.println("<TABLE>");
-        out.println("<TR><TD class='red'></TD><TD class='yellow'></TD><TD class='blue'></TD><TD class='green'></TD><TD class='cyan'></TD><TD class='pink'></TD><TD class='silver'></TD><TD class='purple'></TD><TD class='lime'></TD><TD class='orange'></TD></TR>");
-        out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow'></TD>");
-        out.println("<TD class='choix'><input type='radio' name'choix_couleur' value='blue'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='lime'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='purple'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='silver'></TD>");
-        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='orange'></TD></TR>");
+        out.println("<TR><TD class='red'></TD><TD class='yellow'></TD><TD class='blue'></TD><TD class='green'></TD><TD class='cyan'></TD><TD class='pink'></TD><TD class='lime'></TD><TD class='purple'></TD><TD class='silver'></TD><TD class='orange'></TD></TR>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("red"))
+            out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red' checked='checked' ></TD>");
+        else out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("yellow"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("blue"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='blue' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='blue'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("green"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("aqua"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("fushia"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("lime"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='lime' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='lime'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("purple"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='purple' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='purple'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("silver"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='silver' checked='checked' ></TD>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='silver'></TD>");
+        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("orange"))
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='orange' checked='checked' ></TD></TR>");
+        else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='orange'></TD></TR>");
         out.println("</TABLE>");
         }
         else
@@ -141,7 +170,7 @@
         out.println("<TR><TD class='red'></TD><TD class='yellow'></TD><TD class='blue'></TD><TD class='green'></TD><TD class='cyan'></TD><TD class='pink'></TD><TD class='silver'></TD><TD class='purple'></TD><TD class='lime'></TD><TD class='orange'></TD></TR>");
         out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red'></TD>");
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow'></TD>");
-        out.println("<TD class='choix'><input type='radio' name'choix_couleur' value='blue'></TD>");
+        out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='blue'></TD>");
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green'></TD>");
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua'></TD>");
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia'></TD>");

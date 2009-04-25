@@ -35,6 +35,13 @@ public class PortefeuilleAgenda {
        return result;
     }
 
+    public boolean estUniqueNomAgenda (String name,long agendaID) {
+       boolean result = true;
+       for(Long boucle:agendas.keySet())
+            if(boucle != agendaID && agendas.get(boucle).getNom().equals(name)) result = false;
+       return result;
+    }
+
     public void ajouterAgenda (Agenda a) {
         agendas.put(a.getAgendaID(), a);
     }
@@ -57,7 +64,7 @@ public class PortefeuilleAgenda {
         Agenda ag = new Agenda();
         ag = getAgenda(agendaID);
         if(ag.verifierValiditeNom(name)==true)
-            if(estUniqueNomAgenda(name))
+            if(estUniqueNomAgenda(name,agendaID))
                 {
                 ag.setNom(name);
                 ag.setDescription(description);
@@ -81,7 +88,6 @@ public class PortefeuilleAgenda {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.supprimer();
-    agendas.remove(agendaID);
     }
 
     public void supprimerEvenement (long agendaID, long eventID) {
