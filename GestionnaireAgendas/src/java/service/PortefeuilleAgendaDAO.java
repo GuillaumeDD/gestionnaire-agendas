@@ -1,21 +1,21 @@
 package service;
 
 import Authentification.Utilisateur; 
-import GestionAgenda.PortefeuilleAgenda; 
+import GestionAgenda.*;
 
 public interface PortefeuilleAgendaDAO {
 
-    public void saveAll ();
+    public void save (PortefeuilleAgenda pa);
 
-    public void saveAgenda (int aid);
+    public void saveAgenda (Agenda a);
 
-    public void deleteAgenda (int aid);
+    public void deleteAgenda (Agenda a);
 
-    public void updateAgenda (int aid);
+    public void updateAgenda (Agenda a);
 
-    public void deleteAll ();
+    public void deleteAll (PortefeuilleAgenda pa);
 
-    public void updateAll ();
+    public void updateAll (PortefeuilleAgenda pa);
 
     public PortefeuilleAgenda findByUser (Utilisateur user);
 
