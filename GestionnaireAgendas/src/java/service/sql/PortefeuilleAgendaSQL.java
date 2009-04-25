@@ -15,11 +15,13 @@ public class PortefeuilleAgendaSQL implements PortefeuilleAgendaDAO {
     public PortefeuilleAgendaSQL(){ bd.connexion();}
     
     public void save (PortefeuilleAgenda pa){
+        AgendaSQL asql=new AgendaSQL();
         for(Agenda boucle : pa.getAgendas().values())
         {
             if(boucle.aEteCree()) saveAgenda(boucle);
             else if (boucle.aEteModifie()) updateAgenda(boucle);
             else if(boucle.aEteSupprime()) deleteAgenda(boucle);
+            asql.save(boucle);
         }
 
     }

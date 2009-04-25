@@ -31,7 +31,8 @@
         port.initialiser();
         session.setAttribute("portefeuille", port);
 
-        //session.setAttribute("agenda_select",null);
+        session.setAttribute("agenda_select",null);
+        session.setAttribute("agendaID",null);
      %>
 
     <div id="logo">
