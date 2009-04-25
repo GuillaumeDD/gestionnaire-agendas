@@ -12,33 +12,46 @@
         <title>Gestionnaire d'agendas - Accueil</title>
     </head>
     <body>
-    <div id="titre"> Gestionnaire d'agendas </div>
+    
+
+    <%@page import="GestionAgenda.*" %>
+    <%@page import="service.*" %>
+    <%@page import="service.sql.*" %>
+    <%@page import="Authentification.*" %>
+    <%@page session="true" %>
 
 <%
-    String connect=request.getParameter("connect");
+    String connect=request.getParameter("connexion");
     if(connect!=null)
         {
         String login =request.getParameter("user");
-        out.println("<p>"+login+"</p>");
+        String mdp = request.getParameter("mdp");
+        session.setAttribute("user",login);
+
+        out.println("<div id='message'>");
+        out.println("<form method='post' action='accueil.jsp'>");
+        out.println("<label class='titre1'> Bonjour, "+ session.getAttribute("user")+" </label>  <br/><br/>");
+        out.println("<label class='titre1'> Bienvenue dans le gestionnaire d'agendas en ligne </label>  <br/><br/>");
+        out.println("<label class='titre1'>  Cliquez sur la flèche pour entrer dans l'application </label> <br/><br/>");
+        out.println("<input type='submit' class='in1' id='connect' name='connect' value='' ><br/>");
+        out.println("<label class ='bouton1'> Entrer </label>");
+        out.println("</form></div>");
+        }
+    else
+        {
+        out.println("<div id='titre'> Gestionnaire d'agendas </div>");
+        out.println("<div id='login'>");
+        out.println("<form method='post' action='identification.jsp'>");
+        out.println("<label class='titre'>  Connexion  </label><br/><br/>");
+        out.println("<label class='form'>  Nom d'utilisateur :  </label>  <input type='text' name='user'><br/><br/>");
+        out.println("<label class='form'>  Mot de passe :  </label>  <input type='text' name='mdp' ><br/><br/><br/>");
+        out.println("<input type='submit' class='in' id='connect' name='connexion' value='' ><br/>");
+        out.println("<label class ='bouton'> Se connecter </label>");
+        out.println("</form></div>");
         }
     %>
 
-    <div id="login">
-
-    <form method="post" action="accueil.jsp">
-
-    <label class="titre">  Connexion  </label><br/><br/>
-
-    <label class="form">  Nom d'utilisateur :  </label>  <input type="text" name="user"><br/><br/>
-    <label class="form">  Mot de passe :  </label>  <input type="text" name="mdp" ><br/><br/><br/>
-
-
-    <input type="submit" class="in" id="connect" name="connect" value="" ><br/>
-    <label class ="bouton"> Se connecter </label>
-
-    </form>
-
-    </div>
+    
     
     
     </body>

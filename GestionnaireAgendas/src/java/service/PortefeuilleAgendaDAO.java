@@ -2,6 +2,7 @@ package service;
 
 import Authentification.Utilisateur; 
 import GestionAgenda.*;
+import java.sql.SQLException;
 
 public interface PortefeuilleAgendaDAO {
 

@@ -16,11 +16,11 @@ public class Agenda {
 
     private String color;
 
-    private int userID;
+    private long userID;
 
-    private int agendaID;
+    private long agendaID;
 
-    private HashMap<Integer,Evenement> evenements;
+    private HashMap<Long,Evenement> evenements;
 
     boolean suppr;
 
@@ -31,7 +31,7 @@ public class Agenda {
     public Agenda () {
     }
 
-    public Agenda (String name, String description, String lieu, String color, int userID) {
+    public Agenda (String name, String description, String lieu, String color, long userID) {
         setNom(name);
         setDescription(description);
         setLieu(lieu);
@@ -78,7 +78,7 @@ public class Agenda {
         this.nom=name;
     }
 
-    public void modifierEvenement (int eventID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public void modifierEvenement (long eventID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
     Evenement event = new Evenement();
     event = getEvenement(eventID);
     event.setObjet(objet);
@@ -96,7 +96,7 @@ public class Agenda {
             }
     }
 
-    public Evenement getEvenement (int eventID) {
+    public Evenement getEvenement (long eventID) {
     return evenements.get(eventID) ;
     }
 
@@ -106,18 +106,18 @@ public class Agenda {
       setSuppr(true);
     }
 
-    public void supprimerEvenement (int eventID) {
+    public void supprimerEvenement (long eventID) {
         Evenement event = new Evenement();
         event = getEvenement(eventID);
         event.supprimer();
         evenements.remove(eventID);
     }
 
-    public int getAgendaID () {
+    public long getAgendaID () {
         return agendaID;
     }
 
-    public void setAgendaID (int val) {
+    public void setAgendaID (long val) {
         this.agendaID = val;
     }
 
@@ -125,11 +125,11 @@ public class Agenda {
         return color;
     }
 
-    public HashMap<Integer,Evenement> getEvenements () {
+    public HashMap<Long,Evenement> getEvenements () {
         return evenements;
     }
 
-    public void setEvenements (HashMap<Integer,Evenement> val) {
+    public void setEvenements (HashMap<Long,Evenement> val) {
         this.evenements = val;
     }
 
@@ -153,11 +153,11 @@ public class Agenda {
         return lieu;
     }
 
-    public int getUserID () {
+    public long getUserID () {
         return userID;
     }
 
-    public void setUserID (int val) {
+    public void setUserID (long val) {
         this.userID = val;
     }
 

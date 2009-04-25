@@ -4,12 +4,15 @@ package service.sql;
 import service.*;
 import GestionAgenda.*;
 import Authentification.*;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 
 public class PortefeuilleAgendaSQL implements PortefeuilleAgendaDAO {
 
     private BaseDeDonnees bd = new BaseDeDonnees();
+
+    public PortefeuilleAgendaSQL(){ bd.connexion();}
     
     public void save (PortefeuilleAgenda pa){
         for(Agenda boucle : pa.getAgendas().values())
@@ -45,14 +48,16 @@ public class PortefeuilleAgendaSQL implements PortefeuilleAgendaDAO {
 
     public void updateAll (PortefeuilleAgenda pa){}
 
-    public PortefeuilleAgenda findByUser (Utilisateur user){
+    public PortefeuilleAgenda findByUser (Utilisateur user) {
 
-        HashMap<Integer,Agenda> agendas = new HashMap();
+        HashMap<Long,Agenda> agendas = new HashMap();
         AgendaSQL a = new AgendaSQL();
-        PortefeuilleAgenda pa = new PortefeuilleAgenda();
-        
-        agendas=a.findByUser(user);
-        pa.setUtilisateur(user);
+        PortefeuilleAgenda pa = new PortefeuilleAgenda(user);
+
+        if(a.findByUser(user) != null)
+            {
+            agendas=a.findByUser(user);
+            }
         pa.setAgendas(agendas);
         return pa;
     }

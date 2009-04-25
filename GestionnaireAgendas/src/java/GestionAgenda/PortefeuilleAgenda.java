@@ -2,16 +2,21 @@ package GestionAgenda;
 
 import Authentification.Utilisateur; 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import service.sql.AgendaSQL;
 import service.sql.PortefeuilleAgendaSQL;
 
 public class PortefeuilleAgenda {
 
     private Utilisateur utilisateur;
 
-    private HashMap<Integer,Agenda> agendas;
+    private HashMap<Long,Agenda> agendas;
 
-    public PortefeuilleAgenda () {
+    public PortefeuilleAgenda (Utilisateur u) {
+        utilisateur = u;
     }
 
     public void creerAgenda (String name, String description, String lieu, String color) {
@@ -34,7 +39,7 @@ public class PortefeuilleAgenda {
         agendas.put(a.getAgendaID(), a);
     }
 
-    public void creerEvenement (int agendaID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public void creerEvenement (long agendaID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
     Evenement evt = new Evenement(agendaID,objet,lieu,description,d,heureDebut,heureFin);
@@ -44,11 +49,11 @@ public class PortefeuilleAgenda {
         a.ajouterEvenement(evt);
     }
 
-    public Agenda getAgenda (int agendaID) {
+    public Agenda getAgenda (long agendaID) {
         return agendas.get(agendaID);
     }
 
-    public void modifierAgenda (int agendaID, String name, String description, String lieu, String color) {
+    public void modifierAgenda (long agendaID, String name, String description, String lieu, String color) {
         Agenda ag = new Agenda();
         ag = getAgenda(agendaID);
         if(ag.verifierValiditeNom(name)==true)
@@ -64,7 +69,7 @@ public class PortefeuilleAgenda {
                 }
     }
 
-    public void modifierEvenement (int agendaID, int eventID, String objet, String lieu, String description, Date d, int heureDebut, int heureFin) {
+    public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.modifierEvenement(eventID, objet, lieu, description, d, heureDebut, heureFin);
@@ -72,32 +77,30 @@ public class PortefeuilleAgenda {
     agendas.put(agendaID, ag);
     }
 
-    public void supprimerAgenda (int agendaID) {
+    public void supprimerAgenda (long agendaID) {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.supprimer();
     agendas.remove(agendaID);
     }
 
-    public void supprimerEvenement (int agendaID, int eventID) {
+    public void supprimerEvenement (long agendaID, long eventID) {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.supprimerEvenement(eventID);
     }
 
     public void initialiser () {
-        PortefeuilleAgendaSQL a = new PortefeuilleAgendaSQL();
-        PortefeuilleAgenda pa = new PortefeuilleAgenda();
-        pa = a.findByUser(getUtilisateur());
-        setAgendas(pa.getAgendas());
+        AgendaSQL a = new AgendaSQL();
+        setAgendas(a.findByUser(getUtilisateur()));
         
     }
 
-    public HashMap<Integer,Agenda> getAgendas () {
+    public HashMap<Long,Agenda> getAgendas () {
         return agendas;
     }
 
-    public void setAgendas (HashMap<Integer,Agenda> val) {
+    public void setAgendas (HashMap<Long,Agenda> val) {
         this.agendas = val;
     }
 

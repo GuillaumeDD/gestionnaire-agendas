@@ -10,12 +10,12 @@ public class Database {
     public Database () {
     }
 
-    public HashMap<Integer,Agenda> chargerAgendas (Utilisateur user) {
+    public HashMap<Long,Agenda> chargerAgendas (Utilisateur user) {
         AgendaSQL a = new AgendaSQL();
         return a.findByUser(user);
     }
 
-    public HashMap<Integer,Evenement> chargerEvenements (int agendaID) {
+    public HashMap<Long,Evenement> chargerEvenements (int agendaID) {
         EvenementSQL e = new EvenementSQL();
         return e.findByAgenda(agendaID);
     }
