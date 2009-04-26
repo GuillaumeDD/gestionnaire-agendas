@@ -89,7 +89,7 @@ public class Agenda {
         this.nom=name;
     }
 
-    public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
     Evenement event = new Evenement();
     event = getEvenement(eventID);
     event.setObjet(objet);
