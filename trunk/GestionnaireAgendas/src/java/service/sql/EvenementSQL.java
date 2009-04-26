@@ -1,9 +1,6 @@
-
 package service.sql;
 import service.*;
 import GestionAgenda.*;
-import Authentification.*;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.*;
 import java.sql.*;
@@ -14,7 +11,7 @@ public class EvenementSQL implements EvenementDAO {
 
     public void insert (Evenement e){
     String req="";
-    req="INSERT INTO Agenda(Objet, Lieu, IdAgenda,Description, HeureDebut, HeureFin,Date) VALUES('"+e.getObjet()+"', '"+e.getLieu()+"', "+e.getAgendaID()+", '"+e.getDescription()+"', "+e.getHeureDebut()+", "+e.getHeureFin()+", "+e.getDate()+") ";
+    req="INSERT INTO Evenement(Objet, Lieu, IdAgenda,Description, HeureDebut, HeureFin,Date) VALUES('"+e.getObjet()+"', '"+e.getLieu()+"', "+e.getAgendaID()+", '"+e.getDescription()+"', "+e.getHeureDebut()+", "+e.getHeureFin()+", '"+e.getDate()+"') ";
     try {
         bd.executerMAJ(req);
         }
@@ -25,7 +22,7 @@ public class EvenementSQL implements EvenementDAO {
 
     public void update (Evenement e){
     String req="";
-    req="UPDATE Agenda SET Objet='"+e.getObjet()+"', Lieu='"+e.getLieu()+"', Description='"+e.getDescription()+"', HeureDebut="+e.getHeureDebut()+", HeureFin="+e.getHeureFin()+", Date="+e.getDate()+" WHERE IdEvent="+e.getEventID()+" AND IdAgenda="+e.getAgendaID()+"";
+    req="UPDATE Evenement SET Objet='"+e.getObjet()+"', Lieu='"+e.getLieu()+"', Description='"+e.getDescription()+"', HeureDebut="+e.getHeureDebut()+", HeureFin="+e.getHeureFin()+", Date='"+e.getDate()+"' WHERE IdEvent="+e.getEventID()+" AND IdAgenda="+e.getAgendaID()+"";
     try {
         bd.executerMAJ(req);
         }
@@ -48,7 +45,7 @@ public class EvenementSQL implements EvenementDAO {
     public HashMap<Long,Evenement> findAll (){
         String req="";
         ResultSet rs = null;
-        
+
         HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement ";
         try {
@@ -63,7 +60,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
             }
@@ -89,7 +86,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date"));
                 }
             }
         catch (SQLException ex) {
@@ -101,7 +98,7 @@ public class EvenementSQL implements EvenementDAO {
     public HashMap<Long,Evenement> findAfter (Date d){
     String req="";
         ResultSet rs = null;
-        
+
         HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date >= "+d+" ";
         try {
@@ -116,7 +113,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
             }
@@ -129,7 +126,7 @@ public class EvenementSQL implements EvenementDAO {
     public HashMap<Long,Evenement> findBefore (Date d){
         String req="";
         ResultSet rs = null;
-        
+
         HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date <= "+d+" ";
         try {
@@ -144,7 +141,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
             }
@@ -158,7 +155,7 @@ public class EvenementSQL implements EvenementDAO {
     public HashMap<Long,Evenement> findBetween (Date d1, Date d2){
     String req="";
         ResultSet rs = null;
-        
+
         HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE Date >= "+d1+" AND Date <= "+d2+" ";
         try {
@@ -173,7 +170,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
             }
@@ -186,7 +183,7 @@ public class EvenementSQL implements EvenementDAO {
     public HashMap<Long,Evenement> findByAgenda (long agendaID){
     String req="";
         ResultSet rs = null;
-        
+
         HashMap<Long,Evenement> evenements = new HashMap();
         req="SELECT * FROM Evenement WHERE IdAgenda="+agendaID+" ";
         try {
@@ -201,7 +198,7 @@ public class EvenementSQL implements EvenementDAO {
                 e.setLieu((String) rs.getObject("Lieu"));
                 e.setHeureDebut((Long) rs.getObject("HeureDebut"));
                 e.setHeureFin((Long) rs.getObject("HeureFin"));
-                e.setDate((Date) rs.getObject("Date"));
+                e.setDate((String) rs.getObject("Date").toString());
                 evenements.put(e.getEventID(), e);
                 }
             }
@@ -212,6 +209,6 @@ public class EvenementSQL implements EvenementDAO {
 
     }
 
-    
+
 
 }

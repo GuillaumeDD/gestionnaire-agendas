@@ -1,11 +1,5 @@
 package GestionAgenda;
 
-import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
-
 public class Evenement {
 
     private long eventID;
@@ -18,7 +12,7 @@ public class Evenement {
 
     private String description;
 
-    private Date d;
+    private String d;
 
     private long heureDebut;
 
@@ -31,7 +25,7 @@ public class Evenement {
     public Evenement () {
     }
 
-    public Evenement (long _agendaID, String _objet, String _lieu, String _description, Date _d, long _heureDebut, long _heureFin) {
+    public Evenement (long _agendaID, String _objet, String _lieu, String _description, String _d, long _heureDebut, long _heureFin) {
         setAgendaID(_agendaID);
         setObjet(_objet);
         setLieu(_lieu);
@@ -51,9 +45,8 @@ public class Evenement {
         else return false;
     }
 
-    public boolean verifierChamp (String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
-    Date date_init= new Date(0);
-        if(objet.equals("") || d==date_init || heureDebut==0 || heureFin==0)  return false;
+    public boolean verifierChamp (String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    if(objet.equals("") || d.equals("") || heureDebut==0 || heureFin==0)  return false;
            else return true;
     }
 
@@ -76,11 +69,11 @@ public class Evenement {
         this.agendaID = val;
     }
 
-    public Date getDate () {
+    public String getDate () {
         return d;
     }
 
-    public void setDate (Date val) {
+    public void setDate (String val) {
         this.d = val;
     }
 

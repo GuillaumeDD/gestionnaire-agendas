@@ -33,15 +33,27 @@
         </div>
     </div>
 
+    <!-- Formulaire de modification des paramètres d'un agenda ou suppression de l'agenda -->
+    <div id="cadre_creation"></div>
+
+    <div id="cadre_creation_content">
+
     <% 
       String creation=request.getParameter("creer");
      if(creation!=null)
         {
-        String nom_agenda =request.getParameter("nom_agenda");
+        
+        String nom_agenda = request.getParameter("nom_agenda");
         String lieu_agenda = request.getParameter("lieu_agenda");
         String description = request.getParameter("maDescription");
         String couleur = request.getParameter("choix_couleur");
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerAgenda(nom_agenda, description, lieu_agenda, couleur);
+        int etat_creation=0;
+        etat_creation=((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerAgenda(nom_agenda, description, lieu_agenda, couleur);
+        if(etat_creation==3)
+            out.println("<div id='message_erreur'> ERREUR : Le champ Nom n'a pas été renseigné. </div>");
+        else if(etat_creation==2)
+            out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");
+        else if (etat_creation==1) out.println("<div id='message_ok'> L'agenda a été créé. </div>");
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
@@ -55,10 +67,7 @@
         }
     %>
 
-<!-- Formulaire de modification des paramètres d'un agenda ou suppression de l'agenda -->
-    <div id="cadre_creation"></div>
 
-    <div id="cadre_creation_content">
         <br/>
         <form method="post" action="new_agenda.jsp" >
 
