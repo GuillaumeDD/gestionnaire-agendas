@@ -51,12 +51,13 @@
         String heure_fin = request.getParameter("heure_fin_rdv");
         String description = request.getParameter("maDescription");
         String agendaID_select = request.getParameter("agenda");
-        long agendaID= Long.parseLong(agendaID_select);
-        long heureDebut= Long.parseLong(heure_debut);
-        long heureFin= Long.parseLong(heure_fin);
+        long agendaID=0,heureDebut=0,heureFin=0;
+        if(agendaID_select!="") agendaID= Long.parseLong(agendaID_select);
+        if(heure_debut!="") heureDebut= Long.parseLong(heure_debut);
+        if(heure_fin!="") heureFin= Long.parseLong(heure_fin);
 
         int etat_creation=0;
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
+        etat_creation=((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
         if(etat_creation==3)
             out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");
         else if(etat_creation==2)
@@ -81,9 +82,9 @@
 
         <div id="cadre_titre"><label class ="titre_form_rdv"> Création d'un évènement </label></div><br/>
         <label class ="form_new_rdv"> Objet : </label><input type="text" name="objet_rdv"><br/><br/>
-        <label class ="form_new_rdv"> Date : </label><input type="text" name="date_rdv"><br/><br/>
+        <label class ="form_new_rdv"> Date : </label><input type="text" name="date_rdv">&nbsp;&nbsp;&nbsp;&nbsp;<label class="info">Format: AAAA-MM-JJ</label><br/><br/>
         <label class ="form_new_rdv"> Lieu : </label><input type="text" name="lieu_rdv"><br/><br/>
-        <label class ="form_new_rdv"> Heure de début : </label><input type="text" name="heure_debut_rdv"><br/><br/>
+        <label class ="form_new_rdv"> Heure de début : </label><input type="text" name="heure_debut_rdv">&nbsp;&nbsp;&nbsp;&nbsp;<label class="info">Exemple: pour 10h30 écrire 10,5</label><br/><br/>
         <label class ="form_new_rdv"> Heure de fin : </label><input type="text" name="heure_fin_rdv"><br/><br/>
         <label class ="form_new_rdv"> Agenda : </label>
         <select name="agenda" >

@@ -1,14 +1,9 @@
 package GestionAgenda;
 
 import Authentification.Utilisateur; 
-import java.sql.Date;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import service.sql.AgendaSQL;
-import service.sql.PortefeuilleAgendaSQL;
-import java.lang.*;
+
 
 public class PortefeuilleAgenda {
 
@@ -53,14 +48,19 @@ public class PortefeuilleAgenda {
         agendas.put(a.getAgendaID(), a);
     }
 
-    public void creerEvenement (long agendaID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    public int creerEvenement (long agendaID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
+    int num =0;
     Evenement evt = new Evenement(agendaID,objet,lieu,description,d,heureDebut,heureFin);
     // On fixe un ID bidon qui va être mis à jour lors du reload de la BDD
     evt.setEventID(3321);
     if(evt.estValideEvenement()==true)
-        a.ajouterEvenement(evt);
+        {
+        num = a.ajouterEvenement(evt);
+        return num;
+        }
+    else return 3;
     }
 
     public Agenda getAgenda (long agendaID) {

@@ -33,7 +33,7 @@ public class BaseDeDonnees {
 		}
         try
         {
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3307/bdd_agenda?user=root");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_agenda?user=root&password=mysql");
          System.out.println("Connexion à la base établie.");
         System.out.println("---------------------\n");
         }
