@@ -76,7 +76,7 @@ body {
 
     padding:10px;
     position:absolute;
-    top:425px;
+    top:500px;
     left:170px;
     width: 500px;
     height: 60px;
@@ -269,4 +269,11 @@ label.bouton_retour
     font-size: 15px;
     color:maroon;
     font-weight:bold;
+}
+
+label.info
+{
+    font-family: verdana,sans-serif;
+    font-size: 11px;
+    font-style:italic;
 }

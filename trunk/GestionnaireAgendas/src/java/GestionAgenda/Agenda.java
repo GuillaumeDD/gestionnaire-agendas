@@ -3,8 +3,7 @@ package GestionAgenda;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class Agenda {
 
@@ -29,6 +28,15 @@ public class Agenda {
     boolean nouveau;
 
     public Agenda () {
+        setNom("");
+        setDescription("");
+        setLieu("");
+        setColor("");
+        setUserID(0);
+        setSuppr(false);
+        setModif(false);
+        setNouveau(false);
+        evenements=new HashMap();
     }
 
     public Agenda (String name, String description, String lieu, String color, long userID) {
@@ -59,15 +67,18 @@ public class Agenda {
         return nom;
     }
 
-    public void ajouterEvenement (Evenement evt) {
+    public int ajouterEvenement (Evenement evt) {
         if(estUnique(evt)==true)
-            {evenements.put(evt.getEventID(), evt);}
+            {evenements.put(evt.getEventID(), evt);return 1;}
+        else return 2;
     }
 
     public boolean estUnique (Evenement evt) {
-        if(evenements.containsValue(evt)==true)
-            return false;
-        else return true;
+        boolean result=true;
+     for(Long j:evenements.keySet())
+         if( evenements.get(j).getDate().equals(evt.getDate()) && evenements.get(j).getHeureDebut()==evt.getHeureDebut() && evenements.get(j).getHeureFin()==evt.getHeureFin() )
+                result=false;
+     return result;
     }
 
     public void setDescription (String des) {
@@ -101,15 +112,18 @@ public class Agenda {
     }
 
     public void supprimer () {
-      for(Long boucle:evenements.keySet())
-          supprimerEvenement(boucle);
+      if(evenements != null)
+      {
+      for(Evenement boucle:evenements.values())
+          boucle.supprimer();
+      }
       setSuppr(true);
     }
 
     public void supprimerEvenement (long eventID) {
         Evenement event = new Evenement();
         event = getEvenement(eventID);
-        event.supprimer();
+        if(event != null) event.supprimer();
     }
 
     public long getAgendaID () {
