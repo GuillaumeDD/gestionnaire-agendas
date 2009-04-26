@@ -14,9 +14,9 @@ public class Evenement {
 
     private String d;
 
-    private long heureDebut;
+    private float heureDebut;
 
-    private long heureFin;
+    private float heureFin;
 
     boolean suppr;
     boolean modif;
@@ -25,7 +25,7 @@ public class Evenement {
     public Evenement () {
     }
 
-    public Evenement (long _agendaID, String _objet, String _lieu, String _description, String _d, long _heureDebut, long _heureFin) {
+    public Evenement (long _agendaID, String _objet, String _lieu, String _description, String _d, float _heureDebut, float _heureFin) {
         setAgendaID(_agendaID);
         setObjet(_objet);
         setLieu(_lieu);
@@ -45,7 +45,7 @@ public class Evenement {
         else return false;
     }
 
-    public boolean verifierChamp (String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    public boolean verifierChamp (String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
     if(objet.equals("") || d.equals("") || heureDebut==0 || heureFin==0)  return false;
            else return true;
     }
@@ -85,19 +85,19 @@ public class Evenement {
         this.description = val;
     }
 
-    public long getHeureDebut () {
+    public float getHeureDebut () {
         return heureDebut;
     }
 
-    public void setHeureDebut (long val) {
+    public void setHeureDebut (float val) {
         this.heureDebut = val;
     }
 
-    public long getHeureFin () {
+    public float getHeureFin () {
         return heureFin;
     }
 
-    public void setHeureFin (long val) {
+    public void setHeureFin (float val) {
         this.heureFin = val;
     }
 

@@ -51,10 +51,11 @@
         String heure_fin = request.getParameter("heure_fin_rdv");
         String description = request.getParameter("maDescription");
         String agendaID_select = request.getParameter("agenda");
-        long agendaID=0,heureDebut=0,heureFin=0;
+        long agendaID=0;
+        float heureDebut=0,heureFin=0;
         if(agendaID_select!="") agendaID= Long.parseLong(agendaID_select);
-        if(heure_debut!="") heureDebut= Long.parseLong(heure_debut);
-        if(heure_fin!="") heureFin= Long.parseLong(heure_fin);
+        if(heure_debut!="") heureDebut= Float.parseFloat(heure_debut);
+        if(heure_fin!="") heureFin= Float.parseFloat(heure_fin);
 
         int etat_creation=0;
         etat_creation=((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);

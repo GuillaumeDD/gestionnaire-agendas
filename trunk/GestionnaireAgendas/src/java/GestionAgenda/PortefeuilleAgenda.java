@@ -48,7 +48,7 @@ public class PortefeuilleAgenda {
         agendas.put(a.getAgendaID(), a);
     }
 
-    public int creerEvenement (long agendaID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    public int creerEvenement (long agendaID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
     int num =0;
@@ -86,7 +86,7 @@ public class PortefeuilleAgenda {
         else return 3;
     }
 
-    public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
+    public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.modifierEvenement(eventID, objet, lieu, description, d, heureDebut, heureFin);

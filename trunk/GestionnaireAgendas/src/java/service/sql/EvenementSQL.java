@@ -58,8 +58,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -84,8 +84,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date"));
                 }
             }
@@ -111,8 +111,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -139,8 +139,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -168,8 +168,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date"));
                 evenements.put(e.getEventID(), e);
                 }
@@ -196,8 +196,8 @@ public class EvenementSQL implements EvenementDAO {
                 e.setObjet((String) rs.getObject("Objet"));
                 e.setDescription((String) rs.getObject("Description"));
                 e.setLieu((String) rs.getObject("Lieu"));
-                e.setHeureDebut((Long) rs.getObject("HeureDebut"));
-                e.setHeureFin((Long) rs.getObject("HeureFin"));
+                e.setHeureDebut((Float) rs.getObject("HeureDebut"));
+                e.setHeureFin((Float) rs.getObject("HeureFin"));
                 e.setDate((String) rs.getObject("Date").toString());
                 evenements.put(e.getEventID(), e);
                 }

@@ -56,6 +56,8 @@
 
         if(modif!=null)
         {
+        if(session.getAttribute("agendaID") !=null)
+        {
         String nom_agenda =request.getParameter("nom_agenda");
         String lieu_agenda = request.getParameter("lieu_agenda");
         String description_agenda = request.getParameter("maDescription");
@@ -77,10 +79,12 @@
         port.initialiser();
         session.setAttribute("portefeuille", port);
         session.setAttribute("agenda_select",((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("agendaID")));
-        
+        }
         }
 
       if(suppr!=null)
+        {
+         if(session.getAttribute("agendaID") !=null)
         {
         ((PortefeuilleAgenda)session.getAttribute("portefeuille")).supprimerAgenda((Long)session.getAttribute("agendaID"));
         session.setAttribute("agenda_select", null);
@@ -95,7 +99,7 @@
         PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
         port.initialiser();
         session.setAttribute("portefeuille", port);
-
+        }
         }
 
 
