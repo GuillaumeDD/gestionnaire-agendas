@@ -8,24 +8,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import service.sql.AgendaSQL;
 import service.sql.PortefeuilleAgendaSQL;
+import java.lang.*;
 
 public class PortefeuilleAgenda {
 
     private Utilisateur utilisateur;
 
-    private HashMap<Long,Agenda> agendas;
+    private HashMap<Long,Agenda> agendas = new HashMap();
 
     public PortefeuilleAgenda (Utilisateur u) {
         utilisateur = u;
     }
 
-    public void creerAgenda (String name, String description, String lieu, String color) {
+    public int creerAgenda (String name, String description, String lieu, String color) {
         Agenda a = new Agenda(name,description,lieu,color,utilisateur.getUserID());
-        // On fixe un ID bidon qui va être mis à jour lors du reload de la BDD
-        a.setAgendaID(2000);
+        a.setAgendaID(200);
         if(a.verifierValiditeNom(name))
+        {
             if(estUniqueNomAgenda(name))
+                {
                 ajouterAgenda(a);
+                return 1;
+                }
+            else return 2;
+        }
+        else return 3;
     }
 
     public boolean estUniqueNomAgenda (String name) {
@@ -46,7 +53,7 @@ public class PortefeuilleAgenda {
         agendas.put(a.getAgendaID(), a);
     }
 
-    public void creerEvenement (long agendaID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
+    public void creerEvenement (long agendaID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
     Evenement evt = new Evenement(agendaID,objet,lieu,description,d,heureDebut,heureFin);
@@ -60,7 +67,7 @@ public class PortefeuilleAgenda {
         return agendas.get(agendaID);
     }
 
-    public void modifierAgenda (long agendaID, String name, String description, String lieu, String color) {
+    public int modifierAgenda (long agendaID, String name, String description, String lieu, String color) {
         Agenda ag = new Agenda();
         ag = getAgenda(agendaID);
         if(ag.verifierValiditeNom(name)==true)
@@ -73,10 +80,13 @@ public class PortefeuilleAgenda {
                 ag.setModif(true);
                 agendas.remove(agendaID);
                 agendas.put(agendaID, ag);
+                return 1;
                 }
+            else return 2;
+        else return 3;
     }
 
-    public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
+    public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
     ag.modifierEvenement(eventID, objet, lieu, description, d, heureDebut, heureFin);

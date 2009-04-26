@@ -33,6 +33,11 @@
         </div>
     </div>
 
+    <!-- Formulaire de modification d'un agenda  -->
+    <div id="cadre_creation"></div>
+
+    <div id="cadre_creation_content">
+
 <%
       String modif=request.getParameter("modifier");
       String suppr=request.getParameter("supprimer");
@@ -55,7 +60,13 @@
         String lieu_agenda = request.getParameter("lieu_agenda");
         String description_agenda = request.getParameter("maDescription");
         String couleur = request.getParameter("choix_couleur");
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
+        int etat_modif=0;
+        etat_modif=((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
+        if(etat_modif==3)
+            out.println("<div id='message_erreur'> ERREUR : Le champ Nom n'a pas été renseigné. </div>");
+        else if(etat_modif==2)
+            out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");
+        else if (etat_modif==1) out.println("<div id='message_ok'> L'agenda a été modifié. </div>");
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
@@ -74,6 +85,7 @@
         ((PortefeuilleAgenda)session.getAttribute("portefeuille")).supprimerAgenda((Long)session.getAttribute("agendaID"));
         session.setAttribute("agenda_select", null);
         session.setAttribute("agendaID", null);
+        out.println("<div id='message_ok'> L'agenda a été supprimé. </div>");
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
@@ -89,11 +101,6 @@
 
     %>
 
-
-<!-- Formulaire de modification d'un agenda  -->
-    <div id="cadre_creation"></div>
-
-    <div id="cadre_creation_content">
         <br/>
         <form method="post" action="modif_agenda.jsp" >
 

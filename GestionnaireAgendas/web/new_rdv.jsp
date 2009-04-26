@@ -1,6 +1,14 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="GestionAgenda.*" %>
+<%@page import="service.*" %>
+<%@page import="service.sql.*" %>
+<%@page import="Authentification.*" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.logging.*" %>
 
+
+<%@page import="java.text.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,6 +39,43 @@
     <div id="cadre_creation"></div>
 
     <div id="cadre_creation_content">
+
+     <%
+      String creation=request.getParameter("creer");
+     if(creation!=null)
+        {
+        String objet = request.getParameter("objet_rdv");
+        String lieu = request.getParameter("lieu_rdv");
+        String date = request.getParameter("date_rdv");
+        String heure_debut = request.getParameter("heure_debut_rdv");
+        String heure_fin = request.getParameter("heure_fin_rdv");
+        String description = request.getParameter("maDescription");
+        String agendaID_select = request.getParameter("agenda");
+        long agendaID= Long.parseLong(agendaID_select);
+        long heureDebut= Long.parseLong(heure_debut);
+        long heureFin= Long.parseLong(heure_fin);
+
+        int etat_creation=0;
+        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
+        if(etat_creation==3)
+            out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");
+        else if(etat_creation==2)
+            out.println("<div id='message_erreur'> ERREUR : Evènement existant. </div>");
+        else if (etat_creation==1) out.println("<div id='message_ok'> L'évènement a été créé. </div>");
+
+        //Enregistrement des modifications
+        PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
+        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
+
+        //Rechargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+        session.setAttribute("portefeuille", port);
+
+        }
+    %>
+
+
         <br/>
         <form method="post" action="new_rdv.jsp" >
 
@@ -42,9 +87,17 @@
         <label class ="form_new_rdv"> Heure de fin : </label><input type="text" name="heure_fin_rdv"><br/><br/>
         <label class ="form_new_rdv"> Agenda : </label>
         <select name="agenda" >
-           <option value="travail">Travail</option>
-           <option value="perso">Agenda Perso</option>
-           <option value="sorties">Sorties</option>
+           <%
+        for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+            if((Long)session.getAttribute("agendaID") != null)
+                {
+                if(ag.getAgendaID()==(Long)session.getAttribute("agendaID"))
+                    out.println("<option value='"+ag.getAgendaID()+"' selected>"+ ag.getNom()+" </option><br/>");
+                else
+                    out.println("<option value='"+ag.getAgendaID()+"'>"+ ag.getNom()+" </option><br/>");
+                }
+            else out.println("<option value='"+ag.getAgendaID()+"'>"+ ag.getNom()+" </option><br/>");
+        %>
         </select><br/><br/>
         <label class ="form_new_rdv"> Description : </label><textarea rows="5" cols="30" name="maDescription" id="description_agenda"></textarea><br/><br/>
 

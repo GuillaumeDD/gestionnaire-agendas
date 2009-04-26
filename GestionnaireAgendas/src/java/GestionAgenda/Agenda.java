@@ -20,7 +20,7 @@ public class Agenda {
 
     private long agendaID;
 
-    private HashMap<Long,Evenement> evenements;
+    private HashMap<Long,Evenement> evenements = new HashMap();
 
     boolean suppr;
 
@@ -61,7 +61,7 @@ public class Agenda {
 
     public void ajouterEvenement (Evenement evt) {
         if(estUnique(evt)==true)
-            evenements.put(evt.getEventID(), evt);
+            {evenements.put(evt.getEventID(), evt);}
     }
 
     public boolean estUnique (Evenement evt) {
@@ -78,7 +78,7 @@ public class Agenda {
         this.nom=name;
     }
 
-    public void modifierEvenement (long eventID, String objet, String lieu, String description, Date d, long heureDebut, long heureFin) {
+    public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, long heureDebut, long heureFin) {
     Evenement event = new Evenement();
     event = getEvenement(eventID);
     event.setObjet(objet);
