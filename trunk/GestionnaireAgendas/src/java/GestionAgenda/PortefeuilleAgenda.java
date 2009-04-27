@@ -1,6 +1,7 @@
 package GestionAgenda;
 
-import Authentification.Utilisateur; 
+import Authentification.Utilisateur;
+import Exception.*;
 import java.util.HashMap;
 import service.sql.AgendaSQL;
 
@@ -15,7 +16,7 @@ public class PortefeuilleAgenda {
         utilisateur = u;
     }
 
-    public int creerAgenda (String name, String description, String lieu, String color) {
+    public void creerAgenda (String name, String description, String lieu, String color) throws NomVideException,NomExistantException{
         Agenda a = new Agenda(name,description,lieu,color,utilisateur.getUserID());
         a.setAgendaID(200);
         if(a.verifierValiditeNom(name))
@@ -23,11 +24,10 @@ public class PortefeuilleAgenda {
             if(estUniqueNomAgenda(name))
                 {
                 ajouterAgenda(a);
-                return 1;
                 }
-            else return 2;
+            else throw new NomExistantException();
         }
-        else return 3;
+        else throw new NomVideException();
     }
 
     public boolean estUniqueNomAgenda (String name) {
@@ -48,7 +48,7 @@ public class PortefeuilleAgenda {
         agendas.put(a.getAgendaID(), a);
     }
 
-    public int creerEvenement (long agendaID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
+    public void creerEvenement (long agendaID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) throws EvenementSimultaneException,ChampsMalRenseignesException{
     Agenda a = new Agenda();
     a = getAgenda(agendaID);
     int num =0;
@@ -57,17 +57,23 @@ public class PortefeuilleAgenda {
     evt.setEventID(3321);
     if(evt.estValideEvenement()==true)
         {
-        num = a.ajouterEvenement(evt);
-        return num;
+        try
+        {
+        a.ajouterEvenement(evt);
         }
-    else return 3;
+        catch(EvenementSimultaneException e)
+        {throw new EvenementSimultaneException();}
+        
+        }
+    else throw new ChampsMalRenseignesException();
     }
 
     public Agenda getAgenda (long agendaID) {
         return agendas.get(agendaID);
     }
 
-    public int modifierAgenda (long agendaID, String name, String description, String lieu, String color) {
+    
+        public void modifierAgenda (long agendaID, String name, String description, String lieu, String color) throws NomVideException,NomExistantException {
         Agenda ag = new Agenda();
         ag = getAgenda(agendaID);
         if(ag.verifierValiditeNom(name)==true)
@@ -80,10 +86,9 @@ public class PortefeuilleAgenda {
                 ag.setModif(true);
                 agendas.remove(agendaID);
                 agendas.put(agendaID, ag);
-                return 1;
                 }
-            else return 2;
-        else return 3;
+            else throw new NomExistantException();
+        else throw new NomVideException();
     }
 
     public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {

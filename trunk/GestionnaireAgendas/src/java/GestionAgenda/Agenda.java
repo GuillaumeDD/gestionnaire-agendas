@@ -3,6 +3,7 @@ package GestionAgenda;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import Exception.*;
 
 
 public class Agenda {
@@ -67,10 +68,10 @@ public class Agenda {
         return nom;
     }
 
-    public int ajouterEvenement (Evenement evt) {
+    public void ajouterEvenement (Evenement evt) throws EvenementSimultaneException {
         if(estUnique(evt)==true)
-            {evenements.put(evt.getEventID(), evt);return 1;}
-        else return 2;
+            {evenements.put(evt.getEventID(), evt);}
+        else throw new EvenementSimultaneException();
     }
 
     public boolean estUnique (Evenement evt) {

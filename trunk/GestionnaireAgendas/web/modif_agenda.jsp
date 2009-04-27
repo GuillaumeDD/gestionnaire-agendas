@@ -4,6 +4,7 @@
 <%@page import="service.*" %>
 <%@page import="service.sql.*" %>
 <%@page import="Authentification.*" %>
+<%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
 
@@ -62,13 +63,15 @@
         String lieu_agenda = request.getParameter("lieu_agenda");
         String description_agenda = request.getParameter("maDescription");
         String couleur = request.getParameter("choix_couleur");
-        int etat_modif=0;
-        etat_modif=((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
-        if(etat_modif==3)
-            out.println("<div id='message_erreur'> ERREUR : Le champ Nom n'a pas été renseigné. </div>");
-        else if(etat_modif==2)
-            out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");
-        else if (etat_modif==1) out.println("<div id='message_ok'> L'agenda a été modifié. </div>");
+        try
+        {
+        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
+        out.println("<div id='message_ok'> L'agenda a été modifié. </div>");
+        }
+        catch(NomVideException e)
+            {out.println("<div id='message_erreur'> ERREUR : Le champ Nom n'a pas été renseigné. </div>");}
+        catch(NomExistantException e1)
+            {out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");}
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();

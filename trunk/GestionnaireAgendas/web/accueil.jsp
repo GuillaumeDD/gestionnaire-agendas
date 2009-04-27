@@ -19,9 +19,23 @@
     <%@page import="Authentification.*" %>
     <%@page import="java.sql.*" %>
     <%@page import="java.util.logging.*" %>
+    <%@page import="java.text.*" %>
+    <%@page import="java.util.*" %>
 
     <% GregorianCalendar today = new GregorianCalendar();
-        session.setAttribute("dateDuJour",today.getTime());
+
+        DateFormat dateFormatBDD = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat2 = new SimpleDateFormat("EEEEEEEE");
+        DateFormat dateFormatJour = DateFormat.getDateInstance(DateFormat.FULL);
+        java.util.Date dateDate = today.getTime();
+
+        String dateJourUS = dateFormatBDD.format(dateDate);
+        String dateJourSemaine = dateFormatJour.format(dateDate);
+        String jourSemaine = dateFormat2.format(dateDate);
+
+        session.setAttribute("dateDuJourUS",dateJourUS);    // ex : 2009-04-27 Format de la BDD
+        session.setAttribute("jourSemaine",jourSemaine);    // ex : lundi
+        session.setAttribute("dateDuJour",dateJourSemaine); // ex : lundi 27 avril 2009
 
         Utilisateur moi = new Utilisateur(1);
         session.setAttribute("utilisateur",moi);
@@ -33,6 +47,15 @@
 
         session.setAttribute("agenda_select",null);
         session.setAttribute("agendaID",null);
+
+        //Chargement de la semaine courante
+        CalendrierSQL calend = new CalendrierSQL();
+        ArrayList<String> jours_semaine = new ArrayList();
+        jours_semaine=calend.findWeekByID(calend.findWeekOfADay((String)session.getAttribute("dateDuJourUS")));
+
+        session.setAttribute("jour1",jours_semaine.get(1));
+        session.setAttribute("jour7",jours_semaine.get(13));
+
      %>
 
     <div id="logo">
@@ -105,7 +128,7 @@
     <div id="selection_semaine">
         <form method="post" action="accueil.jsp">
     <input type="submit" class="semaine_precedente" name="semaine_prededente" value="" >&nbsp;&nbsp
-    <label class ="selection_semaine"> Semaine du ...... au .......  </label>&nbsp;&nbsp
+    <label class ="selection_semaine"> Semaine du <%=session.getAttribute("jour1")%> au <%=session.getAttribute("jour7")%>  </label>&nbsp;&nbsp
     <input type="submit" class="semaine_suivante" name="semaine_suivante" value="" >
         </form>
     </div>

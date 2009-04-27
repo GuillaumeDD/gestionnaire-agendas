@@ -46,7 +46,7 @@ public class Evenement {
     }
 
     public boolean verifierChamp (String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
-    if(objet.equals("") || d.equals("") || heureDebut==0 || heureFin==0)  return false;
+    if(objet.equals("") || d.equals("") || heureDebut<0 || heureDebut>24 || heureFin<0 || heureFin>24 || heureDebut>=heureFin)  return false;
            else return true;
     }
 

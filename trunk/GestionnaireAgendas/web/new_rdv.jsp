@@ -4,6 +4,7 @@
 <%@page import="service.*" %>
 <%@page import="service.sql.*" %>
 <%@page import="Authentification.*" %>
+<%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
 
@@ -57,13 +58,13 @@
         if(heure_debut!="") heureDebut= Float.parseFloat(heure_debut);
         if(heure_fin!="") heureFin= Float.parseFloat(heure_fin);
 
-        int etat_creation=0;
-        etat_creation=((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
-        if(etat_creation==3)
-            out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");
-        else if(etat_creation==2)
-            out.println("<div id='message_erreur'> ERREUR : Evènement existant. </div>");
-        else if (etat_creation==1) out.println("<div id='message_ok'> L'évènement a été créé. </div>");
+        try
+          {((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
+           out.println("<div id='message_ok'> L'évènement a été créé. </div>");}
+        catch(EvenementSimultaneException e)
+                {out.println("<div id='message_erreur'> ERREUR : Evènement simultané existant. </div>");}
+        catch(ChampsMalRenseignesException e1)
+                {out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");}
 
         //Enregistrement des modifications
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
