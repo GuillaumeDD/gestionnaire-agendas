@@ -6,11 +6,27 @@ import java.sql.*;
 public class BaseDeDonnees {
 
     private Connection con = null;
-
-
+    private String serveur;
+    private String base;
+    private String user;
+    private String password;
+    private String port;
 
     public BaseDeDonnees () {
+        serveur = "localhost";
+        base = "bdd_agenda";
+        user = "root";
+        password = "mysql";
+        port = "3306";
+        connexion();
+    }
 
+    public BaseDeDonnees(String serveur, String base, String user, String password, String port) {
+        this.serveur = serveur;
+        this.base = base;
+        this.user = user;
+        this.password = password;
+        this.port = port;
         connexion();
     }
 
@@ -25,7 +41,7 @@ public class BaseDeDonnees {
             }
         catch(ClassNotFoundException a)
                 {
-		System.out.println("Driver non trouvé.");
+		System.out.println("Driver non trouvé.\n"+a);
 		}
 	catch(Exception b)
                 {
@@ -33,13 +49,13 @@ public class BaseDeDonnees {
 		}
         try
         {
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_agenda?user=root&password=mysql");
+        con=DriverManager.getConnection("jdbc:mysql://"+serveur+":"+port+"/"+base+"?user="+user+"&password="+password);
          System.out.println("Connexion à la base établie.");
         System.out.println("---------------------\n");
         }
         catch(SQLException c)
         {
-            System.out.println("Connexion refuse ou base inconnue.");
+            System.out.println("Connexion refuse ou base inconnue.\n"+c);
         }
         catch(Exception d)
         {

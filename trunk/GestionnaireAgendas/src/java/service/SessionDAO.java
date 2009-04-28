@@ -11,7 +11,7 @@ public interface SessionDAO {
 
     public void delete (Session s);
 
-    public Session findByUser (Utilisateur u);
+    public Session findByUser (Utilisateur u, String IP);
 
 }
 
