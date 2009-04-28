@@ -22,13 +22,16 @@
     <%@page import="java.text.*" %>
     <%@page import="java.util.*" %>
 
-    <% GregorianCalendar today = new GregorianCalendar();
-
+    <%
+        GregorianCalendar today = new GregorianCalendar();
         DateFormat dateFormatBDD = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dateFormat2 = new SimpleDateFormat("EEEEEEEE");
         DateFormat dateFormatJour = DateFormat.getDateInstance(DateFormat.FULL);
-        java.util.Date dateDate = today.getTime();
+        CalendrierSQL calend = new CalendrierSQL();
+        ArrayList<String> jours_semaine = new ArrayList();
 
+        // Formatages différents de la date du jour
+        java.util.Date dateDate = today.getTime();
         String dateJourUS = dateFormatBDD.format(dateDate);
         String dateJourSemaine = dateFormatJour.format(dateDate);
         String jourSemaine = dateFormat2.format(dateDate);
@@ -44,18 +47,24 @@
         PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
         port.initialiser();
         session.setAttribute("portefeuille", port);
-
         session.setAttribute("agenda_select",null);
         session.setAttribute("agendaID",null);
 
-        //Chargement de la semaine courante
-        CalendrierSQL calend = new CalendrierSQL();
-        ArrayList<String> jours_semaine = new ArrayList();
-        jours_semaine=calend.findWeekByID(calend.findWeekOfADay((String)session.getAttribute("dateDuJourUS")));
+        //Flèches pour changer la semaine courante du calendrier
+        String semaine_prec = request.getParameter("semaine_precedente");
+        String semaine_suiv = request.getParameter("semaine_suivante");
+        if(semaine_prec != null)
+            {session.setAttribute("IdSemaine",(Integer)session.getAttribute("IdSemaine")-1);}
+        else if(semaine_suiv != null)
+            {session.setAttribute("IdSemaine",(Integer)session.getAttribute("IdSemaine")+1);}
+        else
+            {session.setAttribute("IdSemaine",calend.findWeekOfADay((String)session.getAttribute("dateDuJourUS")));}
 
+
+        //Chargement de la semaine courante
+        jours_semaine=calend.findWeekByID((Integer)session.getAttribute("IdSemaine"));
         session.setAttribute("jour1",jours_semaine.get(1));
         session.setAttribute("jour7",jours_semaine.get(13));
-
      %>
 
     <div id="logo">
@@ -127,7 +136,7 @@
 
     <div id="selection_semaine">
         <form method="post" action="accueil.jsp">
-    <input type="submit" class="semaine_precedente" name="semaine_prededente" value="" >&nbsp;&nbsp
+    <input type="submit" class="semaine_precedente" name="semaine_precedente" value="" >&nbsp;&nbsp
     <label class ="selection_semaine"> Semaine du <%=session.getAttribute("jour1")%> au <%=session.getAttribute("jour7")%>  </label>&nbsp;&nbsp
     <input type="submit" class="semaine_suivante" name="semaine_suivante" value="" >
         </form>
