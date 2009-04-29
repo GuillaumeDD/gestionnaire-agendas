@@ -1,31 +1,50 @@
 package Authentification;
 
-import java.sql.Date;
-
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Session {
 
     private int idSession;
 
-    private Date debut;
+    private Timestamp debut;
 
-    private int derniereActivite;
+    private Timestamp derniereActivite;
 
     private String IP;
 
-    private int idUser;
+    private Utilisateur user;
 
     public Session () {
     }
 
-    public Session (Utilisateur u) {
+    public Session (Session s){
+        this.idSession = s.getIdSession();
+        this.debut = s.getDebut();
+        this.derniereActivite = s.getDerniereActivite();
+        this.IP = s.getIP();
+        this.user = s.getUser();
     }
 
-    public void enregistrer () {
+    public Session(int idSession, Timestamp debut, Timestamp derniereActivite, String IP, Utilisateur u) {
+        this.idSession = idSession;
+        this.debut = debut;
+        this.derniereActivite = derniereActivite;
+        this.IP = IP;
+        this.user = u;
     }
 
-    public Utilisateur getUser () {
-        return null;
+    public int getUserID(){
+        return user.getUserID();
+    }
+
+    public Utilisateur getUser() {
+        return user;
+    }
+
+    public void setUser(Utilisateur u) {
+        this.user = u;
     }
 
     public String getIP () {
@@ -36,19 +55,19 @@ public class Session {
         this.IP = val;
     }
 
-    public Date getDebut () {
+    public Timestamp getDebut () {
         return debut;
     }
 
-    public void setDebut (Date val) {
+    public void setDebut (Timestamp val) {
         this.debut = val;
     }
 
-    public int getDerniereActivite () {
+    public Timestamp getDerniereActivite () {
         return derniereActivite;
     }
 
-    public void setDerniereActivite (int val) {
+    public void setDerniereActivite (Timestamp val) {
         this.derniereActivite = val;
     }
 
@@ -60,13 +79,18 @@ public class Session {
         this.idSession = val;
     }
 
-    public int getIdUser () {
-        return idUser;
-    }
+    public String toString(){
+        StringBuffer r = new StringBuffer();
+        r.append("-- SESSION --\n");
+        r.append("idSession : "+idSession+"\n");
 
-    public void setIdUser (int val) {
-        this.idUser = val;
+        DateFormat TimestampFormat = new SimpleDateFormat("HH'h'mm's'ss dd-MM-yy");
+        r.append("debut de la session : "+TimestampFormat.format(debut)+"\n");
+        r.append("Timestamp de derniere activite : "+TimestampFormat.format(derniereActivite)+"\n");
+        r.append("IP : "+IP+"\n");
+        r.append(user.toString());
+        r.append("-------------\n");
+        return r.toString();
     }
-
 }
 

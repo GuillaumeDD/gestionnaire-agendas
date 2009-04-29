@@ -50,5 +50,10 @@ public class Utilisateur {
         this.userID = val;
     }
 
+    public String toString(){
+        StringBuffer r = new StringBuffer();
+        r.append("Utilisateur : "+"(ID)"+userID+" ; "+"(login)"+login +" ; "+"(mdp)"+mdp+"\n");
+        return r.toString();
+    }
 }
 
