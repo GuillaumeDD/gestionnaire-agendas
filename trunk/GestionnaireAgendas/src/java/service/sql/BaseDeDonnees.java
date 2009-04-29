@@ -6,6 +6,8 @@ import java.sql.*;
 public class BaseDeDonnees {
 
     private Connection con = null;
+
+
     private String serveur;
     private String base;
     private String user;
@@ -30,6 +32,9 @@ public class BaseDeDonnees {
         connexion();
     }
 
+    public Connection getCon() {
+        return con;
+    }
 
     public void connexion () {
         try{
