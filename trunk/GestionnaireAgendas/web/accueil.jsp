@@ -71,6 +71,26 @@
         for(int i=1;i<=13;i=i+2)
              {dates_semaine.put(i,a.StringtoDateFR(jours_semaine.get(i)));
         }
+
+        //Sélection des agendas
+        HashMap<Long,Agenda> agendas_coches = new HashMap();
+        String afficher = request.getParameter("afficher");
+        if(afficher != null)
+            {
+            for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+                {
+                 String cocher = request.getParameter(Long.toString(ag.getAgendaID()));
+                 if(cocher != null)
+                     {
+                     agendas_coches.put(ag.getAgendaID(), ag);
+                     session.setAttribute(Long.toString(ag.getAgendaID()),true);
+                     }
+                 else session.setAttribute(Long.toString(ag.getAgendaID()),false);
+                }
+            session.setAttribute("map_agendas_coches",agendas_coches);
+            }
+        else session.setAttribute("map_agendas_coches",((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas());
+        
             
      %>
 
@@ -100,7 +120,14 @@
      <%
      for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
         {
-        out.println("<input type='checkbox' name='"+ag.getAgendaID()+"'> <label>"+ ag.getNom()+" </label><br/>");
+         if(session.getAttribute(Long.toString(ag.getAgendaID())) != null)
+             {
+                if(((Boolean)session.getAttribute(Long.toString(ag.getAgendaID())))==true)
+                    out.println("<input type='checkbox' name='"+ag.getAgendaID()+"' checked='checked' > <label>"+ ag.getNom()+" </label><br/>");
+                else
+                    out.println("<input type='checkbox' name='"+ag.getAgendaID()+"' > <label>"+ ag.getNom()+" </label><br/>");
+             }
+         else out.println("<input type='checkbox' name='"+ag.getAgendaID()+"' > <label>"+ ag.getNom()+" </label><br/>");
         }
      
      %>
@@ -142,11 +169,16 @@
     <div id="corps_calendrier_content">
 
     <div id="selection_semaine">
-        <form method="post" action="accueil.jsp">
+        <div id="fleches"><form method="post" action="accueil.jsp">
     <input type="submit" class="semaine_precedente" name="semaine_precedente" value="" >&nbsp;&nbsp
     <label class ="selection_semaine"> Semaine du <%=session.getAttribute("jour1")%> au <%=session.getAttribute("jour7")%>  </label>&nbsp;&nbsp
     <input type="submit" class="semaine_suivante" name="semaine_suivante" value="" >
-        </form>
+        </form></div>
+        <div id="modif_event">
+     <form method='post' action='modif_rdv.jsp'>
+     <input type="submit" class="modif_event" name="modif_event" value="" >
+         <label class ="bouton_modif_event"> Editer </label>
+        </div>
     </div>
 
 
@@ -177,13 +209,13 @@
                 boolean vide=true;
                 out.println("<TD class='col_agenda'><TABLE WIDTH=125 VALIGN='top'><TR>");
                 int nb_col=0;
-                for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+                for(Agenda ag : ((HashMap<Long,Agenda>)session.getAttribute("map_agendas_coches")).values())
                     {
                     HashMap<Long,Evenement> events = ag.getEvenementsByDate(d);
                     if(!events.isEmpty())
                         nb_col++;
                     }
-                for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+                for(Agenda ag : ((HashMap<Long,Agenda>)session.getAttribute("map_agendas_coches")).values())
                     {
                     HashMap<Long,Evenement> events = ag.getEvenementsByDate(d);
                     if(!events.isEmpty())
@@ -199,7 +231,7 @@
                             Long cle = it.next();
                             if((((events.get(cle)).getHeureDebut())*2) <= compteur_ligne && (((events.get(cle)).getHeureFin())*2) > compteur_ligne)
                                 {
-                                out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD>"+(events.get(cle)).getObjet()+"</TD></TR>");
+                                out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD class='event'>"+(events.get(cle)).getObjet()+"<input type='radio' name='select_event' value='"+(events.get(cle)).getEventID()+"'></TD></TR>");
                                 stop=true;
                                 }
                             }
@@ -218,11 +250,12 @@
                    
                 }
              %>
-       </TR></TABLE>
+       </form></TR></TABLE>
     </div>
 
 
     </div>
+
 
 
     </body>

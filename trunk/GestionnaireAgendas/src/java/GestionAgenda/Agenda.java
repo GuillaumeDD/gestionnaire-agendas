@@ -83,6 +83,15 @@ public class Agenda {
      return result;
     }
 
+    public boolean estUnique (Evenement evt,Long eventID) {
+        boolean result=true;
+     for(Long j:evenements.keySet())
+         if(j != eventID)
+            if( evenements.get(j).getDate().equals(evt.getDate()) && evenements.get(j).getHeureDebut()==evt.getHeureDebut() && evenements.get(j).getHeureFin()==evt.getHeureFin() )
+                result=false;
+     return result;
+    }
+
     public void setDescription (String des) {
         this.description=des;
     }
@@ -91,7 +100,7 @@ public class Agenda {
         this.nom=name;
     }
 
-    public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
+    public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) throws EvenementSimultaneException,ChampsMalRenseignesException {
     Evenement event = new Evenement();
     event = getEvenement(eventID);
     event.setObjet(objet);
@@ -102,11 +111,15 @@ public class Agenda {
     event.setHeureFin(heureFin);
     event.setModif(true);
     if(event.verifierChamp(objet, lieu, description, d, heureDebut, heureFin)==true)
-        if(estUnique(event))
+    {
+        if(estUnique(event,eventID))
             {
             evenements.remove(eventID);
             evenements.put(eventID, event);
             }
+        else throw new EvenementSimultaneException();
+    }
+    else throw new ChampsMalRenseignesException();
     }
 
     public Evenement getEvenement (long eventID) {
@@ -222,36 +235,21 @@ public class Agenda {
 
     public Date StringtoDateFR(String s)
     {
-        //Date d = new Date();
-        //String[] tabChaine = new String[10];
-        //tabChaine = s.split("/");
         String s1 = s.substring(0,2);
-        System.out.println(s1);
         String s2 = s.substring(3,5);
-        System.out.println(s2);
         String s3 = s.substring(6,10);
-        System.out.println(s3);
         GregorianCalendar date = new GregorianCalendar(Integer.parseInt(s3),Integer.parseInt(s2)-1,Integer.parseInt(s1));
         return date.getTime();
-        //Integer.parseInt(tabChaine[2])
-        //return d;
+
     }
 
     public Date StringtoDateUS(String s)
     {
-        //Date d = new Date();
-        //String[] tabChaine = new String[10];
-        //tabChaine = s.split("/");
         String s1 = s.substring(8,10);
-        System.out.println(s1);
         String s2 = s.substring(5,7);
-        System.out.println(s2);
         String s3 = s.substring(0,4);
-        System.out.println(s3);
         GregorianCalendar date = new GregorianCalendar(Integer.parseInt(s3),Integer.parseInt(s2)-1,Integer.parseInt(s1));
         return date.getTime();
-        //Integer.parseInt(tabChaine[2])
-        //return d;
     }
 
 }
