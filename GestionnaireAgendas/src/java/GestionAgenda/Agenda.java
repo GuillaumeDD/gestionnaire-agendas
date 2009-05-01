@@ -1,9 +1,10 @@
 package GestionAgenda;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import Exception.*;
+import java.util.GregorianCalendar;
 
 
 public class Agenda {
@@ -143,6 +144,26 @@ public class Agenda {
         return evenements;
     }
 
+    public HashMap<Long,Evenement> getEvenementsBetween (Date d1, Date d2) {
+        HashMap<Long,Evenement> events = new HashMap();
+        Date d = new Date();
+        for(Evenement e : evenements.values())
+            {d = StringtoDateUS(e.getDate());
+             if(d.compareTo(d1)>=0 && d.compareTo(d2)<=0) events.put(e.getEventID(), e);
+            }
+        return events;
+    }
+
+    public HashMap<Long,Evenement> getEvenementsByDate (Date d1) {
+        HashMap<Long,Evenement> events = new HashMap();
+        Date d = new Date();
+        for(Evenement e : evenements.values())
+            {d = StringtoDateUS(e.getDate());
+             if(d.compareTo(d1)==0) events.put(e.getEventID(), e);
+            }
+        return events;
+    }
+
     public void setEvenements (HashMap<Long,Evenement> val) {
         this.evenements = val;
     }
@@ -197,6 +218,40 @@ public class Agenda {
 
     public void setNouveau (boolean b) {
         this.nouveau = b;
+    }
+
+    public Date StringtoDateFR(String s)
+    {
+        //Date d = new Date();
+        //String[] tabChaine = new String[10];
+        //tabChaine = s.split("/");
+        String s1 = s.substring(0,2);
+        System.out.println(s1);
+        String s2 = s.substring(3,5);
+        System.out.println(s2);
+        String s3 = s.substring(6,10);
+        System.out.println(s3);
+        GregorianCalendar date = new GregorianCalendar(Integer.parseInt(s3),Integer.parseInt(s2)-1,Integer.parseInt(s1));
+        return date.getTime();
+        //Integer.parseInt(tabChaine[2])
+        //return d;
+    }
+
+    public Date StringtoDateUS(String s)
+    {
+        //Date d = new Date();
+        //String[] tabChaine = new String[10];
+        //tabChaine = s.split("/");
+        String s1 = s.substring(8,10);
+        System.out.println(s1);
+        String s2 = s.substring(5,7);
+        System.out.println(s2);
+        String s3 = s.substring(0,4);
+        System.out.println(s3);
+        GregorianCalendar date = new GregorianCalendar(Integer.parseInt(s3),Integer.parseInt(s2)-1,Integer.parseInt(s1));
+        return date.getTime();
+        //Integer.parseInt(tabChaine[2])
+        //return d;
     }
 
 }

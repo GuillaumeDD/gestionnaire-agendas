@@ -125,7 +125,7 @@ label.bouton_deco
 #corps_calendrier {
 
     margin-top:15px;
-    width: 970px;
+    width: 1050px;
     height: 670px;
     position:absolute;
     top:160px;
@@ -140,7 +140,7 @@ label.bouton_deco
 #corps_calendrier_content {
 
     margin-top:15px;
-    width: 970px;
+    width: 1050px;
     height: 670px;
     position:absolute;
     top:160px;
@@ -183,14 +183,14 @@ label.bouton_deco
 
     padding-left:30px;
     padding-top:5px;
-    width: 930px;
+    width: 970px;
     height: 25px;
 }
 
 #calendrier_hebdo {
 
     padding-left:30px;
-    width: 930px;
+    width: 975px;
     height: 570px;
     overflow:scroll;
 }
@@ -333,15 +333,23 @@ tr.jours
     color:navy;
 }
 
-tr.agenda
+tr.agenda1
 {
-    height:14px;
-    background-color:#F5F5F5;
+    height:15px;
     text-align:center;
     font-family: verdana,sans-serif;
-    font-size: 13px;
+    font-size: 11px;
 
 }
+
+tr.agenda
+{
+    height:15px;
+    background-color:#F5F5F5;
+    text-align:center;
+
+}
+/* background-color:#F5F5F5;*/
 
 td.col_agenda
 {
@@ -350,6 +358,16 @@ td.col_agenda
 
 td.col_jours
 {
-    width:123px;
+    width:128px;
+    border:1px solid navy;
+}
+
+td.col_heures
+{
+    width:45px;
+    font-family: verdana,sans-serif;
+    font-size: 11px;
+    font-weight:bold;
+    color:navy;
     border:1px solid navy;
 }
