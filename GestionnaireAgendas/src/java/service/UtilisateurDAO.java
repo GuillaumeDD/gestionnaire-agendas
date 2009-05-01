@@ -1,16 +1,20 @@
 package service;
 
 import Authentification.Utilisateur; 
+import Exception.LoginDejaExistantException;
+import Exception.UtilisateurInexistantException;
 
 public interface UtilisateurDAO {
 
-    public Utilisateur findByUserMdp (String login, String mdp);
+    public Utilisateur findByUserMdp (String login, String mdp) throws UtilisateurInexistantException;
 
-    public Utilisateur findByID (int userID);
+    public Utilisateur findByID (int userID) throws UtilisateurInexistantException;
 
-    public void insert (Utilisateur u);
+    public boolean loginUtilise(String login);
 
-    public void update (Utilisateur u);
+    public void insert (Utilisateur u) throws LoginDejaExistantException;
+
+    public void update (Utilisateur u) throws UtilisateurInexistantException, LoginDejaExistantException;
 
     public void delete (Utilisateur u);
 

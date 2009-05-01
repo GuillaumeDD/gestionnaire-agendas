@@ -13,6 +13,7 @@ public class BaseDeDonnees {
     private String user;
     private String password;
     private String port;
+    private boolean DEBUG = false;
 
     public BaseDeDonnees () {
         serveur = "localhost";
@@ -39,24 +40,28 @@ public class BaseDeDonnees {
     public void connexion () {
         try{
             // Chargement des drivers SQL
-            System.out.println("\n---------------------");
-            System.out.println("Connexion au driver JDBC.");
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            System.out.println("Driver com.mysql.jdbc.Driver bien Chargé.");
+            if(DEBUG){
+                System.out.println("\n---------------------");
+                System.out.println("Connexion au driver JDBC.");
             }
-        catch(ClassNotFoundException a)
-                {
-		System.out.println("Driver non trouvé.\n"+a);
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+
+            if(DEBUG){
+                System.out.println("Driver com.mysql.jdbc.Driver bien Chargé.");
+            }
+        }catch(ClassNotFoundException a){
+            System.out.println("Driver non trouvé.\n"+a);
 		}
-	catch(Exception b)
-                {
-		System.out.println("Problème sur chargement de driver JDBC.");
+    	catch(Exception b){
+        	System.out.println("Problème sur chargement de driver JDBC.");
 		}
         try
         {
         con=DriverManager.getConnection("jdbc:mysql://"+serveur+":"+port+"/"+base+"?user="+user+"&password="+password);
-         System.out.println("Connexion à la base établie.");
-        System.out.println("---------------------\n");
+        if(DEBUG){
+            System.out.println("Connexion à la base établie.");
+            System.out.println("---------------------\n");
+        }
         }
         catch(SQLException c)
         {
@@ -76,9 +81,11 @@ public class BaseDeDonnees {
         try
         {
         con.close();
+        if(DEBUG){
         System.out.println("\n-------------------------.");
         System.out.println("Fermeture de connexion.");
         System.out.println("--------------------------\n");
+        }
         }
         catch(Exception d)
         {
@@ -98,5 +105,54 @@ public class BaseDeDonnees {
         Statement stmt = con.createStatement();
         stmt.executeUpdate(requete);
     }
+
+    public boolean isDEBUG() {
+        return DEBUG;
+    }
+
+    public void setDEBUG(boolean DEBUG) {
+        this.DEBUG = DEBUG;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getServeur() {
+        return serveur;
+    }
+
+    public void setServeur(String serveur) {
+        this.serveur = serveur;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
 }
 

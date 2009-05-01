@@ -6,11 +6,11 @@ import java.text.SimpleDateFormat;
 
 public class Session {
 
-    private int idSession;
+    private int idSession = -1;
 
-    private Timestamp debut;
+    private Timestamp debut = null;
 
-    private Timestamp derniereActivite;
+    private Timestamp derniereActivite = null;
 
     private String IP;
 
@@ -25,6 +25,11 @@ public class Session {
         this.derniereActivite = s.getDerniereActivite();
         this.IP = s.getIP();
         this.user = s.getUser();
+    }
+
+    public Session(Utilisateur u, String IP){
+        this.user = u;
+        this.IP = IP;
     }
 
     public Session(int idSession, Timestamp debut, Timestamp derniereActivite, String IP, Utilisateur u) {
