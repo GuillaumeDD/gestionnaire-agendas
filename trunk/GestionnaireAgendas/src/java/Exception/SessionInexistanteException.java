@@ -11,7 +11,7 @@ import Authentification.Utilisateur;
  *
  * @author GDD
  */
-public class NoSessionException extends Exception {
+public class SessionInexistanteException extends Exception {
 
     private Utilisateur u;
 
@@ -19,12 +19,12 @@ public class NoSessionException extends Exception {
     /**
      * Creates a new instance of <code>NoSessionException</code> without detail message.
      */
-    public NoSessionException() {
+    public SessionInexistanteException() {
         u = null;
         IP = null;
     }
 
-    public NoSessionException(Utilisateur u, String IP) {
+    public SessionInexistanteException(Utilisateur u, String IP) {
         this.u = u;
         this.IP = IP;
     }
@@ -33,7 +33,7 @@ public class NoSessionException extends Exception {
      * Constructs an instance of <code>NoSessionException</code> with the specified detail message.
      * @param msg the detail message.
      */
-    public NoSessionException(String msg) {
+    public SessionInexistanteException(String msg) {
         super(msg);
     }
 
