@@ -17,7 +17,6 @@
     <%@page import="service.*" %>
     <%@page import="service.sql.*" %>
     <%@page import="Authentification.*" %>
-    <%@page import="java.sql.*" %>
     <%@page import="java.util.logging.*" %>
     <%@page import="java.text.*" %>
     <%@page import="java.util.*" %>
@@ -65,6 +64,14 @@
         jours_semaine=calend.findWeekByID((Integer)session.getAttribute("IdSemaine"));
         session.setAttribute("jour1",jours_semaine.get(1));
         session.setAttribute("jour7",jours_semaine.get(13));
+
+        Agenda a = new Agenda();
+        HashMap<Integer,Date> dates_semaine = new HashMap();
+        
+        for(int i=1;i<=13;i=i+2)
+             {dates_semaine.put(i,a.StringtoDateFR(jours_semaine.get(i)));
+        }
+            
      %>
 
     <div id="logo">
@@ -144,16 +151,74 @@
 
 
     <div id="entete_calendrier"><TABLE>
-       <TR class="jours"><TD class="col_jours" >Lundi</TD><TD class="col_jours" >Mardi</TD><TD class="col_jours" >Mercredi</TD><TD class="col_jours" >Jeudi</TD><TD class="col_jours" >Vendredi</TD><TD class="col_jours" >Samedi</TD><TD class="col_jours" >Dimanche</TD></TR>
+       <TR class="jours"><TD class="col_heures">Heures</TD><TD class="col_jours" >Lundi</TD><TD class="col_jours" >Mardi</TD><TD class="col_jours" >Mercredi</TD><TD class="col_jours" >Jeudi</TD><TD class="col_jours" >Vendredi</TD><TD class="col_jours" >Samedi</TD><TD class="col_jours" >Dimanche</TD></TR>
     </TABLE></div>
     
     <div id="calendrier_hebdo">
-        <TABLE>
-            <%! int compteur_ligne=1; %>
-            <% for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
+        
+            <!--int compteur_ligne=0;
+            for(compteur_ligne=0;compteur_ligne<=47;compteur_ligne++)
                 {out.println("<TR class='agenda'><TD class='col_agenda' > </TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD></TR>");}
-            %>
-        </TABLE>
+            -->
+        <TABLE VALIGN='top'><TR>
+            <%!int compteur_ligne=0;%>
+            <%
+
+            out.println("<TD class='col_heures'><TABLE WIDTH=45><TR>");
+                for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
+                        if(((float)compteur_ligne)%2==0)
+                            out.println("<TR class='agenda'><TD>"+(compteur_ligne/2)+"</TD></TR>");
+                        else out.println("<TR class='agenda'><TD></TD></TR>");
+            out.println("</TR></TABLE></TD>");
+
+
+            for(Date d:dates_semaine.values())
+                {
+                boolean vide=true;
+                out.println("<TD class='col_agenda'><TABLE WIDTH=125 VALIGN='top'><TR>");
+                int nb_col=0;
+                for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+                    {
+                    HashMap<Long,Evenement> events = ag.getEvenementsByDate(d);
+                    if(!events.isEmpty())
+                        nb_col++;
+                    }
+                for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+                    {
+                    HashMap<Long,Evenement> events = ag.getEvenementsByDate(d);
+                    if(!events.isEmpty())
+                        {
+                        out.println("<TD><TABLE WIDTH="+(int)(117/nb_col)+" VALIGN='top'>");
+                        vide=false;
+                        for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
+                        {
+                        boolean stop=false;
+                        Iterator<Long> it = events.keySet().iterator();
+                        while(it.hasNext() && stop==false)
+                            {
+                            Long cle = it.next();
+                            if((((events.get(cle)).getHeureDebut())*2) <= compteur_ligne && (((events.get(cle)).getHeureFin())*2) > compteur_ligne)
+                                {
+                                out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD>"+(events.get(cle)).getObjet()+"</TD></TR>");
+                                stop=true;
+                                }
+                            }
+                        if(stop==false) out.println("<TR class='agenda'><TD></TD></TR>");
+                        }
+                        out.println("</TABLE></TD>");
+                        }
+                     
+                    }
+                if(vide==true)
+                       {for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
+                            out.println("<TR class='agenda'><TD></TD></TR>");}
+
+
+                   out.println("</TR></TABLE></TD>");
+                   
+                }
+             %>
+       </TR></TABLE>
     </div>
 
 
