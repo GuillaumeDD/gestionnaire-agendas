@@ -48,12 +48,17 @@
     <div id="cadre_creation_content">
 
      <%
+
+     //Chargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+
         String event_select = request.getParameter("select_event");
         if( event_select != null)
             session.setAttribute("SelectEventID", Long.parseLong(event_select));
             
         
-      for(Agenda a:((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+      for(Agenda a:port.getAgendas().values())
           {
           if(a.getEvenement((Long)session.getAttribute("SelectEventID")) != null)      
               session.setAttribute("SelectAgendaID", a.getAgendaID());
@@ -79,7 +84,7 @@
 
         try
           {
-           ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierEvenement((Long)session.getAttribute("SelectAgendaID"),(Long)session.getAttribute("SelectEventID"),objet,lieu,description,date,heureDebut,heureFin);
+           port.modifierEvenement((Long)session.getAttribute("SelectAgendaID"),(Long)session.getAttribute("SelectEventID"),objet,lieu,description,date,heureDebut,heureFin);
            out.println("<div id='message_ok'> L'évènement a été modifié. </div>");
            }
         catch(EvenementSimultaneException e3)
@@ -87,32 +92,25 @@
         catch(ChampsMalRenseignesException e4)
                 {out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");}
 
-        //Enregistrement des modifications
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
 
         }
 
       if(suppression!=null)
           {
-          ((PortefeuilleAgenda)session.getAttribute("portefeuille")).supprimerEvenement((Long)session.getAttribute("SelectAgendaID"),(Long)session.getAttribute("SelectEventID"));
+          port.supprimerEvenement((Long)session.getAttribute("SelectAgendaID"),(Long)session.getAttribute("SelectEventID"));
           session.setAttribute("SelectEventID",null);
           session.setAttribute("SelectAgendaID",null);
           out.println("<div id='message_ok'> L'évènement a été supprimé. </div>");
 
-        //Enregistrement des modifications
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
+
         }
       }
     %>
@@ -125,12 +123,12 @@
 
         <% if(session.getAttribute("SelectEventID")!=null && session.getAttribute("SelectAgendaID")!=null)
             {
-            out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getObjet()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDate()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getLieu()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value='"+ ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'>"+ ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDescription()+"</textarea><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getObjet()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDate()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getLieu()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'>"+ port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDescription()+"</textarea><br/><br/>");
             }
       else
           {

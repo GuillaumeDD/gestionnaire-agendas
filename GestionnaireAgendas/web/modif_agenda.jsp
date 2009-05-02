@@ -40,17 +40,19 @@
     <div id="cadre_creation_content">
 
 <%
+
+        //Chargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+
       String modif=request.getParameter("modifier");
       String suppr=request.getParameter("supprimer");
       String select=request.getParameter("select");
       
       if(select!=null)
       {
-       Agenda a = new Agenda();
        String agendaID_string = request.getParameter("agenda");
        Long agendaID = Long.parseLong(agendaID_string);
-       a = ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda(agendaID);
-       session.setAttribute("agenda_select",a);
        session.setAttribute("agendaID",agendaID);
        }
        
@@ -65,7 +67,7 @@
         String couleur = request.getParameter("choix_couleur");
         try
         {
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
+        port.modifierAgenda((Long)session.getAttribute("agendaID"), nom_agenda, description_agenda, lieu_agenda, couleur);
         out.println("<div id='message_ok'> L'agenda a été modifié. </div>");
         }
         catch(NomVideException e)
@@ -73,15 +75,11 @@
         catch(NomExistantException e1)
             {out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");}
 
-        //Enregistrement des modifications
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
-        session.setAttribute("agenda_select",((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("agendaID")));
+
         }
         }
 
@@ -89,19 +87,15 @@
         {
          if(session.getAttribute("agendaID") !=null)
         {
-        ((PortefeuilleAgenda)session.getAttribute("portefeuille")).supprimerAgenda((Long)session.getAttribute("agendaID"));
-        session.setAttribute("agenda_select", null);
+        port.supprimerAgenda((Long)session.getAttribute("agendaID"));
         session.setAttribute("agendaID", null);
         out.println("<div id='message_ok'> L'agenda a été supprimé. </div>");
 
-        //Enregistrement des modifications
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
+
         }
         }
 
@@ -117,7 +111,7 @@
         <label class ="form_new_agenda">Agenda : </label>
         <select name="agenda" name="agenda">
         <%
-        for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+        for(Agenda ag : port.getAgendas().values())
             if((Long)session.getAttribute("agendaID") != null)
                 {
                 if(ag.getAgendaID()==(Long)session.getAttribute("agendaID"))
@@ -134,42 +128,42 @@
         <!-- Paramètres de cet agenda -->
         
         <%
-        if(session.getAttribute("agenda_select") != null)
+        if(session.getAttribute("agendaID") != null)
         {
-        out.println("<label class ='form_new_agenda'> Nom : </label><input type='text' name='nom_agenda' value='"+((Agenda)session.getAttribute("agenda_select")).getNom()+"'><br/><br/>");
-        out.println("<label class ='form_new_agenda'> Lieu : </label><input type='text' name='lieu_agenda' value='"+((Agenda)session.getAttribute("agenda_select")).getLieu()+"'><br/><br/>");
-        out.println("<label class ='form_new_agenda'> Description : </label><textarea rows='5' cols='30' name='maDescription' >"+((Agenda)session.getAttribute("agenda_select")).getDescription()+"</textarea><br/><br/>");
+        out.println("<label class ='form_new_agenda'> Nom : </label><input type='text' name='nom_agenda' value='"+port.getAgenda((Long)session.getAttribute("agendaID")).getNom()+"'><br/><br/>");
+        out.println("<label class ='form_new_agenda'> Lieu : </label><input type='text' name='lieu_agenda' value='"+port.getAgenda((Long)session.getAttribute("agendaID")).getLieu()+"'><br/><br/>");
+        out.println("<label class ='form_new_agenda'> Description : </label><textarea rows='5' cols='30' name='maDescription' >"+port.getAgenda((Long)session.getAttribute("agendaID")).getDescription()+"</textarea><br/><br/>");
         out.println("<label class ='form_new_agenda'> Couleur : </label>");
         out.println("<TABLE>");
         out.println("<TR><TD class='red'></TD><TD class='yellow'></TD><TD class='blue'></TD><TD class='green'></TD><TD class='cyan'></TD><TD class='pink'></TD><TD class='lime'></TD><TD class='purple'></TD><TD class='silver'></TD><TD class='orange'></TD></TR>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("red"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("red"))
             out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red' checked='checked' ></TD>");
         else out.println("<TR><TD class='choix'><input type='radio' name='choix_couleur' value='red'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("yellow"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("yellow"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='yellow'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("blue"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("blue"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='blue' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='blue'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("green"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("green"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='green'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("aqua"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("aqua"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='aqua'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("fushia"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("fushia"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='fuchsia'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("lime"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("lime"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='lime' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='lime'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("purple"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("purple"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='purple' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='purple'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("silver"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("silver"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='silver' checked='checked' ></TD>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='silver'></TD>");
-        if(((Agenda)session.getAttribute("agenda_select")).getColor().equals("orange"))
+        if(port.getAgenda((Long)session.getAttribute("agendaID")).getColor().equals("orange"))
         out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='orange' checked='checked' ></TD></TR>");
         else out.println("<TD class='choix'><input type='radio' name='choix_couleur' value='orange'></TD></TR>");
         out.println("</TABLE>");

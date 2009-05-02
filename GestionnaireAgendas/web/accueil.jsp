@@ -45,8 +45,6 @@
         //Chargement du portefeuille d'agendas
         PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
         port.initialiser();
-        session.setAttribute("portefeuille", port);
-        session.setAttribute("agenda_select",null);
         session.setAttribute("agendaID",null);
 
         //Flèches pour changer la semaine courante du calendrier
@@ -77,7 +75,7 @@
         String afficher = request.getParameter("afficher");
         if(afficher != null)
             {
-            for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+            for(Agenda ag : port.getAgendas().values())
                 {
                  String cocher = request.getParameter(Long.toString(ag.getAgendaID()));
                  if(cocher != null)
@@ -89,7 +87,7 @@
                 }
             session.setAttribute("map_agendas_coches",agendas_coches);
             }
-        else session.setAttribute("map_agendas_coches",((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas());
+        else session.setAttribute("map_agendas_coches",port.getAgendas());
         
             
      %>
@@ -118,7 +116,7 @@
      &nbsp;&nbsp;&nbsp;<label class="titre1">Mes agendas</label><br/><br/>
 
      <%
-     for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+     for(Agenda ag : port.getAgendas().values())
         {
          if(session.getAttribute(Long.toString(ag.getAgendaID())) != null)
              {
@@ -188,10 +186,7 @@
     
     <div id="calendrier_hebdo">
         
-            <!--int compteur_ligne=0;
-            for(compteur_ligne=0;compteur_ligne<=47;compteur_ligne++)
-                {out.println("<TR class='agenda'><TD class='col_agenda' > </TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD><TD class='col_agenda' ></TD></TR>");}
-            -->
+           
         <TABLE VALIGN='top'><TR>
             <%!int compteur_ligne=0;%>
             <%

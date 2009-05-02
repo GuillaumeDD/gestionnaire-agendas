@@ -39,8 +39,13 @@
 
     <div id="cadre_creation_content">
 
-    <% 
-      String creation=request.getParameter("creer");
+    <%
+
+        //Chargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+
+     String creation=request.getParameter("creer");
      if(creation!=null)
         {
         
@@ -50,7 +55,7 @@
         String couleur = request.getParameter("choix_couleur");
         try
             {
-            ((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerAgenda(nom_agenda, description, lieu_agenda, couleur);
+            port.creerAgenda(nom_agenda, description, lieu_agenda, couleur);
             out.println("<div id='message_ok'> L'agenda a été créé. </div>");
             }
         catch(NomVideException e)
@@ -58,14 +63,10 @@
         catch(NomExistantException e1)
                 {out.println("<div id='message_erreur'> ERREUR : Un agenda porte déjà ce nom. </div>");}
 
-        //Enregistrement des modifications
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
         
         }
     %>
