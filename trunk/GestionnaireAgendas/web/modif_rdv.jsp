@@ -1,5 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+
 <%@page import="GestionAgenda.*" %>
 <%@page import="service.*" %>
 <%@page import="service.sql.*" %>
@@ -7,7 +8,7 @@
 <%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
-
+<%@include file="authentifier.jsp" %>
 
 <%@page import="java.text.*" %>
 

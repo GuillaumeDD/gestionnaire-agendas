@@ -31,6 +31,20 @@ public class SessionSQL implements SessionDAO{
         connexion = bd.getCon();
     }
 
+    public void cleanUp(){
+        try {
+            String req = "DELETE FROM Session where TIMESTAMPDIFF(SECOND, dateDerniereActivite, NOW()) > 1200";
+            PreparedStatement prepStmt;
+            prepStmt = connexion.prepareStatement(req);
+            prepStmt.execute();
+
+            req = "DELETE FROM Session where TIMESTAMPDIFF(SECOND, dateDebut, dateDerniereActivite) > 6000";
+            prepStmt = connexion.prepareStatement(req);
+            prepStmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void delete(Session s) {
         try {
