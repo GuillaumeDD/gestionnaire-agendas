@@ -103,19 +103,20 @@ public class Agenda {
     public void modifierEvenement (long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) throws EvenementSimultaneException,ChampsMalRenseignesException {
     Evenement event = new Evenement();
     event = getEvenement(eventID);
-    event.setObjet(objet);
-    event.setLieu(lieu);
-    event.setDescription(description);
-    event.setDate(d);
-    event.setHeureDebut(heureDebut);
-    event.setHeureFin(heureFin);
-    event.setModif(true);
+    
     if(event.verifierChamp(objet, lieu, description, d, heureDebut, heureFin)==true)
     {
         if(estUnique(event,eventID)==true)
             {
-            evenements.remove(eventID);
-            evenements.put(eventID, event);
+            event.setObjet(objet);
+            event.setLieu(lieu);
+            event.setDescription(description);
+            event.setDate(d);
+            event.setHeureDebut(heureDebut);
+            event.setHeureFin(heureFin);
+            event.setModif(true);
+            //evenements.remove(eventID);
+            //evenements.put(eventID, event);
             }
         else 
             {throw new EvenementSimultaneException();}

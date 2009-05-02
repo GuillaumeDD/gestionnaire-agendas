@@ -42,7 +42,12 @@
     <div id="cadre_creation_content">
 
      <%
-      String creation=request.getParameter("creer");
+
+     //Chargement du portefeuille d'agendas
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        port.initialiser();
+
+     String creation=request.getParameter("creer");
      if(creation!=null)
         {
         String objet = request.getParameter("objet_rdv");
@@ -59,21 +64,19 @@
         if(heure_fin!="") heureFin= Float.parseFloat(heure_fin);
 
         try
-          {((PortefeuilleAgenda)session.getAttribute("portefeuille")).creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
+          {port.creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
            out.println("<div id='message_ok'> L'évènement a été créé. </div>");}
         catch(EvenementSimultaneException e)
                 {out.println("<div id='message_erreur'> ERREUR : Evènement simultané existant. </div>");}
         catch(ChampsMalRenseignesException e1)
                 {out.println("<div id='message_erreur'> ERREUR : Champs mal renseignés. </div>");}
 
-        //Enregistrement des modifications
+        
+        //Enregistrement des modifications et rechargement du portefeuille d'agendas
         PortefeuilleAgendaSQL pa_sql = new PortefeuilleAgendaSQL();
-        pa_sql.save((PortefeuilleAgenda)session.getAttribute("portefeuille"));
-
-        //Rechargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        pa_sql.save(port);
         port.initialiser();
-        session.setAttribute("portefeuille", port);
+ 
 
         }
     %>
@@ -91,7 +94,7 @@
         <label class ="form_new_rdv"> Agenda : </label>
         <select name="agenda" >
            <%
-        for(Agenda ag : ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
+        for(Agenda ag : port.getAgendas().values())
             if((Long)session.getAttribute("agendaID") != null)
                 {
                 if(ag.getAgendaID()==(Long)session.getAttribute("agendaID"))
