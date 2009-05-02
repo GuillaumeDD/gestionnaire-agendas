@@ -112,14 +112,15 @@ public class Agenda {
     event.setModif(true);
     if(event.verifierChamp(objet, lieu, description, d, heureDebut, heureFin)==true)
     {
-        if(estUnique(event,eventID))
+        if(estUnique(event,eventID)==true)
             {
             evenements.remove(eventID);
             evenements.put(eventID, event);
             }
-        else throw new EvenementSimultaneException();
+        else 
+            {throw new EvenementSimultaneException();}
     }
-    else throw new ChampsMalRenseignesException();
+    else {throw new ChampsMalRenseignesException();}
     }
 
     public Evenement getEvenement (long eventID) {

@@ -48,21 +48,16 @@
     <div id="cadre_creation_content">
 
      <%
-
-
         String event_select = request.getParameter("select_event");
         if( event_select != null)
-            {
             session.setAttribute("SelectEventID", Long.parseLong(event_select));
-            }
+            
         
       for(Agenda a:((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgendas().values())
           {
-          if(a.getEvenement((Long)session.getAttribute("SelectEventID")) != null)
-              {
+          if(a.getEvenement((Long)session.getAttribute("SelectEventID")) != null)      
               session.setAttribute("SelectAgendaID", a.getAgendaID());
-              session.setAttribute("SelectAgenda", a);
-              }
+              
           }
       
       String modification=request.getParameter("modifier");
@@ -130,12 +125,12 @@
 
         <% if(session.getAttribute("SelectEventID")!=null && session.getAttribute("SelectAgendaID")!=null)
             {
-            out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value='"+((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getObjet()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value='"+((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getDate()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value='"+((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getLieu()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value='"+((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value='"+ ((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'>"+ ((Agenda)session.getAttribute("SelectAgenda")).getEvenement((Long)session.getAttribute("SelectEventID")).getDescription()+"</textarea><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getObjet()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDate()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getLieu()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value='"+((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value='"+ ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'>"+ ((PortefeuilleAgenda)session.getAttribute("portefeuille")).getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDescription()+"</textarea><br/><br/>");
             }
       else
           {

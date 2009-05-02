@@ -94,16 +94,16 @@ public class PortefeuilleAgenda {
     public void modifierEvenement (long agendaID, long eventID, String objet, String lieu, String description, String d, float heureDebut, float heureFin) throws EvenementSimultaneException,ChampsMalRenseignesException{
     Agenda ag = new Agenda();
     ag = getAgenda(agendaID);
-    try
-    {
+    //try
+    //{
     ag.modifierEvenement(eventID, objet, lieu, description, d, heureDebut, heureFin);
     agendas.remove(agendaID);
     agendas.put(agendaID, ag);
-    }
-    catch(EvenementSimultaneException ex1)
-        {throw new EvenementSimultaneException();}
-    catch(ChampsMalRenseignesException ex2)
-        {throw new ChampsMalRenseignesException();}
+    //}
+    //catch(EvenementSimultaneException ex1)
+     //   {throw new EvenementSimultaneException();}
+    //catch(ChampsMalRenseignesException ex2)
+     //   {throw new ChampsMalRenseignesException();}
     
     }
 
