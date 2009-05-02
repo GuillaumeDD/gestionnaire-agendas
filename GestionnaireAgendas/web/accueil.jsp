@@ -1,6 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-
+<%@include file="authentifier.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -97,10 +97,10 @@
 
 <!-- Haut de page : message d'accueil -->
     <div id="haut_page">
-        <div id="message_accueil"> Bonjour  <%=session.getAttribute("user")%> , <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
+        <div id="message_accueil"> Bonjour  <%=session.getAttribute("login")%> , <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
         <div id="deconnexion">
                 <form method="post" action="identification.jsp" >
-                <input type="submit" class="out" id="disconnect" value="" ><br/>
+                <input type="submit" class="out" id="disconnect" name="deco" value="" ><br/>
                 <label class ="bouton_deco"> Déconnexion </label>
                 </form>
         </div>

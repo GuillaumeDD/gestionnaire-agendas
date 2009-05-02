@@ -7,7 +7,7 @@
 <%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
-
+<%@include file="authentifier.jsp" %>
 
 <%@page import="java.text.*" %>
 
@@ -27,7 +27,7 @@
 
 <!-- Haut de page : message d'accueil -->
     <div id="haut_page">
-        <div id="message_accueil"> Bonjour <%=session.getAttribute("user")%>, <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
+        <div id="message_accueil"> Bonjour <%=session.getAttribute("login")%>, <br/> nous sommes le <%=session.getAttribute("dateDuJour")%> </div>
         <div id="deconnexion">
                 <form method="post" action="identification.jsp" >
                 <input type="submit" class="out" id="disconnect" value="" ><br/>

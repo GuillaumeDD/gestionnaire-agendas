@@ -10,6 +10,7 @@ import Authentification.Utilisateur;
 import Exception.SessionInexistanteException;
 import Exception.SessionDejaExistanteException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +52,11 @@ public class SessionSQLTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        // Suppression du contenu de la table Session
+        String req = "DELETE FROM Session";
+        PreparedStatement prepStmt;
+        prepStmt = bd.getCon().prepareStatement(req);
+        prepStmt.execute();
     }
 
     // TODO add test methods here. The name must begin with 'test'. For example:
@@ -189,5 +195,34 @@ public class SessionSQLTest extends TestCase {
         } catch (SessionInexistanteException ex) {
 
         }
+    }
+
+    public void testCleanUp(){
+        try {
+            String req;
+            PreparedStatement prepStmt;
+            ResultSet rs;
+            req = "INSERT INTO Session set IdUser = 69, dateDebut = '2009-05-01 21:20:24', dateDerniereActivite ='2009-05-01 21:20:24', IP = '192.168.168.2'";
+            prepStmt = bd.getCon().prepareStatement(req);
+            prepStmt.executeUpdate();
+
+
+            req = "SELECT COUNT(*) FROM Session where IdUser = 69";
+            prepStmt = bd.getCon().prepareStatement(req);
+            rs = prepStmt.executeQuery();
+            rs.next();
+            assertTrue(rs.getInt("COUNT(*)") == 1);
+            (new SessionSQL()).cleanUp();
+
+            req = "SELECT COUNT(*) FROM Session where IdUser = 69";
+            prepStmt = bd.getCon().prepareStatement(req);
+            rs = prepStmt.executeQuery();
+            rs.next();
+            assertTrue(rs.getInt("COUNT(*)") == 0);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionSQLTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

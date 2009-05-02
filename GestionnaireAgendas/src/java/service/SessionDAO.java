@@ -7,6 +7,8 @@ import Exception.SessionDejaExistanteException;
 
 public interface SessionDAO {
 
+    public void cleanUp();
+
     public void insert (Session s) throws SessionDejaExistanteException;
 
     public void update (Session s) throws SessionInexistanteException;
