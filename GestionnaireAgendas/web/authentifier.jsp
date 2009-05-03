@@ -10,8 +10,10 @@ if(!estConnecte((Integer)session.getAttribute("userid"),request.getRemoteAddr())
     response.sendRedirect("identification.jsp");
 }else{
     Session s = getSession((Integer)session.getAttribute("userid"), request.getRemoteAddr());
+
     if(s == null){
         response.sendRedirect("identification.jsp");
     }
+    else session.setAttribute("user",s.getUser());
 }
 %>

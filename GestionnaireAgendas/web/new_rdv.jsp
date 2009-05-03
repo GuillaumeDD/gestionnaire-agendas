@@ -1,5 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@include file="authentifier.jsp" %>
 <%@page import="GestionAgenda.*" %>
 <%@page import="service.*" %>
 <%@page import="service.sql.*" %>
@@ -7,7 +8,6 @@
 <%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
-<%@include file="authentifier.jsp" %>
 
 <%@page import="java.text.*" %>
 
@@ -44,7 +44,7 @@
      <%
 
      //Chargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("user"));
         port.initialiser();
 
      String creation=request.getParameter("creer");

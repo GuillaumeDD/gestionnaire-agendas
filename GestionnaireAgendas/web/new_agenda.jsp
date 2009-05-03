@@ -1,6 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-
+<%@include file="authentifier.jsp" %>
 <%@page import="GestionAgenda.*" %>
 <%@page import="service.*" %>
 <%@page import="service.sql.*" %>
@@ -8,7 +8,7 @@
 <%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
-<%@include file="authentifier.jsp" %>
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -43,7 +43,7 @@
     <%
 
         //Chargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("user"));
         port.initialiser();
 
      String creation=request.getParameter("creer");
