@@ -12,6 +12,7 @@
         <title>Agenda</title>
     </head>
     <body>
+
     <%@page import="java.util.GregorianCalendar" %>
     <%@page import="GestionAgenda.*" %>
     <%@page import="service.*" %>
@@ -39,11 +40,9 @@
         session.setAttribute("jourSemaine",jourSemaine);    // ex : lundi
         session.setAttribute("dateDuJour",dateJourSemaine); // ex : lundi 27 avril 2009
 
-        Utilisateur moi = new Utilisateur(1);
-        session.setAttribute("utilisateur",moi);
 
         //Chargement du portefeuille d'agendas
-        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("utilisateur"));
+        PortefeuilleAgenda port = new PortefeuilleAgenda((Utilisateur)session.getAttribute("user"));
         port.initialiser();
         session.setAttribute("agendaID",null);
 
