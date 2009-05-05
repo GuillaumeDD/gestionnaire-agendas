@@ -54,7 +54,7 @@
         else if(semaine_suiv != null)
             {session.setAttribute("IdSemaine",(Integer)session.getAttribute("IdSemaine")+1);}
         else
-            {session.setAttribute("IdSemaine",calend.findWeekOfADay((String)session.getAttribute("dateDuJourUS")));}
+            {if(session.getAttribute("IdSemaine")==null) session.setAttribute("IdSemaine",calend.findWeekOfADay((String)session.getAttribute("dateDuJourUS")));}
 
 
         //Chargement de la semaine courante
@@ -72,8 +72,9 @@
         //Sélection des agendas
         HashMap<Long,Agenda> agendas_coches = new HashMap();
         String afficher = request.getParameter("afficher");
-        if(afficher != null)
-            {
+        //if(afficher != null)
+         //   {
+            boolean cochage=false;
             for(Agenda ag : port.getAgendas().values())
                 {
                  String cocher = request.getParameter(Long.toString(ag.getAgendaID()));
@@ -81,12 +82,13 @@
                      {
                      agendas_coches.put(ag.getAgendaID(), ag);
                      session.setAttribute(Long.toString(ag.getAgendaID()),true);
+                     cochage=true;
                      }
                  else session.setAttribute(Long.toString(ag.getAgendaID()),false);
                 }
-            session.setAttribute("map_agendas_coches",agendas_coches);
-            }
-        else session.setAttribute("map_agendas_coches",port.getAgendas());
+            if(cochage==true) session.setAttribute("map_agendas_coches",agendas_coches);
+          //  }
+                else session.setAttribute("map_agendas_coches",port.getAgendas());
         
             
      %>
