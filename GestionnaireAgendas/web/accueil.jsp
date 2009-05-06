@@ -226,8 +226,8 @@
                             {
                             Long cle = it.next();
                             if((((events.get(cle)).getHeureDebut())*2) <= compteur_ligne && (((events.get(cle)).getHeureFin())*2) > compteur_ligne)
-                                {if(((events.get(cle)).getObjet()).length()>5)
-                                out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD class='event'>"+((events.get(cle)).getObjet()).substring(0,6)+"<input type='radio' name='select_event' value='"+(events.get(cle)).getEventID()+"'></TD></TR>");
+                                {if(((events.get(cle)).getObjet()).length()>3)
+                                out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD class='event'>"+((events.get(cle)).getObjet()).substring(0,4)+"<input type='radio' name='select_event' value='"+(events.get(cle)).getEventID()+"'></TD></TR>");
                                 else out.println("<TR class='agenda1' BGCOLOR="+ag.getColor()+" ><TD class='event'>"+((events.get(cle)).getObjet())+"<input type='radio' name='select_event' value='"+(events.get(cle)).getEventID()+"'></TD></TR>");
                                  stop=true;
                                 }
