@@ -61,17 +61,17 @@
                     }catch(UtilisateurInexistantException ex){
                     out.println("<div id='titre'> Gestionnaire d'agendas </div>");
                     out.println("<div id='login'>");
-                    out.println("Couple nom d'utilisateur / mot de passe inexistant.<br/>");
+                    out.println("<div id='erreur'>Couple nom d'utilisateur / mot de passe inexistant.</div>");
                     out.println("<form method='post' action='identification.jsp'>");
                     out.println("<label class='titre'>  Connexion  </label><br/><br/>");
                     out.println("<label class='form'>  Nom d'utilisateur :  </label>  <input type='text' name='user'><br/><br/>");
-                    out.println("<label class='form'>  Mot de passe :  </label>  <input type='text' name='mdp' ><br/><br/><br/>");
+                    out.println("<label class='form'>  Mot de passe :  </label>  <input type='password' name='mdp' ><br/><br/><br/>");
                     out.println("<input type='submit' class='in' id='connect' name='connexion' value='' ><br/>");
                     out.println("<label class ='bouton'> Se connecter </label>");
                     out.println("</form></div>");
 
                 }catch(SessionDejaExistanteException ex){
-                    out.println("session existante");
+                    out.println("<div id='erreur'>session existante</div>");
                     response.sendRedirect("identification.jsp");
                 }
             }
@@ -82,7 +82,7 @@
             out.println("<form method='post' action='identification.jsp'>");
             out.println("<label class='titre'>  Connexion  </label><br/><br/>");
             out.println("<label class='form'>  Nom d'utilisateur :  </label>  <input type='text' name='user'><br/><br/>");
-            out.println("<label class='form'>  Mot de passe :  </label>  <input type='text' name='mdp' ><br/><br/><br/>");
+            out.println("<label class='form'>  Mot de passe :  </label>  <input type='password' name='mdp' ><br/><br/><br/>");
             out.println("<input type='submit' class='in' id='connect' name='connexion' value='' ><br/>");
             out.println("<label class ='bouton'> Se connecter </label>");
             out.println("</form></div>");

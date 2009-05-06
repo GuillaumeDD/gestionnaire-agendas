@@ -14,7 +14,7 @@ public class AgendaSQL implements AgendaDAO {
     private BaseDeDonnees bd = new BaseDeDonnees();
 
     public AgendaSQL(){
-        bd.connexion();
+        //bd.connexion();
     }
 
     public void save(Agenda a)
