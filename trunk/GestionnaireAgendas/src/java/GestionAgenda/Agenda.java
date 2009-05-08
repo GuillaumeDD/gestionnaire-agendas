@@ -4,10 +4,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import Exception.*;
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 
-public class Agenda {
+public class Agenda implements Serializable{
 
     private String nom;
 
@@ -254,5 +255,13 @@ public class Agenda {
         return date.getTime();
     }
 
+    public String toString(){
+        StringBuffer result = new StringBuffer();
+        result.append("Agenda : "+this.getNom()+"\n");
+        for(Evenement boucle:evenements.values()){
+            result.append("\t"+boucle.toString()+"\n");
+        }
+        return result.toString();
+    }
 }
 

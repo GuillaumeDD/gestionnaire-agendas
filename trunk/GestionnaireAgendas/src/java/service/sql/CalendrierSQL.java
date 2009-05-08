@@ -14,7 +14,7 @@ import java.util.logging.*;
  */
 public class CalendrierSQL {
 
-    private BaseDeDonnees bd=new BaseDeDonnees();
+    private BaseDeDonnees bd=BaseDeDonnees.getInstance();
 
     public int findWeekOfADay(String date)
     {

@@ -1,6 +1,8 @@
 package GestionAgenda;
 
-public class Evenement {
+import java.io.Serializable;
+
+public class Evenement implements Serializable{
 
     private long eventID;
 
@@ -141,5 +143,10 @@ public class Evenement {
         this.nouveau = b;
     }
 
+    public String toString(){
+        StringBuffer result = new StringBuffer();
+        result.append("(objet)"+objet+" ; (lieu)"+lieu+ " ; (description)"+description);
+        return result.toString();
+    }
 }
 

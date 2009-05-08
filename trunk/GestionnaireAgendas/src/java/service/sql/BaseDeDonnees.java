@@ -14,8 +14,16 @@ public class BaseDeDonnees {
     private String password;
     private String port;
     private boolean DEBUG = false;
+    private static BaseDeDonnees instance = null;
 
-    public BaseDeDonnees () {
+    public static BaseDeDonnees getInstance(){
+        if(instance == null){
+            instance = new BaseDeDonnees();
+        }
+        return instance;
+    }
+
+    private BaseDeDonnees () {
         serveur = "localhost";
         base = "bdd_agenda";
         user = "root";
@@ -24,7 +32,7 @@ public class BaseDeDonnees {
         connexion();
     }
 
-    public BaseDeDonnees(String serveur, String base, String user, String password, String port) {
+    private BaseDeDonnees(String serveur, String base, String user, String password, String port) {
         this.serveur = serveur;
         this.base = base;
         this.user = user;

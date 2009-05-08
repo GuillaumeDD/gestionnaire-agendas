@@ -27,7 +27,7 @@ public class UtilisateurSQL implements UtilisateurDAO{
     private Connection connexion;
 
     public UtilisateurSQL(){
-        bd = new BaseDeDonnees();
+        bd = BaseDeDonnees.getInstance();
         connexion = bd.getCon();
     }
 

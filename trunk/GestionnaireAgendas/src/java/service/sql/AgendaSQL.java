@@ -11,7 +11,7 @@ import java.util.logging.*;
 
 public class AgendaSQL implements AgendaDAO {
 
-    private BaseDeDonnees bd = new BaseDeDonnees();
+    private BaseDeDonnees bd = BaseDeDonnees.getInstance();
 
     public AgendaSQL(){
         //bd.connexion();
