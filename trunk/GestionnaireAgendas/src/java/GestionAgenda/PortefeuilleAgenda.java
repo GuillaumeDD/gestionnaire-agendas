@@ -15,6 +15,7 @@ public class PortefeuilleAgenda implements Serializable{
 
     public PortefeuilleAgenda (Utilisateur u) {
         utilisateur = u;
+        agendas = new HashMap();
     }
 
     public void creerAgenda (String name, String description, String lieu, String color) throws NomVideException,NomExistantException{
@@ -114,7 +115,8 @@ public class PortefeuilleAgenda implements Serializable{
 
     public void initialiser () {
         AgendaSQL a = new AgendaSQL();
-        setAgendas(a.findByUser(getUtilisateur()));
+        if(a.findByUser(getUtilisateur())!=null)
+            setAgendas(a.findByUser(getUtilisateur()));
         
     }
 

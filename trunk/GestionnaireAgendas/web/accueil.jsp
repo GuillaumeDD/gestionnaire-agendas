@@ -75,6 +75,8 @@
         //if(afficher != null)
          //   {
             boolean cochage=false;
+       if(!(port.getAgendas().isEmpty()))
+           {
             for(Agenda ag : port.getAgendas().values())
                 {
                  String cocher = request.getParameter(Long.toString(ag.getAgendaID()));
@@ -87,10 +89,10 @@
                  else session.setAttribute(Long.toString(ag.getAgendaID()),false);
                 }
             if(cochage==true) session.setAttribute("map_agendas_coches",agendas_coches);
-          //  }
                 else session.setAttribute("map_agendas_coches",port.getAgendas());
         
-            
+            }
+            else session.setAttribute("map_agendas_coches",null);
      %>
 
     <div id="logo">
@@ -117,6 +119,8 @@
      &nbsp;&nbsp;&nbsp;<label class="titre1">Mes agendas</label><br/><br/>
 
      <%
+     if(!(port.getAgendas().isEmpty()))
+     {
      for(Agenda ag : port.getAgendas().values())
         {
          if(session.getAttribute(Long.toString(ag.getAgendaID())) != null)
@@ -128,6 +132,7 @@
              }
          else out.println("<input type='checkbox' name='"+ag.getAgendaID()+"' > <label>"+ ag.getNom()+" </label><br/>");
         }
+     }
      
      %>
 
@@ -205,6 +210,8 @@
                 boolean vide=true;
                 out.println("<TD class='col_agenda'><TABLE WIDTH=125 VALIGN='top'><TR>");
                 int nb_col=0;
+                if(session.getAttribute("map_agendas_coches")!=null)
+                {
                 for(Agenda ag : ((HashMap<Long,Agenda>)session.getAttribute("map_agendas_coches")).values())
                     {
                     HashMap<Long,Evenement> events = ag.getEvenementsByDate(d);
@@ -238,6 +245,7 @@
                         }
                      
                     }
+                }
                 if(vide==true)
                        {for(compteur_ligne=1;compteur_ligne<=48;compteur_ligne++)
                             out.println("<TR class='agenda'><TD></TD></TR>");}
