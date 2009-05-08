@@ -24,7 +24,7 @@ import service.sql.SessionSQL;
  */
 public class SessionSQLTest extends TestCase {
 
-    BaseDeDonnees bd = new BaseDeDonnees();
+    BaseDeDonnees bd = BaseDeDonnees.getInstance();
     
     public SessionSQLTest(String testName) {
         super(testName);

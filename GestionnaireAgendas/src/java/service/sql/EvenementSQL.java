@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class EvenementSQL implements EvenementDAO {
 
-    private BaseDeDonnees bd = new BaseDeDonnees();
+    private BaseDeDonnees bd = BaseDeDonnees.getInstance();
 
     public void insert (Evenement e){
     String req="";

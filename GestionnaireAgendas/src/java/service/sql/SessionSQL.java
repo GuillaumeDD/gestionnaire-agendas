@@ -27,7 +27,7 @@ public class SessionSQL implements SessionDAO{
     private Connection connexion;
 
     public SessionSQL(){
-        bd = new BaseDeDonnees();
+        bd = BaseDeDonnees.getInstance();
         connexion = bd.getCon();
     }
 

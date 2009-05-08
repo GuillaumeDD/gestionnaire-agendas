@@ -2,11 +2,12 @@ package GestionAgenda;
 
 import Authentification.Utilisateur;
 import Exception.*;
+import java.io.Serializable;
 import java.util.HashMap;
 import service.sql.AgendaSQL;
 
 
-public class PortefeuilleAgenda {
+public class PortefeuilleAgenda implements Serializable{
 
     private Utilisateur utilisateur;
 
@@ -133,5 +134,15 @@ public class PortefeuilleAgenda {
         this.utilisateur = val;
     }
 
+    public String toString(){
+        StringBuffer result = new StringBuffer();
+        result.append("PORTEFEUILLE AGENDA :\n");
+        result.append("Utilisateur : "+utilisateur.getLogin()+"\n");
+        result.append("-----------------------\n");
+        for(Agenda boucle:agendas.values()){
+            result.append(boucle.toString()+"\n");
+        }
+        return result.toString();
+    }
 }
 

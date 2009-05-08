@@ -1,7 +1,9 @@
 package Authentification;
 
+import java.io.Serializable;
 
-public class Utilisateur {
+
+public class Utilisateur implements Serializable{
 
     private String login;
 

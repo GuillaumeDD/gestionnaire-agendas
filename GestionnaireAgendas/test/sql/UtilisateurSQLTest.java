@@ -23,7 +23,7 @@ import service.sql.UtilisateurSQL;
  */
 public class UtilisateurSQLTest extends TestCase {
 
-    BaseDeDonnees bd = new BaseDeDonnees();
+    BaseDeDonnees bd = BaseDeDonnees.getInstance();
     
     public UtilisateurSQLTest(String testName) {
         super(testName);

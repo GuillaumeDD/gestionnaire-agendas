@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class PortefeuilleAgendaSQL implements PortefeuilleAgendaDAO {
 
-    private BaseDeDonnees bd = new BaseDeDonnees();
+    private BaseDeDonnees bd = BaseDeDonnees.getInstance();
 
     public PortefeuilleAgendaSQL(){ bd.connexion();}
     
