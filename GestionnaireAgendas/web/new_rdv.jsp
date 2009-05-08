@@ -8,6 +8,7 @@
 <%@page import="Exception.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.logging.*" %>
+<%@page import="java.util.regex.*" %>
 
 <%@page import="java.text.*" %>
 
@@ -53,15 +54,23 @@
         String objet = request.getParameter("objet_rdv");
         String lieu = request.getParameter("lieu_rdv");
         String date = request.getParameter("date_rdv");
-        String heure_debut = request.getParameter("heure_debut_rdv");
-        String heure_fin = request.getParameter("heure_fin_rdv");
+        String heure_debut1 = request.getParameter("heure_debut_rdv1");
+        String heure_debut2 = request.getParameter("heure_debut_rdv2");
+        String heure_fin1 = request.getParameter("heure_fin_rdv1");
+        String heure_fin2 = request.getParameter("heure_fin_rdv2");
         String description = request.getParameter("maDescription");
         String agendaID_select = request.getParameter("agenda");
         long agendaID=0;
-        float heureDebut=0,heureFin=0;
+        float hDebut=0,hFin=0,minDebut=0,minFin=0;
         if(agendaID_select!="") agendaID= Long.parseLong(agendaID_select);
-        if(heure_debut!="") heureDebut= Float.parseFloat(heure_debut);
-        if(heure_fin!="") heureFin= Float.parseFloat(heure_fin);
+        hDebut= Float.parseFloat(heure_debut1);
+        minDebut= Float.parseFloat(heure_debut2);
+        hFin= Float.parseFloat(heure_fin1);
+        minFin= Float.parseFloat(heure_fin2);
+
+        float heureDebut,heureFin;
+        heureDebut=hDebut+(minDebut/60);
+        heureFin=hFin+(minFin/60);
 
         try
           {port.creerEvenement(agendaID,objet,lieu,description,date,heureDebut,heureFin);
@@ -89,8 +98,30 @@
         <label class ="form_new_rdv"> Objet : </label><input type="text" name="objet_rdv"><br/><br/>
         <label class ="form_new_rdv"> Date : </label><input type="text" name="date_rdv">&nbsp;&nbsp;&nbsp;&nbsp;<label class="info">Format: AAAA-MM-JJ</label><br/><br/>
         <label class ="form_new_rdv"> Lieu : </label><input type="text" name="lieu_rdv"><br/><br/>
-        <label class ="form_new_rdv"> Heure de début : </label><input type="text" name="heure_debut_rdv">&nbsp;&nbsp;&nbsp;&nbsp;<label class="info">Exemple: pour 10h30 écrire 10,5</label><br/><br/>
-        <label class ="form_new_rdv"> Heure de fin : </label><input type="text" name="heure_fin_rdv"><br/><br/>
+        <label class ="form_new_rdv"> Heure de début : </label>
+            <% int i=0;
+            out.println("<select name='heure_debut_rdv1'>");
+            for(i=0;i<=23;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_debut_rdv2'>");
+            for(i=0;i<=59;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+                    %>
+        <br/><br/>
+        <label class ="form_new_rdv"> Heure de fin : </label>
+        <%
+            out.println("<select name='heure_fin_rdv1'>");
+            for(i=0;i<=23;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_fin_rdv2'>");
+            for(i=0;i<=59;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+         %>
+                    <br/><br/>
         <label class ="form_new_rdv"> Agenda : </label>
         <select name="agenda" >
            <%

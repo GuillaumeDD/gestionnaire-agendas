@@ -77,12 +77,20 @@
         String objet = request.getParameter("objet_rdv");
         String lieu = request.getParameter("lieu_rdv");
         String date = request.getParameter("date_rdv");
-        String heure_debut = request.getParameter("heure_debut_rdv");
-        String heure_fin = request.getParameter("heure_fin_rdv");
+        String heure_debut1 = request.getParameter("heure_debut_rdv1");
+        String heure_debut2 = request.getParameter("heure_debut_rdv2");
+        String heure_fin1 = request.getParameter("heure_fin_rdv1");
+        String heure_fin2 = request.getParameter("heure_fin_rdv2");
         String description = request.getParameter("maDescription");
-        float heureDebut=0,heureFin=0;
-        if(heure_debut!="") heureDebut= Float.parseFloat(heure_debut);
-        if(heure_fin!="") heureFin= Float.parseFloat(heure_fin);
+        float hDebut=0,hFin=0,minDebut=0,minFin=0;
+        hDebut= Float.parseFloat(heure_debut1);
+        minDebut= Float.parseFloat(heure_debut2);
+        hFin= Float.parseFloat(heure_fin1);
+        minFin= Float.parseFloat(heure_fin2);
+
+        float heureDebut,heureFin;
+        heureDebut=hDebut+(minDebut/60);
+        heureFin=hFin+(minFin/60);
 
         try
           {
@@ -128,8 +136,43 @@
             out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getObjet()+"'><br/><br/>");
             out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDate()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
             out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getLieu()+"'><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut()+"'>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value='"+port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin()+"'><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de début : </label>");
+            float heureDeDebut=port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureDebut();
+            float heureDeFin=port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getHeureFin();
+            int h1=(int)heureDeDebut;
+            int m1=(int)((heureDeDebut - (int)heureDeDebut)*60);
+            int h2=(int)heureDeFin;
+            int m2=(int)((heureDeFin - (int)heureDeFin)*60);
+            int i=0;
+            out.println("<select name='heure_debut_rdv1'>");
+            for(i=0;i<=23;i++)
+                if(i==h1)
+                    out.println("<option value='"+i+"' selected>"+ i +"</option>");
+                else out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_debut_rdv2'>");
+            for(i=0;i<=59;i++)
+                if(i==m1)
+                    out.println("<option value='"+i+"' selected>"+ i +"</option>");
+                else out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+
+            out.println("<br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de fin : </label>");
+
+            out.println("<select name='heure_fin_rdv1'>");
+            for(i=0;i<=23;i++)
+                if(i==h2)
+                    out.println("<option value='"+i+"' selected>"+ i +"</option>");
+                else out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_fin_rdv2'>");
+            for(i=0;i<=59;i++)
+                if(i==m2)
+                    out.println("<option value='"+i+"' selected>"+ i +"</option>");
+                else out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<br/><br/>");
             out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'>"+ port.getAgenda((Long)session.getAttribute("SelectAgendaID")).getEvenement((Long)session.getAttribute("SelectEventID")).getDescription()+"</textarea><br/><br/>");
             }
       else
@@ -137,8 +180,29 @@
             out.println("<label class ='form_new_rdv'> Objet : </label><input type='text' name='objet_rdv' value=''><br/><br/>");
             out.println("<label class ='form_new_rdv'> Date : </label><input type='text' name='date_rdv' value=''>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Format: AAAA-MM-JJ</label><br/><br/>");
             out.println("<label class ='form_new_rdv'> Lieu : </label><input type='text' name='lieu_rdv' value=''><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de début : </label><input type='text' name='heure_debut_rdv' value=''>&nbsp;&nbsp;&nbsp;&nbsp;<label class='info'>Exemple: pour 10h30 écrire 10,5</label><br/><br/>");
-            out.println("<label class ='form_new_rdv'> Heure de fin : </label><input type='text' name='heure_fin_rdv' value=''><br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de début : </label>");
+            int i=0;
+            out.println("<select name='heure_debut_rdv1'>");
+            for(i=0;i<=23;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_debut_rdv2'>");
+            for(i=0;i<=59;i++)
+            out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+
+            out.println("<br/><br/>");
+            out.println("<label class ='form_new_rdv'> Heure de fin : </label>");
+
+            out.println("<select name='heure_fin_rdv1'>");
+            for(i=0;i<=23;i++)
+                out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<select name='heure_fin_rdv2'>");
+            for(i=0;i<=59;i++)
+                out.println("<option value='"+i+"' >"+ i +"</option>");
+            out.println("</select>");
+            out.println("<br/><br/>");
             out.println("<label class ='form_new_rdv'> Description : </label><textarea rows='5' cols='30' name='maDescription' id='description_agenda'></textarea><br/><br/>");
             }
 
