@@ -674,48 +674,67 @@ L'encha\^inement A2 démarre au point 3 du scénario nominal.
 \end{enumerate}
 Le scénario nominal reprend au point 1.\\
 
-\begin{landscape}
 \subsection{Diagramme d'activité}
-\begin{center}
-  \includegraphics[scale=0.45]{./images/diag_activite.png}
-\end{center}
-\end{landscape}
+\noindent Nous avons vu les différents scénarios du projet, nous allons maintenant voir les différents diagrammes d'activité correspondant.
 
 \subsubsection{Authentification}
 \begin{center}
   \includegraphics[scale=0.6]{./images/diag_act_authentification.png}
 \end{center}
+\noindent Comme nous pouvons le voir sur ce diagramme, l'utilisateur indique son login et son mot de passe. Il a 5 tentatives pour arriver à se connecter, après quoi il n'aura plus accès à la connexion.
 
 \subsubsection{Création d'agenda}
 \begin{center}
   \includegraphics[scale=0.6]{./images/diag_act_creation_agenda.png}
 \end{center}
+\noindent Comme nous pouvons le voir sur ce diagramme, la création d'un agenda consiste en  le remplissage d'un formulaire. Les données communiquées par le formulaire sont vérifiés. Dans le cas où ces
+données seraient erronées (nom vide ou déjà utilisé), l'utilisateur est invité à remplir de nouveau le formulaire.
+Enfin si le formulaire est correctement rempli, l'agenda est créé.
 
 \subsubsection{Création d'événement}
 \begin{center}
   \includegraphics[scale=0.6]{./images/diag_act_creation_evenement.png}
 \end{center}
+\noindent De la m\^eme manière que la création d'agenda, l'utilisateur est invité à remplir un formulaire pour créer des événements. L'événement est créé quand toutes les conditions sont remplies :
+champs bien renseignés, aucun événement simultané n'existe, l'agenda dans lequel l'utilisateur souhaite ajouter un événement lui appartient.
 
 \subsubsection{Suppression d'agenda}
+\noindent La suppression d'un agenda s'effectue de la façon suivante :
 \begin{center}
   \includegraphics[scale=0.6]{./images/diag_act_suppression_agenda.png}
 \end{center}
+\noindent 
 
 \subsubsection{Suppression d'événement}
+\noindent Lorsqu'un utilisateur souhaite supprimer un événement, cela se passe de la manière suivante :
 \begin{center}
   \includegraphics[scale=0.6]{./images/diag_act_suppression_evenement.png}
 \end{center}
 
-\subsection{Diagramme de séquences}
 \begin{landscape}
-\subsubsection{Authentification}
+\subsubsection{Diagramme d'activité global}
 \begin{center}
-  \includegraphics[scale=0.55]{./images/diag_seq_authentification.jpg}
+  \includegraphics[scale=0.45]{./images/diag_activite.png}
 \end{center}
 \end{landscape}
 
+\subsection{Diagramme de séquences}
+\noindent Nous allons maintenant voir les différents diagrammes de séquences qui permettent de décrire les interactions entre les objets de notre projet.
+\subsubsection{Authentification}
+\noindent Ce premier diagramme définit l'authentification. Celle-ci est finalement très simple puisque qu'il s'agit d'une interrogation d'un objet UtilisateurDAO (DAO pour Data Access Object) qui
+permet de s'abstraire de la façon dont sont stockées les données référençant l'utilisateur.\\
+Dans le cas où l'utilisateur n'existe pas ou que le mot de passe ne correspond pas, un signal est envoyé par UtilisateurDAO.
+\begin{center}
+  \includegraphics[scale=0.55]{./images/diag_seq_authentification.jpg}
+\end{center}
+
+
 \begin{landscape}
 \subsubsection{Creer un agenda}
+\noindent Un  des points clé de  notre projet est la  création d'agenda. Ce diagramme  de séquence explique  le déroulement de cette  opération. Comme nous pouvons  le voir ci-dessous, la  création de
+l'agenda commence par  l'ajout dans le portefeuille d'agendas  de l'utilisateur qui vérifiera que  le nom de l'agenda est  valide et qu'il n'est pas  déjà attribué. Si toutes les  conditions sont bien
+remplies, l'agenda est alors ajouté au portefeuille.\\
+Bien entendu la persistance de cette modification sera assurée par un objet PortefeuilleAgendaDAO qui appelera également des objets AgendaDAO et EvenementDAO.
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_creer_agenda.png}
 \end{center}
@@ -723,6 +742,8 @@ Le scénario nominal reprend au point 1.\\
 
 \begin{landscape}
 \subsubsection{Modifier un agenda}
+\noindent Après avoir  ajouté un agenda, l'utilisateur  doit toujours \^etre capable de  le modifier. Ce diagramme  explique le déroulemet de cette  opération. On constatera qu'il  s'agit de récupérer
+l'agenda correspondant dans le portefeuille d'agenda puis de le modifier en vérifiant bien sur que les nouvelles données correspondent aux conditions décrites dans les scénarios.
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_modifier_agenda.jpg}
 \end{center}
@@ -730,6 +751,7 @@ Le scénario nominal reprend au point 1.\\
 
 \begin{landscape}
 \subsubsection{Supprimer un agenda}
+\noindent Un utilisateur peut également supprimer un agenda. Ce diagramme de séquence décrit le déroulement de cette opération.
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_supprimer_agenda.jpg}
 \end{center}
@@ -737,13 +759,17 @@ Le scénario nominal reprend au point 1.\\
 
 \begin{landscape}
 \subsubsection{Création d'un événement}
+\noindent Une fois que l'utilisateur possède un ou plusieurs agendas, il peut ajouter des événements. L'ajout d'événement est décrit par le diagramme de séquence suivant :
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_creation_evenement.png}
 \end{center}
+\noindent Il faut souligner que dans  un m\^eme agenda, il ne peut pas y avoir plusieurs  événements sur un m\^eme créneau horaire. Nous avons choisi cette option  pour des raisons de simplicité d'une
+part et parce que l'utilisateur peut très bien créer un autre événement simultané dans un autre agenda.
 \end{landscape}
 
 \begin{landscape}
 \subsubsection{Modifier un événement}
+\noindent L'utilisateur peut bien évidemment modifier un événement qu'il a créé. Cette opération s'effectue selon le diagramme de séquence suivant :
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_modifier_evt.jpg}
 \end{center}
@@ -751,16 +777,503 @@ Le scénario nominal reprend au point 1.\\
 
 \begin{landscape}
 \subsubsection{Supprimer un événement}
+\noindent Finalement, un utilisateur peut supprimer un événement. Cette opération s'effecture selon le diagramme de séquence suivant :
 \begin{center}
   \includegraphics[scale=0.55]{./images/diag_seq_supprimer_evt.jpg}
 \end{center}
 \end{landscape}
 
 \subsection{Diagramme de classes}
+\noindent Nous allons maintenant voir la décomposition en différentes classes que nous avons choisie.
+
+\subsubsection{Gestionnaire d'agendas}
+\noindent Les premières classes sont directement en rapport avec le gestionnaire d'agenda. Il s'agit de nos classes métiers.
+\begin{itemize}
+\item PortefeuilleAgenda : associé à un utilisateur, il regroupe les agendas et permet des opérations telles que l'ajout, la modification et la suppression d'agendas et d'événements
+\item Agenda : associé  à un utilisateur, il regroupe les différents  événements ajoutés. Il permet l'ajout, la modification  et la suppression d'événements. Un agenda est caractérisé  par un nom, une
+  description, une couleur et un lieu.
+\item Evenement : caractérisé par un objet, un lieu, une description et une date de début et de fin
+\end{itemize}
+\noindent Toutes ces classes sont regroupées dans le paquetage "Gestion agenda".
 \begin{center}
-  \includegraphics[scale=0.3]{./images/class_diagram.jpg}
+  \includegraphics[scale=0.45]{./images/class_diagram_gestionagenda.jpg}
 \end{center}
 
+
+\subsubsection{Authentification}
+\noindent Pour accéder à ses agendas, l'utilisateur  doit s'authentifier à l'aide d'un couple pseudonyme (ou login) / mot de passe. Cette authentification  est rendue persistante grace à un système de
+Session qui intègre des options de sécurité (une session ne peut exister plus d'un certain temps, une session inactive trop longtemps n'est plus valide).
+D'où les deux classes :
+\begin{itemize}
+\item Utilisateur : caractérisé par un login, mot de passe et un identifiant unique
+\item Session : caractérisé par un identifiant unique, une date de début, une date de dernière activité, une adresse IP et bien évidemment un utilisateur
+\end{itemize}
+\noindent Ces classes sont regroupées dans le paquetage "Authentification" et sont réutilisables pour n'importe quel autre projet.
+
+\begin{center}
+  \includegraphics[scale=0.5]{./images/class_diagram_authentification.jpg}
+\end{center}
+
+\newpage
+\subsubsection{Service DAO}
+\noindent Enfin, pour assurer la persistance des objets  nous avons créé des interfaces DAO qui permettent le mapping entre les objets manipulés par  le programme et un système de stockage (comme une
+base de données, des fichiers XML). Il y a une classe DAO pour chaque classe que nous avons vu précédemment.\\
+Ces interfaces sont regroupées dans le paquetage "Service".\\
+Dans le cadre de notre projet, nous avons implémenté ces différentes interfaces pour réaliser un mapping objet/mySQL.
+\begin{center}
+  \includegraphics[scale=0.5]{./images/class_diagram_DAO.jpg}
+\end{center}
+
+\newpage
+\subsubsection{Les différents paquetages}
+\noindent Voici les différents paquetages utilisés lors de notre projet. Le contenu des  paquetages GestionAgenda, Authentification, et service a été décrit précédemment. Le paquetage sql contenu dans
+le paquetage service est l'implémentation des interfaces DAO pour le mapping objet/mySQL.
+\begin{center}
+  \includegraphics[scale=0.5]{./images/paquetages.jpg}
+\end{center}
+
+\newpage
+\subsection{Modèle E/A et relationnel de la base de données}
+
+\subsubsection{Modèle entité/association}
+\noindent Pour modéliser notre base de données, nous nous sommes appuyés sur le modèle entité/association suivant :
+\begin{center}
+  \includegraphics[scale=0.8]{./images/EA.png}
+\end{center}
+
+\noindent Comme  nous pouvons le voir,  un utilisateur est connecté  à une Session. En  fait, cette session se  comporte comme une persistance  de l'authentification. Un  utilisateur possède plusieurs
+agendas qui contiennent eux-m\^emes des événements.\\
+Nous allons maintenant passer à la transformation vers le modèle relationnel.
+
+\subsubsection{Modèle relationnel}
+\paragraph{Pour chaque entité, on crée une relation \\}
+\noindent Agenda(\textbf{IdAgenda},NomAgenda,LieuAgenda,Description,Couleur)\\
+Utilisateur(\textbf{IdUser},Login,Password) \\
+Session(\textbf{IdSession},DateDebut,DateDerniereActivite,IP)
+
+\paragraph{Entité faible\\}
+\noindent Evènement est une entité faible d'Agenda. On crée donc un mécanisme de clé étrangère pour
+référencer l'entité forte dans l'entité faible.\\
+Evènement(\textbf{IdAgenda},\textbf{IdEvent},Objet,Lieu,Description,Date,HeureDebut,HeureFin)
+
+\paragraph{Autres associations binaires\\}
+\noindent L'identifiant de l'utilisateur devient un attribut de la table Agenda.\\
+L'identifiant de l'utilisateur devient un attribut de la table Session.\\ \\
+
+\noindent On obtient ainsi le modèle relationnel suivant :\\
+Agenda(\textbf{IdAgenda},NomAgenda,LieuAgenda,Description,Couleur,IdUser)\\
+Utilisateur(\textbf{IdUser},Login,Password)\\
+Session(\textbf{IdSession},DateDebut,DateDerniereActivite,IP,IdUser)\\
+Evènement(\textbf{IdAgenda},\textbf{IdEvent},Objet,Lieu,Description,Date,HeureDebut,HeureFin)\\
+\begin{center}
+  \includegraphics[scale=0.6]{./images/relationnel.png}
+\end{center}
+
+
+\newpage
+\section{Exemple de fonctionnement}
+\subsection{Identification}
+\noindent Lorsque l’utilisateur veut se connecter à l’application, il est dirigé vers la page d’identification
+du gestionnaire d’agendas.\\
+L’identification se fait grâce à un nom d’utilisateur et un mot de passe stockés dans la base de
+données de l’application. L’utilisateur doit donc remplir les champs « Nom d’utilisateur » et
+« Mot de passe » avec ses identifiants et cliquer ensuite sur le bouton « Se connecter ».
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/authentification2.png}
+\end{center}
+
+\subsubsection{Authentification réussie}
+\noindent Si un utilisateur correspondant à ce couple login/mot de passe est enregistré dans la base et si
+aucune session n’est déjà ouverte pour cet utilisateur, l’authentification est réussie et
+l’utilisateur arrive sur la page de bienvenue :
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/authentification4.png}
+\end{center}
+
+\noindent Il doit ensuite cliquer sur le bouton « Entrer » pour finalement entrer dans le gestionnaire
+d’agendas.
+
+\subsubsection{Erreurs d'authentification}
+\noindent Il existe plusieurs types d’erreurs d’authentification :
+\begin{itemize}
+\item Couple login/mot de passe inexistant
+\item 5 échecs de connexion
+\item Session déjà ouverte pour cet utilisateur
+\end{itemize}
+
+\paragraph{Couple login/mot de passe inexistant\\}
+ Si aucun utilisateur de la base ne correspond au nom d’utilisateur et au mot de passe, entrés
+dans les champs d’identification, un message d’erreur est affiché et l’utilisateur est redirigé vers
+la page d’authentification.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/authentification3.png}
+\end{center}
+
+
+\paragraph{5 échecs de connexion\\}
+Au bout de 5 tentatives de connexion infructueuses, l’accès à l’application est bloqué.
+L’utilisateur ne peut plus accéder à la page de connexion pour des raisons de sécurité. Cette
+mesure évite que certaines personnes puissent tomber par hasard sur un couple login/mot de
+passe valide, en essayant de multiples valeurs et ainsi pirater le compte d’un autre utilisateur.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/authentification5.png}
+\end{center}
+
+\newpage
+\subsection{Page d'accueil : structure et fonctionnement}
+\noindent Une fois l’authentification réussie, l’utilisateur arrive sur la page d’accueil de l’application.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/accueil3.png}
+\end{center}
+
+
+\noindent Cette page est composée de 3 parties :
+\subsubsection{Le menu horizontal }
+\noindent Ce menu est constitué du logo de l’application, et d’un cadre possédant :
+\begin{itemize}
+\item un message d’accueil pour l’utilisateur connecté
+\item une indication de la date du jour
+\item  un bouton permettant de se déconnecter de l’application
+\end{itemize}
+
+\begin{center}
+  \includegraphics[scale=0.4]{./images/accueil4.png}
+\end{center}
+
+
+
+\subsubsection{Le menu vertical de gauche}
+\noindent Ce menu est composé de 2 parties :
+\begin{itemize}
+\item   Une liste des agendas de l’utilisateur
+\end{itemize}
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/calendrier_agenda3.png}
+\end{center}
+
+\noindent Ce dernier peut choisir ceux qu’il souhaite voir apparaître dans
+son calendrier en les sélectionnant et en cliquant sur le bouton
+« Afficher ».
+
+\newpage
+
+\begin{itemize}
+\item Des boutons d’accès aux différentes pages de gestion des agendas et des évènements
+\end{itemize}
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/accueil5.png}
+\end{center}       
+
+\noindent Le bouton « Nouvel agenda » permet d’accéder au
+formulaire de création d’un agenda.\\
+\noindent Le bouton « Paramètres des agendas » permet d’accéder au
+formulaire de modification ou de suppression d’un agenda.\\
+\noindent Le bouton « Nouvel évènement » permet d’accéder au
+formulaire de création d’un évènement.\\
+
+
+
+
+
+\subsubsection{Le calendrier d'affichage des agendas}
+\noindent Ce calendrier permet à l’utilisateur connecté de consulter ces agendas par semaine.\\ \\
+Lorsque l’utilisateur se connecte à l’application, la semaine par défaut est la semaine
+correspondant à la date du jour. Mais il lui est ensuite possible de changer en utilisant les
+flèches bleues situées de part et d’autre de la semaine courante, qui permettent de passer à la
+semaine précédente ou à la semaine suivante. \\ \\
+Dans le calendrier, les agendas sont affichés sont ceux sélectionnés dans la liste « Mes agendas »
+du menu vertical de gauche (cf. paragraphe précédant). Pour plus de visibilité, chaque agenda
+a une couleur caractéristique. Par exemple, dans le screenshot ci-dessous, l’agenda « Cinéma »
+est caractérisé par la couleur bleu clair, et l’agenda « GM4 » est caractérisé par la couleur
+rouge.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/calendrier_agenda.png}
+\end{center}
+
+
+\noindent Si l’utilisateur choisit de ne sélectionner que l’agenda « GM4 »,
+\begin{center}
+  \includegraphics[scale=0.6]{./images/calendrier_agenda3.png}
+\end{center}
+\noindent son calendrier aura donc l’allure suivante :
+\begin{center}
+  \includegraphics[scale=0.6]{./images/calendrier_agenda2.png}
+\end{center}
+
+
+
+\noindent Pour modifier un évènement, l’utilisateur doit le sélectionner en cochant le bouton radio
+correspondant et ensuite cliquer sur le bouton « Editer », situé en haut à droite du calendrier.
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Créer un agenda}
+\noindent Pour créer un agenda, l’utilisateur doit cliquer sur le bouton « Nouvel Agenda » du menu
+vertical de gauche. Il est ensuite dirigé sur le formulaire suivant :
+\begin{center}
+  \includegraphics[scale=0.6]{./images/creation_agenda1.png}
+\end{center}
+
+
+
+
+
+\noindent Un agenda est caractérisé par les 4 informations suivantes :
+\begin{itemize}
+\item un nom
+\item un lieu d'application
+\item une description
+\item une couleur d'affichage
+\end{itemize}
+L’utilisateur doit donc renseigner ce formulaire de création et ensuite cliquer sur le bouton
+« Créer » pour le valider.
+
+
+\subsubsection{Création réussie}
+\noindent Si l’utilisateur a rempli correctement le formulaire, i.e. s’il a au moins rempli le champ « Nom »
+avec une valeur valide, la création est effectuée et un message d’information est affiché.
+\begin{center}
+  \includegraphics[scale=0.8]{./images/creation_agenda2.png}
+\end{center}
+
+
+\subsubsection{Erreurs de création}
+\noindent Si l’utilisateur n’a pas rempli le champ « Nom » du formulaire, la création est invalidée et un
+message d’erreur est affiché.
+\begin{center}
+  \includegraphics[scale=0.8]{./images/creation_agenda3.png}
+\end{center}
+
+
+\noindent Si l’utilisateur possède un autre agenda portant le même nom que celui inscrit dans le champ
+« Nom » du formulaire, la création est invalidée et un message d’erreur est affiché.
+\begin{center}
+  \includegraphics[scale=0.8]{./images/creation_agenda4.png}
+\end{center}
+
+
+
+
+\noindent L’utilisateur peut à tout moment retourner sur la page d’accueil en cliquant sur le bouton
+« Retour à l’agenda ».
+
+
+
+
+
+\subsection{Modifier les paramètres d'un agenda}
+\noindent Pour modifier les paramètres d’un agenda, l’utilisateur doit cliquer sur le bouton « Paramètres
+des agendas » du menu vertical de gauche. Il est ensuite dirigé sur le formulaire suivant :
+\begin{center}
+  \includegraphics[scale=0.6]{./images/param_agenda3.png}
+\end{center}
+
+\noindent Il doit tout d’abord sélectionner l’agenda qu’il désire modifier en le sélectionnant dans la liste
+déroulante « Agenda » et en cliquant ensuite sur la flèche verte. Les caractéristiques de l’agenda
+sélectionné sont ainsi affichées dans les différents champs du formulaire.
+
+\subsubsection{Suppression de l'agenda}
+\noindent Pour supprimer l’agenda sélectionné, l’utilisateur doit cliquer sur le bouton « Supprimer » situé
+en bas à droite du formulaire. Cette action a pour conséquence de supprimer l’agenda de la
+base de données, ainsi que tous les évènements relatifs à cet agenda.
+\begin{center}
+  \includegraphics[scale=0.6]{./images/param_agenda1.png}
+\end{center}
+
+\subsubsection{Modification des caractéristiques de l'agenda}
+\noindent Pour modifier les caractéristiques de l’agenda sélectionné l’utilisateur doit renseigner les
+champs du formulaire avec les informations voulues et cliquer ensuite sur le bouton
+« Modifier ». Si le formulaire a été correctement rempli, la modification est validée et un
+message d’information est affiché.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/modif_agenda.png}
+\end{center}
+
+
+
+\noindent \textbf{NB :} La modification est invalidée dans le cas d’erreurs de même type que lors de la création
+d’un agenda, à savoir le champ « Nom » non rempli, ou un agenda portant déjà le nom inscrit
+dans le champ « Nom ».
+
+
+
+\subsection{Créer un événement}
+\noindent Pour créer un nouvel évènement, l’utilisateur doit cliquer sur le bouton «Nouvel Evènement »
+du menu vertical de gauche. Il est ensuite dirigé sur le formulaire suivant :
+\begin{center}
+  \includegraphics[scale=0.4]{./images/creation_event1.png}
+\end{center}
+
+
+
+
+Un évènement est caractérisé par les 7 informations suivantes :
+\begin{itemize}
+\item L’agenda auquel il appartient
+\item Un objet
+\item Une date d’application
+\item Un lieu d’application
+\item Une heure de début
+\item Une heure de fin
+\item Une description
+\end{itemize}
+         
+
+\noindent L’utilisateur doit donc renseigner ce formulaire de création et ensuite cliquer sur le bouton
+« Créer » pour le valider.
+
+
+
+
+
+
+\subsubsection{Création réussie}
+\noindent Si l’utilisateur a rempli correctement le formulaire, i.e. s’il a au moins rempli les champs
+« Agenda », « Objet », « Date », « Heure de début » et « Heure de fin » avec des valeurs valides,
+la création est effectuée et un message d’information est affiché.
+\begin{center}
+  \includegraphics[scale=0.6]{./images/creation_event2.png}
+\end{center}
+
+
+
+\subsubsection{Erreurs de création}
+\noindent Le premier type d’erreur de création correspond à un mauvais remplissage des champs par
+l’utilisateur, à savoir :
+
+\begin{itemize}
+\item   Champ « Objet » non rempli
+\item Date invalide
+\item Heures de début de fin invalides : heure de début supérieure à l'heure de fin
+\end{itemize}
+
+\noindent Dans l’un de ces 3 cas, la création est invalidée et un message d’erreur est affiché.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/creation_event3.png}
+\end{center}
+
+
+
+\noindent Le second type d’erreur de création correspond à l’existence dans l’agenda sélectionné, d’un
+évènement simultané, i.e. possédant une date et des heures de début et de fin identiques. Dans
+ce cas, la création est invalidée et un message d’erreur est affiché.
+
+\begin{center}
+  \includegraphics[scale=0.6]{./images/creation_event4.png}
+\end{center}
+
+
+\subsection{Modifier les paramètres d'un événement}
+\noindent Pour modifier les paramètres d’un évènement, l’utilisateur doit le sélectionner dans le
+calendrier de la page d’accueil et cliquer sur le bouton « Editer ». Il est ensuite dirigé sur le
+formulaire suivant :
+\begin{center}
+  \includegraphics[scale=0.6]{./images/modif_event.png}
+\end{center}
+
+
+
+
+\noindent Les caractéristiques de l’évènement sélectionné sont affichées dans les différents champs du
+formulaire.\\ \\
+\textbf{NB} : L’utilisateur ne peut pas déplacer son évènement d’un agenda à l’autre. C’est pour cette
+raison que le champ « Agenda » n’apparaît pas dans ce formulaire. Pour déplacer un
+évènement vers un autre agenda, l’utilisateur doit le supprimer du premier agenda, et ensuite
+le recréer dans un autre agenda.
+
+\subsubsection{Suppresion de l'événement}
+\noindent Pour supprimer l’évènement sélectionné, l’utilisateur doit cliquer sur le bouton « Supprimer »
+situé en bas à droite du formulaire. Cette action a pour conséquence de supprimer
+l’évènement de la base de données.
+\begin{center}
+  \includegraphics[scale=0.6]{./images/modif_event3.png}
+\end{center}
+
+
+
+\subsubsection{Modification des caractéristiques de l'événement}
+\noindent Pour modifier les caractéristiques de l’évènement sélectionné, l’utilisateur doit renseigner les
+champs du formulaire avec les informations voulues et cliquer ensuite sur le bouton
+« Modifier ». Si le formulaire a été correctement rempli, la modification est validée et un
+message d’information est affiché.
+\begin{center}
+  \includegraphics[scale=0.6]{./images/modif_event2.png}
+\end{center}
+
+
+\noindent \textbf{NB} : La modification est invalidée dans le cas d’erreurs de même type que lors de la création
+d’un évènement, à savoir un ou plusieurs champs mal renseignés, ou un évènement simultané
+existant.
+
+
+
+
+\newpage
+\section{Pour aller plus loin : exemple d'utilisation du RMI}
+\subsection{Exemple envisagé}
+\noindent Afin de nous assurer de  la validité de notre modélisation, nous avons voulu changer notre  point de vue sur le gestionnaire d'agenda. En plus de l'accès  par une interface web en JSP/xHTML,
+nous nous sommes dits  qu'il serait intéressant que l'utilisateur puisse accéder à  ces agendas depuis un programme. C'est comme ça  que nous est venu l'idée d'implémenter un  petit exemple en RMI. Ce
+petit exemple n'existe que pour démontrer la faisabilité de la chose et non pas pour implémenter un logiciel complet.\\
+Notre exemple est composé des éléments suivants :
+\begin{itemize}
+\item Un serveur distant : il se charge de mettre à disposition un objet distant qui permet d'accéder aux agendas d'un utilisateur quand on lui précise un login et un mot de passe. Une fois qu'on lui
+  donne un login et un mot de passe valide, il se connecte à la base de données mySQL (à l'aide des objets du paquetage service.sql) pour récupérer le portefeuille d'agenda de l'utilisateur.
+\item un client : qui se connecte et récupère un portefeuille d'agenda d'un utilisateur
+\end{itemize}
+
+
+\noindent Voici les différentes classes utilisées :
+\begin{center}
+  \includegraphics[scale=0.5]{./images/rmi.jpg}
+\end{center}
+
+\subsection{Retranscription du fonctionnement}
+\noindent Le petit exemple que nous avons programmé va faire les deux choses suivantes :
+\begin{itemize}
+\item Il va essayer de récupérer un portefeuille d'agenda avec un couple login/mot de passe invalide
+\item Il va essayer de récupérer un portefeuille d'agenda avec un couple login/mot de passe valide
+\end{itemize}
+Voici la sortie du programme : 
+\begin{center}
+  \includegraphics[scale=0.5]{./images/rmi-sortie.png}
+\end{center}
+
+
+\noindent Nous allons maintenant expliquer cette sortie.\\
+Dans la première partie, nous pouvons constater qu'une exception de type "UtilisateurInexistantException" est lancee.
+\begin{center}
+  \includegraphics[scale=0.5]{./images/rmi-sortie01.png}
+\end{center}
+Effectivement, nous essayons de récupérer un portefeuille d'agenda d'un utilisateur soit inexistant, soit le mot de passe donné est invalide.\\
+
+
+\noindent Ensuite nous essayons de récupérer le portefeuille d'agenda d'un utilisateur existant avec le bon mot de passe. Nous l'obtenons et l'affichons dans le terminal :
+\begin{center}
+  \includegraphics[scale=0.5]{./images/rmi-sortie02.png}
+\end{center}
+
+\subsection{Conclusion que nous pouvons tirer de cet exemple}
+\noindent Cet exemple simpliste démontre qu'il serait vraiment facile de développer une application distante pour consulter et modifier ses agendas. L'utilisateur aurait alors le choix d'utiliser
+l'interface web, une application fenetrée ou bien sur les deux.
 
 \newpage	
 \section{Conclusion}
