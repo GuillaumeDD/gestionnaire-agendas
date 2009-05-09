@@ -4,6 +4,12 @@ import GestionAgenda.Evenement;
 import java.sql.Date;
 import java.util.HashMap;
 
+/**
+ * Interface representant les fonctions que doit implementer un systeme voulant assurer la persistance d'un objet Evenement
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
+ * @see Evenement
+ */
 public interface EvenementDAO {
 
     public void insert (Evenement e);
