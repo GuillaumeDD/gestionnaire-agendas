@@ -8,8 +8,11 @@ package Exception;
 import Authentification.Session;
 
 /**
- *
- * @author GDD
+ * Exception lancee lorsqu'une session avec le meme idSession est deja stockee.
+ * @see Session
+ * @see SessionDAO
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
  */
 public class SessionDejaExistanteException extends Exception {
     private Session s;

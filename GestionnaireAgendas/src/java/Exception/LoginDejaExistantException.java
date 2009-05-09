@@ -5,11 +5,14 @@
 
 package Exception;
 
-import Authentification.Utilisateur;
+import service.UtilisateurDAO;
 
 /**
- *
- * @author GDD
+ * Exception lancee si un utilisateur portant le meme pseudonyme existe deja
+ * @see Utilisateur
+ * @see UtilisateurDAO
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
  */
 public class LoginDejaExistantException extends Exception {
 
