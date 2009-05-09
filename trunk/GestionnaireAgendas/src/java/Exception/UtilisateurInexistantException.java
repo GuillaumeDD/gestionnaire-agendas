@@ -8,8 +8,11 @@ package Exception;
 import Authentification.Utilisateur;
 
 /**
- *
- * @author GDD
+ * Exception lancee si aucun utilisateur ne correspond au couple login/mot de passe
+ * @see Utilisateur
+ * @see UtilisateurDAO
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
  */
 public class UtilisateurInexistantException extends Exception {
 

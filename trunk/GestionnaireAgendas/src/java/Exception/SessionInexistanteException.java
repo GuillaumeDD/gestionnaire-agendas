@@ -8,8 +8,11 @@ package Exception;
 import Authentification.Utilisateur;
 
 /**
- *
- * @author GDD
+ * Exception lancee lorsqu'aucune session correspondant a l'identifiant idSession est stockee
+ * @see Session
+ * @see SessionDAO
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
  */
 public class SessionInexistanteException extends Exception {
 

@@ -19,6 +19,7 @@
     </head>
     <body>
 <%
+if((Integer)session.getAttribute("try") == null || (Integer)session.getAttribute("try") < 5){
    if(estConnecte((Integer)session.getAttribute("userid"),request.getRemoteAddr())){
        Session s = getSession((Integer)session.getAttribute("userid"), request.getRemoteAddr());
        Utilisateur u = s.getUser();
@@ -42,6 +43,7 @@
          }
     }else{
         String connect=request.getParameter("connexion");
+        Integer tentative = null;
         if(connect != null)
             {
                 UtilisateurSQL userService = new UtilisateurSQL();
@@ -58,7 +60,10 @@
                     session.setAttribute("login", u.getLogin());
                     response.sendRedirect("identification.jsp");
 
-                    }catch(UtilisateurInexistantException ex){
+                 }catch(UtilisateurInexistantException ex){
+                    tentative = (Integer)session.getAttribute("try");
+                    if(tentative == null) tentative = 0;
+                    session.setAttribute("try", tentative + 1);
                     out.println("<div id='titre'> Gestionnaire d'agendas </div>");
                     out.println("<div id='login'>");
                     out.println("<div id='erreur'>Couple nom d'utilisateur / mot de passe inexistant.</div>");
@@ -88,6 +93,12 @@
             out.println("</form></div>");
             }
     }
+}else{
+    out.println("<div id='titre'> Gestionnaire d'agendas </div>");
+    out.println("<div id='login'>");
+    out.println("<div id='erreur'>Nombre de tentatives de connexion excédé !</div>");
+    out.println("</div>");
+}
     %>
 
     
