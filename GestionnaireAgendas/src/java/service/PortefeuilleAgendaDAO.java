@@ -2,8 +2,12 @@ package service;
 
 import Authentification.Utilisateur; 
 import GestionAgenda.*;
-import java.sql.SQLException;
-
+/**
+ * Interface representant les fonctions que doit implementer un systeme voulant assurer la persistance d'un objet PortefeuilleAgenda
+ * @author Pauline REQUENA
+ * @author Guillaume DUBUISSON DUPLESSIS
+ * @see PortefeuilleAgenda
+ */
 public interface PortefeuilleAgendaDAO {
 
     public void save (PortefeuilleAgenda pa);

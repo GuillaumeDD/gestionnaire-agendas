@@ -23,10 +23,22 @@ public class Evenement implements Serializable{
     boolean suppr;
     boolean modif;
     boolean nouveau;
-
+/**
+ * Constructeur par défaut
+ */
     public Evenement () {
     }
 
+    /**
+     * Constructeur avec arguments
+     * @param _agendaID : identifiant de l'agenda dans lequel se trouve l'événement
+     * @param _objet : objet de l'événement
+     * @param _lieu : lieu de l'événement
+     * @param _description : description de l'événement
+     * @param _d : date de l'événement
+     * @param _heureDebut : heure de début de l'événement
+     * @param _heureFin : heure de fin de l'événement
+     */
     public Evenement (long _agendaID, String _objet, String _lieu, String _description, String _d, float _heureDebut, float _heureFin) {
         setAgendaID(_agendaID);
         setObjet(_objet);
@@ -40,18 +52,34 @@ public class Evenement implements Serializable{
         setNouveau(true);
 
     }
-
+/**
+ * Méthode qui vérifie si un événement est valide i.e. que tout ses attributs sont correctement remplis
+ * @return true s'il est valide, false sinon
+ */
     public boolean estValideEvenement () {
         if(verifierChamp(getObjet(),getLieu(),getDescription(),getDate(),getHeureDebut(),getHeureFin())==true)
             return true;
         else return false;
     }
 
+    /**
+     * Méthode qui vérifie que les champs sont valides
+     * @param objet : objet de l'événement
+     * @param lieu : lieu de l'événement
+     * @param description : description de l'événement
+     * @param d : date de l'événement
+     * @param heureDebut : heure de début de l'événement
+     * @param heureFin : heure de fin de l'événement
+     * @return true si les champs sont valides, false sinon
+     */
     public boolean verifierChamp (String objet, String lieu, String description, String d, float heureDebut, float heureFin) {
     if(objet.equals("") || d.equals("") || heureDebut<0 || heureDebut>24 || heureFin<0 || heureFin>24 || heureDebut>=heureFin)  return false;
            else return true;
     }
 
+    /**
+     * Méthode qui supprime l'événement. Il sera supprimé lors de la prochaine synchronisation avec le support de persistance.
+     */
     public void supprimer () {
        setSuppr(true);
     }
