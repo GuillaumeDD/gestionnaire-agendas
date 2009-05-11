@@ -1,0 +1,406 @@
+/* 
+    Document   : accueil
+    Created on : 12 févr. 2009, 16:30:41
+    Author     : Pauline Réquéna
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+/* Design de l'en-tête commun à toutes les pages' */
+
+
+body {
+    background-image: url("../images/fond5.jpg");
+    background-repeat: no-repeat;
+
+}
+
+
+#logo {
+
+    margin-left:20px;
+    margin-top:20px;
+    width: 130px;
+    height: 130px;
+    float: left;
+    background-image: url("../images/calendar.png");
+}
+
+#haut_page {
+
+    padding:10px;
+    margin-top:20px;
+    margin-right:20px;
+    width: 1020px;
+    height: 90px;
+    float: right;
+    color: navy;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size:18px;
+    font-weight:bold;
+    border-style: double;
+    border-color:navy;
+}
+
+
+#message_accueil {
+
+    padding:10px;
+    margin-top:15px;
+    width: 800px;
+    height: 60px;
+    float: left;
+    text-align:center;
+
+}
+
+#deconnexion {
+
+    padding:3px;
+    margin-top:5px;
+    margin-left:35px;
+    width: 100px;
+    height: 80px;
+    float: left;
+    text-align:center;
+
+}
+
+input.out
+{
+    background: transparent url("../images/exit.png") no-repeat center center;
+    border:none;
+    width:60px;
+    height:60px;
+}
+
+label.bouton_deco
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:red;
+    font-weight:bold;
+}
+
+/* Design du menu et du corps du calendrier */
+
+#menu_gauche {
+
+    margin-top:15px;
+    width: 200px;
+    height: 670px;
+    position:absolute;
+    top:160px;
+    left:25px;
+    background-color: white;
+    -moz-opacity:0.6;
+    filter:alpha(opacity=60);
+    opacity:0.6;
+
+}
+
+#menu_gauche_content {
+
+    margin-top:15px;
+    padding-left:15px;
+    width: 200px;
+    height: 670px;
+    position:absolute;
+    top:160px;
+    left:25px;
+    font-family: verdana,sans-serif;
+    font-size:16px;
+    font-weight:bold;
+ /* overflow:scroll; */
+}
+
+#corps_calendrier {
+
+    margin-top:15px;
+    width: 1050px;
+    height: 670px;
+    position:absolute;
+    top:160px;
+    left:270px;
+    background-color: white;
+    -moz-opacity:0.6;
+    filter:alpha(opacity=60);
+    opacity:0.6;
+    text-align:center;
+}
+
+#corps_calendrier_content {
+
+    margin-top:15px;
+    width: 1050px;
+    height: 670px;
+    position:absolute;
+    top:160px;
+    left:270px;
+    text-align:center;
+}
+
+
+#selection_semaine {
+
+    margin-top:6px;
+    width: 1000px;
+    height: 50px;
+    text-align:center;
+}
+
+#nouvel_agenda {
+
+    padding:10px;
+    width: 140px;
+    height: 82px;
+    text-align:center;
+    border-style: double;
+    border-color:#FF8C00;
+    background-color:#FFEFD5;
+}
+
+#nouvel_rdv {
+
+    padding:10px;
+    width: 140px;
+    height: 82px;
+    text-align:center;
+    border-style: double;
+    border-color:red;
+    background-color:#FFE4E1;
+}
+
+#entete_calendrier {
+
+    padding-left:30px;
+    padding-top:5px;
+    width: 970px;
+    height: 25px;
+}
+
+#calendrier_hebdo {
+
+    padding-left:30px;
+    width: 975px;
+    height: 570px;
+    overflow:scroll;
+}
+
+#modif_agenda {
+
+    padding:10px;
+    width: 140px;
+    height: 92px;
+    text-align:center;
+    border-style: double;
+    border-color:silver;
+    background-color:white;
+}
+
+#fleches {
+
+    float:left;
+    width:900px;
+    text-align:center;
+}
+
+#modif_event {
+
+    float:right;
+    width:100px;
+    text-align:center;
+}
+
+
+input.afficher
+{
+    margin-left:105px;
+    background: transparent url("../images/pen.png") no-repeat center center;
+    border:none;
+    width:60px;
+    height:60px;
+}
+
+input.new_agenda
+{
+    margin-left:8px;
+    background: transparent url("../images/new.png") no-repeat center center;
+    border:none;
+    width:65px;
+    height:65px;
+}
+
+input.new_rdv
+{
+    margin-left:8px;
+    background: transparent url("../images/blocnotes.png") no-repeat center center;
+    border:none;
+    width:65px;
+    height:65px;
+}
+
+input.modifier_agenda
+{
+    margin-left:8px;
+    background: transparent url("../images/setting.png") no-repeat center center;
+    border:none;
+    width:65px;
+    height:65px;
+}
+
+input.semaine_precedente
+{
+    background: transparent url("../images/fleche1.png") no-repeat center center;
+    border:none;
+    width:50px;
+    height:50px;
+}
+
+input.semaine_suivante
+{
+    background: transparent url("../images/fleche2.png") no-repeat center center;
+    border:none;
+    width:50px;
+    height:50px;
+}
+
+input.modif_event
+{
+    background: transparent url("../images/modif_event.png") no-repeat center center;
+    border:none;
+    width:40px;
+    height:40px;
+}
+
+
+
+label.bouton_new_agenda
+{
+    margin-left:2px;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:#FF8C00;
+    font-weight:bold;
+}
+
+label.bouton_new_rdv
+{
+    margin-left:2px;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:red;
+    font-weight:bold;
+}
+
+
+label.selection_semaine
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    color:navy;
+    font-weight:bold;
+}
+
+label.bouton_modif_event
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:blue;
+    font-weight:bold;
+}
+
+label.bouton_modif_agenda
+{
+    margin-left:2px;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:silver;
+    font-weight:bold;
+}
+
+label.bouton_afficher
+{
+    margin-left:95px;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 13px;
+    color:#BA55D3;
+    font-weight:bold;
+}
+
+label.titre1
+{
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 18px;
+    font-weight:bold;
+    font-style:normal;
+    text-decoration:underline;
+    color:navy;
+}
+
+tr.jours
+{
+    height:20px;
+    background-color:white;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 15px;
+    font-weight:bold;
+    color:navy;
+}
+
+tr.agenda1
+{
+    height:22px;
+    text-align:center;
+    font-family: verdana,sans-serif;
+    font-size: 11px;
+
+}
+
+tr.agenda
+{
+    height:22px;
+    background-color:#F5F5F5;
+    text-align:center;
+}/* background-color:#F5F5F5;*/
+td.event
+{
+    border:1px solid black;
+}
+
+td.col_agenda
+{
+    width:125px;
+}
+
+td.col_jours
+{
+    width:128px;
+    border:1px solid navy;
+}
+
+td.col_heures
+{
+    width:45px;
+    font-family: verdana,sans-serif;
+    font-size: 11px;
+    font-weight:bold;
+    color:navy;
+    border:1px solid navy;
+}
