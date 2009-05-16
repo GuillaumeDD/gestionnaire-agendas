@@ -39,6 +39,7 @@ Session getSession(int userID, String IP){
     Session s = null;
     Utilisateur u = null;
     SessionSQL sSession = new SessionSQL();
+    sSession.cleanUp();
     try{
         u = (new UtilisateurSQL()).findByID(userID);
     }catch(UtilisateurInexistantException ex){
