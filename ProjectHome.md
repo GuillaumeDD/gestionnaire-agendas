@@ -1,0 +1,1 @@
+Gestionnaire d'agenda simple réalisé en JSP et avec des servlets réalisé dans le cadre d'une UV de java distribué (INSA de Rouen - département GM).
